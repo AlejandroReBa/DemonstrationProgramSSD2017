@@ -10,15 +10,15 @@ Essentially, the ICONIX Process describes the core "logical" analysis and design
 Project Management Methodology: SCRUM (Agile development process)
 This approach emphasizes the rapid delivery of an application in complete functional components. 
 
+---------------------------------------------------------------------
+UPDATE 21/03/2017
+
 TEAM:
 
-Leader: Alejandro Reyes Bautista
+Leader/Designer/HCI/ResourceManager/Programmer/Testing/Usability: 
+Alejandro Reyes Bautista
 
-Human Computer Interaction (HCI): Agnieszka Kogus
-
-Resource Manager: Josh Light
-
-
+---------------------------------------------------------------------
 UPDATE 24/01/2017
 
 TEAM:
@@ -30,10 +30,13 @@ Resource Manager: Josh Light
 
 Programmer: Lewis Bloomer
 
-
-UPDATE 21/03/2017
-
+---------------------------------------------------------------------
 TEAM:
 
-Leader/Designer/HCI/ResourceManager/Programmer/Testing/Usability: 
-Alejandro Reyes Bautista
+Leader: Alejandro Reyes Bautista
+
+Human Computer Interaction (HCI): Agnieszka Kogus
+
+Resource Manager: Josh Light
+
+---------------------------------------------------------------------
