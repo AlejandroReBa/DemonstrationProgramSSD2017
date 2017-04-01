@@ -3,3 +3,4 @@ VAUM:
 -Add an event information
 -Update an event information
 -Maintain an event information
+-Pick teams

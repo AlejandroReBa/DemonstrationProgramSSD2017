@@ -1,0 +1,5 @@
+VAUM:
+-View a membership information
+-Add a membership information
+-Update a membership information
+-Maintain a membership information
