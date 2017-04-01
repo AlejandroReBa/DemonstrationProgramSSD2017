@@ -1,4 +1,4 @@
-package athleticsclub.event;
+package event;
 
 import java.util.ArrayList;
 import java.util.Date;
