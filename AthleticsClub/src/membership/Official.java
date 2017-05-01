@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class Official extends Membership {
     private List<Event> eventsList;
-    private typeEnum type = typeEnum.Official;
 
     public Official(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Official;
         this.eventsList = new ArrayList<>();
         Membership.membersList.add(this);
     }
@@ -28,6 +28,7 @@ public class Official extends Membership {
     public Official(String nameIn, String addressIn, String telIn, String sexIn,
             Date birthIn, List<Event> eventsListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Official;
         this.eventsList = eventsListIn;
         Membership.membersList.add(this);
     }

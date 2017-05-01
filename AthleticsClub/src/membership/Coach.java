@@ -13,17 +13,16 @@ import training.Training;
 
 /**
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
-public class Coach extends Membership{
+public class Coach extends Membership{ //delete elements for the list not implemented yet, for any class.
     private List<Training> trainingsList;
     private List<Event> eventsList;
     private List<Athlete> athletesList;
-    
-    private typeEnum type = typeEnum.Coach;
 
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Coach;
         this.trainingsList = new ArrayList<>();
         this.eventsList = new ArrayList<>();
         this.athletesList = new ArrayList<>();
@@ -33,6 +32,7 @@ public class Coach extends Membership{
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
             List<Training> trainingsListIn, List<Event> eventsListIn, List<Athlete> athletesListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Coach;
         this.trainingsList = trainingsListIn;
         this.eventsList = eventsListIn;
         this.athletesList = athletesListIn;

@@ -13,16 +13,15 @@ import training.Training;
 
 /**
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Athlete extends Membership{
     private List<Training> trainingsList;
     private List<Event> eventsList;
-    
-    private typeEnum type = typeEnum.Athlete;
 
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>();
         this.eventsList = new ArrayList<>();
         Membership.membersList.add(this); //perhaps will throw an error
@@ -30,6 +29,7 @@ public class Athlete extends Membership{
     
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn, List<Training> trainingsListIn, List<Event> eventsListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Athlete;
         this.trainingsList = trainingsListIn;
         this.eventsList = eventsListIn;
         Membership.membersList.add(this); //perhaps will throw an error

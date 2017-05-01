@@ -12,9 +12,9 @@ import java.util.Date;
  * @author Alejandro Reyes
  */
 public class StaffAdmin extends Membership{ //at the moment is the same as support..
-    private typeEnum type = typeEnum.Administration;
 
     public StaffAdmin(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
-        super(nameIn, addressIn, telIn, sexIn, birthIn, true);
+        super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Administration;
     }
 }
