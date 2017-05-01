@@ -1,5 +1,6 @@
 package training;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,11 +27,12 @@ public class Training {
     
    
     public Training (String typeIn, String disciplineIn,
-            String ageGroupIn, Date dateIn){
+            String ageGroupIn){
         this.type = typeEnum.valueOf(typeIn);
         this.discipline = disciplineTrainingEnum.valueOf(disciplineIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
-        this.date = dateIn;
+        this.date = Date.from(Instant.now());
+        this.coachId = -1;
         
         this.id = incrementalId;
         incrementalId++;
@@ -38,13 +40,13 @@ public class Training {
         trainingsList.add(this);
     }
     
-    public Training (String typeIn, int coachIdIn, String disciplineIn,
-            String ageGroupIn, Date dateIn){
+    public Training (String typeIn, String disciplineIn,
+            String ageGroupIn, Date dateIn, int coachIdIn){
         this.type = typeEnum.valueOf(typeIn);
+        this.discipline = disciplineTrainingEnum.valueOf(disciplineIn);
+        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
+        this.date = dateIn;
         this.coachId = coachIdIn;
-        this.discipline = disciplineTrainingEnum.valueOf(disciplineIn);
-        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
-        this.date = dateIn;
         
         this.id = incrementalId;
         incrementalId++;
@@ -52,6 +54,7 @@ public class Training {
         trainingsList.add(this);
     }
     
+    //attribute that can't be changed
     public int getId(){
         return this.id;
     }
@@ -60,16 +63,40 @@ public class Training {
         return this.type.toString();
     }
     
+    public void setType(String typeIn){
+        this.type = typeEnum.valueOf(typeIn);
+    }
+    
     public int getCoach(){
         return this.coachId;
+    }
+    
+    public void setCoach(int coachIdIn){
+        this.coachId = coachIdIn;
     }
     
     public String getDiscipline(){
         return this.discipline.toString();
     }
     
+    public void setDiscipline(String disciplineIn){
+        this.discipline = disciplineTrainingEnum.valueOf(disciplineIn);
+    }
+    
     public String getAgeGroup(){
         return this.ageGroup.toString();
+    }
+    
+    public void setAgeGroup(String ageGroupIn){
+        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
+    }
+    
+    public Date getDate(){
+        return this.date;
+    }
+    
+    public void setDate (Date dateIn){
+        this.date = dateIn;
     }
     
     public static Training viewTrainingById(int id){

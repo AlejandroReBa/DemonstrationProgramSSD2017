@@ -57,4 +57,46 @@ public class Team {
         incrementalId++; 
         teamsList.add(this);
     }
+        
+    public void addAthlete(Athlete atheleteIn){
+        this.athletesList.add(atheleteIn);
+    }
+    
+    public void deleteAthlete(int athleteId){
+        int athleteIndex = -1;
+        int index = 0;
+        
+        for (Athlete currentAthlete : this.athletesList){
+            if (currentAthlete.getId() == athleteId){
+                athleteIndex = index;
+                break;
+            }else{
+                index++;
+            }
+        }
+        if (athleteIndex != -1){
+            this.athletesList.remove(athleteIndex);
+        }
+    }
+        
+    public List<Athlete> getAthletesList(){
+        return this.athletesList;
+    }
+        
+    public int getCaptainId(){
+        return this.captainId;
+    }
+    
+    public void changeCaptainId(int captainIdIn){
+        this.captainId = captainIdIn;
+    }
+    
+    public int getCoachId(){
+        return this.coachId;
+    }
+    
+    public void changeCoachId(int coachIdIn){
+        this.coachId = coachIdIn;
+    }
+        
 }

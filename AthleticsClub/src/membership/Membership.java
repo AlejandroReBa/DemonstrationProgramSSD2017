@@ -47,20 +47,33 @@ public class Membership {
         }
     }
     
-    
+    //attribute that can't be changed
+    public int getId(){
+        return this.id;
+    }
     
     public String getName(){
         return this.name;
+    }
+    
+    public void setName(String nameIn){
+        this.name = nameIn;
     }
     
     public String getTelephone(){
         return this.telephone;
     }
     
+    public void setTelephone(String telephoneIn){
+        this.telephone = telephoneIn;
+    }
+    
+    //attribute that can't be changed
     public String getSex(){
         return this.sex.toString();
     }
     
+    //attribute that can't be changed
     public Date getBirth(){
         return this.birth;
     }

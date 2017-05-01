@@ -1,5 +1,6 @@
 package event;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +32,14 @@ public class Event {
 
     
     public Event (String typeIn, String genderIn, String ageGroupIn,
-            String transportIn, Date dateIn){
+            String transportIn){
         this.type = typeEnum.valueOf(typeIn);
         this.gender = genderEnum.valueOf(genderIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
         this.transport = transportEnum.valueOf(transportIn);
-        this.date = dateIn;
+        this.date = Date.from(Instant.now());
+        this.officialId = -1;
+        this.transport =  transportEnum.Minibus; //by default
         
         this.id = incrementalId;
         incrementalId++; 
@@ -51,34 +54,64 @@ public class Event {
         this.transport = transportEnum.valueOf(transportIn);
         this.date = dateIn;
         this.officialId = officialIdIn; 
+        this.transport =  transportEnum.Minibus; //by default
         
         this.id = incrementalId;
         incrementalId++; 
         eventsList.add(this);
     }
     
+    //attribute that can't be changed
+    public int getId(){
+        return this.id;
+    }
+        
     public String getType (){
         return this.type.toString();
+    }
+    
+    public void setType (String typeIn){
+        this.type = typeEnum.valueOf(typeIn);
     }
     
     public String getGender (){
         return this.gender.toString();
     }
     
+    public void setGender (String genderIn){
+        this.gender = genderEnum.valueOf(genderIn);
+    }
+    
     public String getAgeGroup (){
         return this.ageGroup.toString();
+    }
+    
+    public void setAgeGroup (String ageGroupIn){
+        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
     }
     
     public String getTransport (){
         return this.transport.toString();
     }
     
+    public void setTransport(String transportIn){
+        this.transport = transportEnum.valueOf(transportIn);
+    }
+    
     public Date getDate (){
         return this.date;
     }
     
+    public void setDate (Date dateIn){
+        this.date = dateIn;
+    }
+    
     public int getOfficialId(){
         return this.officialId;
+    }
+    
+    public void setOfficialId(int officialIdIn){
+        this.officialId = officialIdIn;
     }
     
     public static Event viewEventById(int id){
