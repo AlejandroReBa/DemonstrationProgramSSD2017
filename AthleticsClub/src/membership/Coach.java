@@ -15,24 +15,28 @@ import training.Training;
  *
  * @author Alejandro Reyes
  */
-public class Athlete extends Membership{
+public class Coach extends Membership{
     private List<Training> trainingsList;
     private List<Event> eventsList;
+    private List<Athlete> athletesList;
     
-    private typeEnum type = typeEnum.Athlete;
+    private typeEnum type = typeEnum.Coach;
 
-    public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
+    public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         this.trainingsList = new ArrayList<>();
         this.eventsList = new ArrayList<>();
-        Membership.membersList.add(this); //perhaps will throw an error
+        this.athletesList = new ArrayList<>();
+        Membership.membersList.add(this);
     }
     
-    public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn, List<Training> trainingsListIn, List<Event> eventsListIn) {
+    public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
+            List<Training> trainingsListIn, List<Event> eventsListIn, List<Athlete> athletesListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         this.trainingsList = trainingsListIn;
         this.eventsList = eventsListIn;
-        Membership.membersList.add(this); //perhaps will throw an error
+        this.athletesList = athletesListIn;
+        Membership.membersList.add(this);
     }
     
     public List<Training> getTrainingsList(){
@@ -49,5 +53,13 @@ public class Athlete extends Membership{
     
     public void addEvent(Event eventIn){
         this.eventsList.add(eventIn);
+    }
+    
+    public List<Athlete> getAthletesList(){
+        return this.athletesList;
+    }
+    
+    public void addAthlete(Athlete athleteIn){
+        this.athletesList.add(athleteIn);
     }
 }

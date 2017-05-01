@@ -11,10 +11,10 @@ import java.util.List;
 
 public class Event {
     //invented
-    enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
+    public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
     Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
-    enum genderEnum {Men, Women, Mixed};
-    enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
+    public enum genderEnum {Men, Women, Mixed};
+    public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     enum transportEnum {Car, Bus, Minibus, Train};
     
     private static int incrementalId = 1;
