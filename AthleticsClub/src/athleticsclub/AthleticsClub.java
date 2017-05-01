@@ -143,7 +143,7 @@ public class AthleticsClub {
         */
         //create teams
         for (int i = 0; i < athletesList.size()/5; i++){
-            List<Athlete> members = athletesList.subList(0,5);
+            List<Athlete> members = athletesList.subList(5*i,5*i+5);
             int captainId = members.get(0).getId();
             int coachId = coachsList.get(i).getId();
             if (i == 0){
@@ -155,6 +155,12 @@ public class AthleticsClub {
             }
         }
         
+        //create events
+        List<Official> officialsList = Official.getOfficialsList();
+        new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
+        new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1,3));
+        new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1,3));
+        
         //display members
         System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
@@ -165,6 +171,12 @@ public class AthleticsClub {
         System.out.println ("\n------>TEAMS<------");
         for (Team t : Team.getTeams()){
             System.out.println(t);
+        }
+        
+        //display events
+        System.out.println("----->EVENTS<-----");
+        for (Event e : Event.getEvents()){
+            System.out.println(e);
         }
         
     }

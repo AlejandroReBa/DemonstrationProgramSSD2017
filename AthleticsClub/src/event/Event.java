@@ -4,6 +4,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import membership.Membership;
+import membership.Official;
+import membership.Team;
 
 /**
  *
@@ -21,7 +24,9 @@ public class Event {
     private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
     
+    private List<Team> participants; ///do we have to include participants?
     private int id;
+    private String name;
     private typeEnum type;
     private genderEnum gender;
     private ageGroupRelatedEnum ageGroup;
@@ -31,8 +36,9 @@ public class Event {
     private int officialId = -1;
 
     
-    public Event (String typeIn, String genderIn, String ageGroupIn,
+    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
             String transportIn){
+        this.name = nameIn;
         this.type = typeEnum.valueOf(typeIn);
         this.gender = genderEnum.valueOf(genderIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
@@ -40,30 +46,53 @@ public class Event {
         this.date = Date.from(Instant.now());
         this.officialId = -1;
         this.transport =  transportEnum.Minibus; //by default
+        this.participants = new ArrayList<>();
         
         this.id = incrementalId;
         incrementalId++; 
         eventsList.add(this);
     }
     
-        public Event (String typeIn, String genderIn, String ageGroupIn,
-            String transportIn, Date dateIn, int officialIdIn){
+        public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
+            String transportIn, Date dateIn, int officialIdIn, List<Team> participantsIn){
+        this.name = nameIn;
         this.type = typeEnum.valueOf(typeIn);
         this.gender = genderEnum.valueOf(genderIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
         this.transport = transportEnum.valueOf(transportIn);
         this.date = dateIn;
         this.officialId = officialIdIn; 
-        this.transport =  transportEnum.Minibus; //by default
+        this.transport =  transportEnum.valueOf(transportIn); //by default
+        this.participants = participantsIn;
         
         this.id = incrementalId;
         incrementalId++; 
         eventsList.add(this);
     }
     
+    public static List<Event> getEvents(){
+        return eventsList;
+    }
+     
+    public List<Team> getParticipants(){
+        return this.participants;
+    }
+    
+    public void addParticipant(Team participant){
+        this.participants.add(participant);
+    }
+        
     //attribute that can't be changed
     public int getId(){
         return this.id;
+    }
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setName (String nameIn){
+        this.name = nameIn;
     }
         
     public String getType (){
@@ -163,5 +192,18 @@ public class Event {
             }
         }
         return resEvents;
+    }
+    
+    public String toString(){
+        Official off = (Official) Membership.getMembersList().get(this.officialId);
+        String res = "EVENT. Name: " + this.name + ", Type: " + this.type.toString()
+                + ", Gender: " + this.gender.toString() + ", Age Group: " +
+                this.ageGroup.toString() + ", Date: " + this.date +
+                ", Official: " + off.getName() + ", Transport: " + this.transport.toString()
+                + ".\nParticipants:\n";
+        for (Team t : this.participants){
+            res += t + "\n";
+        }
+        return res;
     }
 }
