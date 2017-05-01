@@ -18,6 +18,7 @@ public class Team {
     private static List<Team> teamsList = new ArrayList<>();
     
     private int id;
+    private String name;
     private List<Athlete> athletesList;
     private List<Event> eventsList;
     private int captainId;
@@ -27,14 +28,15 @@ public class Team {
     private Event.genderEnum gender;
     private Event.ageGroupRelatedEnum ageGroup;
     
-    public Team (int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn){
+    public Team (String nameIn, int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn, List<Athlete> athletesListIn){
+        this.name = nameIn;
         this.captainId = captainIdIn;
         this.coachId = coachIdIn;
         this.type = Event.typeEnum.valueOf(typeIn);
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
-        this.athletesList = new ArrayList<>();
+        this.athletesList = athletesListIn;
         this.eventsList = new ArrayList<>();
         
         this.id = incrementalId;
@@ -42,8 +44,9 @@ public class Team {
         teamsList.add(this);
     }
     
-        public Team (int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn,
+        public Team (String nameIn, int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn,
                 List<Athlete> athletesListIn, List<Event> eventsListIn){
+        this.name = nameIn;
         this.captainId = captainIdIn;
         this.coachId = coachIdIn;
         this.type = Event.typeEnum.valueOf(typeIn);
@@ -57,7 +60,19 @@ public class Team {
         incrementalId++; 
         teamsList.add(this);
     }
-        
+    
+    public static List<Team> getTeams(){
+        return teamsList;
+    }    
+    
+    public String getName(){
+        return this.name;
+    }
+    
+    public void setName (String nameIn){
+        this.name = nameIn;
+    }
+    
     public void addAthlete(Athlete atheleteIn){
         this.athletesList.add(atheleteIn);
     }
@@ -97,6 +112,20 @@ public class Team {
     
     public void changeCoachId(int coachIdIn){
         this.coachId = coachIdIn;
+    }
+    
+    public String toString(){
+        Athlete cap = (Athlete)Membership.getMembersList().get(this.captainId); //crash if id doesn't belong to an athlete
+        Coach coach = (Coach)Membership.getMembersList().get(this.coachId);
+        String res = "TEAM. Name: " + this.name + ", Captain: " + cap.getName() +
+                ", Coach: " + coach.getName() + ", Type:" + this.type.toString() +
+                ", Gender: " + this.gender.toString() + ", Age Group: " +
+                this.ageGroup.toString() + ".\nAthletes List: \n";
+        for (Athlete ath : this.athletesList){
+            res += ath + "\n";
+        }
+        
+        return res;
     }
         
 }

@@ -5,7 +5,9 @@
  */
 package membership;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -13,8 +15,16 @@ import java.util.Date;
  */
 public class StaffAdmin extends Membership{ //at the moment is the same as support..
 
+    public static List<StaffAdmin> staffAdminsList = new ArrayList<>();
+    
     public StaffAdmin(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Administration;
+        Membership.membersList.add(this);
+        staffAdminsList.add(this);
+    }
+    
+    public static List<StaffAdmin> getStaffAdminsList(){
+        return staffAdminsList;
     }
 }

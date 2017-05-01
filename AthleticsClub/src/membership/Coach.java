@@ -9,6 +9,7 @@ import event.Event;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import static membership.Athlete.athletesList;
 import training.Training;
 
 /**
@@ -16,6 +17,7 @@ import training.Training;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Coach extends Membership{ //delete elements for the list not implemented yet, for any class.
+    public static List<Coach> coachsList = new ArrayList<>();
     private List<Training> trainingsList;
     private List<Event> eventsList;
     private List<Athlete> athletesList;
@@ -27,6 +29,7 @@ public class Coach extends Membership{ //delete elements for the list not implem
         this.eventsList = new ArrayList<>();
         this.athletesList = new ArrayList<>();
         Membership.membersList.add(this);
+        coachsList.add(this);
     }
     
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
@@ -37,6 +40,11 @@ public class Coach extends Membership{ //delete elements for the list not implem
         this.eventsList = eventsListIn;
         this.athletesList = athletesListIn;
         Membership.membersList.add(this);
+        coachsList.add(this);
+    }
+    
+    public static List<Coach> getCoachsList(){
+        return coachsList;
     }
     
     public List<Training> getTrainingsList(){

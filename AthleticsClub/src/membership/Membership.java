@@ -17,7 +17,7 @@ public class Membership {
     public enum qualificationsEnum {Coaching, Official};
     public enum sexEnum {F, M, Other};
     
-    private static int incrementalId = 1; //unique place to incrementalId
+    private static int incrementalId = 0; //unique place to incrementalId
     public static List<Membership> membersList = new ArrayList<>();
     
     protected typeEnum type = typeEnum.Support;
@@ -45,6 +45,10 @@ public class Membership {
         if (addToMembers){
             membersList.add(this);
         }
+    }
+    
+    public static List<Membership> getMembersList(){
+        return membersList;
     }
     
     //attribute that can't be changed

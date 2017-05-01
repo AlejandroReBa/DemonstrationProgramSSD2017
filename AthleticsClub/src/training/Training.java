@@ -14,7 +14,7 @@ public class Training {
     enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing};
     enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     
-    private static int incrementalId = 1;
+    private static int incrementalId = 0;
     public static List<Training> trainingsList = new ArrayList<>();
     
     private int id;

@@ -16,6 +16,7 @@ import training.Training;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Athlete extends Membership{
+    public static List<Athlete> athletesList = new ArrayList<>();
     private List<Training> trainingsList;
     private List<Event> eventsList;
 
@@ -25,6 +26,8 @@ public class Athlete extends Membership{
         this.trainingsList = new ArrayList<>();
         this.eventsList = new ArrayList<>();
         Membership.membersList.add(this); //perhaps will throw an error
+        athletesList.add(this);
+        
     }
     
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn, List<Training> trainingsListIn, List<Event> eventsListIn) {
@@ -33,6 +36,11 @@ public class Athlete extends Membership{
         this.trainingsList = trainingsListIn;
         this.eventsList = eventsListIn;
         Membership.membersList.add(this); //perhaps will throw an error
+        athletesList.add(this);
+    }
+    
+    public static List<Athlete> getAthletesList(){
+        return athletesList;
     }
     
     public List<Training> getTrainingsList(){

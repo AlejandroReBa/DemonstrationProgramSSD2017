@@ -18,7 +18,7 @@ public class Event {
     public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     enum transportEnum {Car, Bus, Minibus, Train};
     
-    private static int incrementalId = 1;
+    private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
     
     private int id;

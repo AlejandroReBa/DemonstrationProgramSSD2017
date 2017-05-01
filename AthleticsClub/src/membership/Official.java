@@ -15,6 +15,7 @@ import java.util.List;
  * @author Alejandro Reyes
  */
 public class Official extends Membership {
+    public static List<Official> officialsList = new ArrayList<>();
     private List<Event> eventsList;
 
     public Official(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
@@ -22,6 +23,7 @@ public class Official extends Membership {
         type = typeEnum.Official;
         this.eventsList = new ArrayList<>();
         Membership.membersList.add(this);
+        officialsList.add(this);
     }
     
     
@@ -31,6 +33,11 @@ public class Official extends Membership {
         type = typeEnum.Official;
         this.eventsList = eventsListIn;
         Membership.membersList.add(this);
+        officialsList.add(this);
+    }
+    
+    public static List<Official> getOfficialsList(){
+        return officialsList;
     }
     
     public List<Event> getEventsList(){

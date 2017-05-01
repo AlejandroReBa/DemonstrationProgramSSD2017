@@ -5,6 +5,7 @@
  */
 package athleticsclub;
 
+import event.Event;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +13,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import membership.Athlete;
+import membership.Coach;
 import membership.Membership;
+import membership.Official;
+import membership.StaffAdmin;
+import membership.Team;
 
 /**
  *
@@ -83,7 +88,7 @@ public class AthleticsClub {
         List<String> sexList = new ArrayList<>();
         List<Date> datesList = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 35; i++) {
             namesList.add(gn.randomIdentifier(1));
             addressesList.add(gn.randomIdentifier(2));
             telephonesList.add(gn.randomIdentifier(3));
@@ -95,9 +100,28 @@ public class AthleticsClub {
             datesList.add(Date.from(Instant.now()));
         }
         
+        //create members
         for (int i = 0; i < 5; i++) {
             new Membership(namesList.get(i), addressesList.get(i),
             telephonesList.get(i), sexList.get(i), datesList.get(i), true);
+            
+            new Athlete(namesList.get(i+5), addressesList.get(i+5),
+            telephonesList.get(i+5), sexList.get(i+5), datesList.get(i+5));
+            
+            new Coach(namesList.get(i+10), addressesList.get(i+10),
+            telephonesList.get(i+10), sexList.get(i+10), datesList.get(i+10));
+            
+            new Official(namesList.get(i+15), addressesList.get(i+15),
+            telephonesList.get(i+15), sexList.get(i+15), datesList.get(i+15));
+            
+            new StaffAdmin(namesList.get(i+20), addressesList.get(i+20),
+            telephonesList.get(i+20), sexList.get(i+20), datesList.get(i+20));
+            
+            new Athlete(namesList.get(i+25), addressesList.get(i+25),
+            telephonesList.get(i+25), sexList.get(i+25), datesList.get(i+25));
+            
+            new Athlete(namesList.get(i+30), addressesList.get(i+30),
+            telephonesList.get(i+30), sexList.get(i+30), datesList.get(i+30));
             /*
             System.out.println("new membership");
             System.out.println("name: " + namesList.get(i));
@@ -109,20 +133,40 @@ public class AthleticsClub {
             */
         }
         
-        for (int i = 5; i < 10; i++){
-            /*
-            new Athlete(namesList.get(i), addressesList.get(i),
-            telephonesList.get(i), sexList.get(i), datesList.get(i));
-            */
-            
-            new Athlete("Pedro", "Royal Crescent Road", "676 88 99 28", "M", Date.from(Instant.now()));
+        List<Coach> coachsList = Coach.getCoachsList();
+        List<Athlete> athletesList = Athlete.getAthletesList();
+        /*debug stuff
+        for (Athlete ath : athletesList){
+            System.out.println("--------->type:" + ath.getType() + " +id: " + ath.getId());
+            System.out.println("SAME ATHLETE ->" + Membership.getMembersList().get(ath.getId()));
+        }
+        */
+        //create teams
+        for (int i = 0; i < athletesList.size()/5; i++){
+            List<Athlete> members = athletesList.subList(0,5);
+            int captainId = members.get(0).getId();
+            int coachId = coachsList.get(i).getId();
+            if (i == 0){
+                new Team("Football Solent", captainId, coachId, "Football", "Men", "U17", members);
+            }else if (i == 1){
+                new Team("Basketball Solent", captainId, coachId, "Basketball", "Women", "U20", members);
+            }else{
+                new Team("Swimmers Solent", captainId, coachId, "Swimming", "Mixed", "Senior", members);
+            }
         }
         
-        System.out.println("MEMBERS: 5 support, 5 athletes");
+        //display members
+        System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
             System.out.println(member);
         }
 
+        //display teams
+        System.out.println ("\n------>TEAMS<------");
+        for (Team t : Team.getTeams()){
+            System.out.println(t);
+        }
+        
     }
 
 }
