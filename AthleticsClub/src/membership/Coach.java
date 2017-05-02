@@ -6,6 +6,7 @@
 package membership;
 
 import event.Event;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import training.Training;
  *
  * @author Alejandro Reyes (AlejandroReBa)
  */
-public class Coach extends Membership{ //delete elements for the list not implemented yet, for any class.
+public class Coach extends Membership implements Serializable{ //delete elements for the list not implemented yet, for any class.
     public static List<Coach> coachsList = new ArrayList<>();
     private List<Training> trainingsList;
     private List<Event> eventsList; //needed?

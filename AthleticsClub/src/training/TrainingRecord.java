@@ -5,13 +5,14 @@
  */
 package training;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Alejandro Reyes (AlejandroReBa)
  */
-public class TrainingRecord { //another class because "Coaches hold separate records relating to their athletes, training routine..."
+public class TrainingRecord implements Serializable{ //another class because "Coaches hold separate records relating to their athletes, training routine..."
     private static List<TrainingRecord> trainingRecordsList;
     private static int incrementalId = 1;
     

@@ -6,6 +6,11 @@
 package athleticsclub;
 
 import event.Event;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -203,6 +208,98 @@ public class AthleticsClub {
             System.out.println(t);
         }
         
+        //trying to serialize a member.
+        //serializeObject(Membership.getMembersList().get(0));
+        /*
+        serializeObject(new Membership("Pedro", "Road Lagasca",
+            "613 28 99 82", "M", Date.from(Instant.now()), true));
+        Membership resultMember = deserializeMembership();
+        System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPP---->" + resultMember);
+        */
+        
+        new Membership("Pedro", "Road Lagasca",
+            "613 28 99 82", "M", Date.from(Instant.now()), true);
+        serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
+        List<Membership> retrievedMemberships = deserializeMemberships();
+        
+        System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPPSSSSS---->");
+        for (Membership m : retrievedMemberships){
+            System.out.println(m);
+        }
+        
+        System.out.println("\nENDDDDDD");
+    }
+    
+    
+    
+    //reference: https://www.tutorialspoint.com/java/java_serialization.htm
+    //class to serialize objects
+    private static void serializeObject(Object ob){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("object.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(ob);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in object.ser");
+      }catch(IOException i) {
+         i.printStackTrace();
+      }
+    }
+    
+    //class to deserialize Membership
+    private static Membership deserializeMembership(){
+        Membership member = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("object.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         member = (Membership) in.readObject();
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("Membership class not found");
+         c.printStackTrace();
+      }
+      
+      return member;
+    }
+    
+    
+    //serialize List<Membership> (including athletes, coachs...)
+    private static void serializeMemberships(ArrayList<Membership> membershipsList){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("memberships.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(membershipsList);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in memberships.ser");
+      }catch(IOException i) {
+         i.printStackTrace();
+      }
+    }
+    
+    //deserialize List<Membership> (including athletes, coachs...)
+    private static ArrayList<Membership> deserializeMemberships(){
+        ArrayList<Membership> membershipsList = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("memberships.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         membershipsList = (ArrayList<Membership>)in.readObject();
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("Membership class not found");
+         c.printStackTrace();
+      }
+      
+      return membershipsList;
     }
 
 }

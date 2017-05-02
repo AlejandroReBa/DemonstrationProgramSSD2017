@@ -6,6 +6,7 @@
 package membership;
 
 import event.Event;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author Alejandro Reyes
  */
-public class Team {
+public class Team implements Serializable{
     private static int incrementalId = 1;
     private static List<Team> teamsList = new ArrayList<>();
     

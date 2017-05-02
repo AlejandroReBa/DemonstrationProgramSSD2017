@@ -5,6 +5,7 @@
  */
 package membership;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author Alejandro Reyes
  */
-public class StaffAdmin extends Membership{ //at the moment is the same as support..
+public class StaffAdmin extends Membership implements Serializable{ //at the moment is the same as support..
 
     public static List<StaffAdmin> staffAdminsList = new ArrayList<>();
     

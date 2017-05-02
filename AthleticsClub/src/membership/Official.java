@@ -6,6 +6,7 @@
 package membership;
 
 import event.Event;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author Alejandro Reyes
  */
-public class Official extends Membership {
+public class Official extends Membership implements Serializable{
     public static List<Official> officialsList = new ArrayList<>();
     private List<Event> eventsList;
 

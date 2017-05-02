@@ -1,6 +1,7 @@
 package membership;
 
 import event.Event;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import training.Training;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 
-public class Membership {
+public class Membership implements Serializable{
     public enum typeEnum {Athlete, Coach, Official, Administration, Support};
     public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters};
     public enum qualificationsEnum {Coaching, Official};

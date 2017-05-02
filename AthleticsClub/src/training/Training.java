@@ -1,5 +1,6 @@
 package training;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,7 @@ import membership.Membership;
  *
  * @author Alejandro Reyes (AlejandroReBa)
  */
-public class Training {
+public class Training implements Serializable{
     enum typeEnum {RoadDistance, XCountryDistance, Track, Field, Gym};
     enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
     Weighting, Repetitions, Roading};
