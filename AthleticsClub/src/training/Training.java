@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class Training {
     enum typeEnum {RoadDistance, XCountryDistance, Track, Field, Gym};
-    enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing};
+    enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
+    Weighting, Repetitions, Roading};
     enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     
     private static int incrementalId = 0;

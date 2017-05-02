@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class TrainingRecord { //another class because "Coaches hold separate records relating to their athletes, training routine..."
     private static List<TrainingRecord> trainingRecordsList;
@@ -20,6 +20,7 @@ public class TrainingRecord { //another class because "Coaches hold separate rec
     private int coachId;
     private int trainingId;
     private String record;
+    //add date? date is already in training
     
     public TrainingRecord (int athleteIdIn, int coachIdIn, int trainingIdIn, String recordIn){
         this.athleteId = athleteIdIn;
