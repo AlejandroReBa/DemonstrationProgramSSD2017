@@ -19,7 +19,7 @@ import training.Training;
 public class Coach extends Membership{ //delete elements for the list not implemented yet, for any class.
     public static List<Coach> coachsList = new ArrayList<>();
     private List<Training> trainingsList;
-    private List<Event> eventsList;
+    private List<Event> eventsList; //needed?
     private List<Athlete> athletesList;
 
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {

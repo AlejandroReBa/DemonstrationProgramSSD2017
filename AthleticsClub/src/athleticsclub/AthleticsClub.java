@@ -18,6 +18,7 @@ import membership.Membership;
 import membership.Official;
 import membership.StaffAdmin;
 import membership.Team;
+import training.Training;
 
 /**
  *
@@ -157,15 +158,32 @@ public class AthleticsClub {
         
         //create events
         List<Official> officialsList = Official.getOfficialsList();
-        new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
-        new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1,3));
-        new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1,3));
+        Event ev1 = new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
+        Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1,3));
+        Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1,3));
         
+        officialsList.get(0).addEvent(ev1);
+        officialsList.get(1).addEvent(ev2);
+        officialsList.get(2).addEvent(ev3);
         //display members
         System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
             System.out.println(member);
         }
+        
+        //create trainings
+        //List<Coach> coachsList = Coach.getCoachsList(); already created
+        Training training1 = new Training("RoadDistance", "Sprinting", "U20", Date.from(Instant.now()), coachsList.get(0).getId());
+        Training training2 = new Training("XCountryDistance", "Hurdling", "U17", Date.from(Instant.now()), coachsList.get(1).getId());
+        Training training3 = new Training("Track", "Jumping", "U20", Date.from(Instant.now()), coachsList.get(2).getId());
+        Training training4 = new Training("Field", "Sprinting", "U15", Date.from(Instant.now()), coachsList.get(3).getId());
+        Training training5 =new Training("RoadDistance", "Repetitions", "Senior", Date.from(Instant.now()), coachsList.get(4).getId());
+        
+        coachsList.get(0).addTraining(training1);
+        coachsList.get(1).addTraining(training2);
+        coachsList.get(2).addTraining(training3);
+        coachsList.get(3).addTraining(training4);
+        coachsList.get(4).addTraining(training5);
 
         //display teams
         System.out.println ("\n------>TEAMS<------");
@@ -177,6 +195,12 @@ public class AthleticsClub {
         System.out.println("----->EVENTS<-----");
         for (Event e : Event.getEvents()){
             System.out.println(e);
+        }
+        
+        //display trainings
+        System.out.println("----->TRAININGS<-----");
+        for (Training t : Training.getTrainingsList()){
+            System.out.println(t);
         }
         
     }

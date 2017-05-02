@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import membership.Coach;
+import membership.Membership;
 
 /**
  *
@@ -16,7 +18,7 @@ public class Training {
     enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     
     private static int incrementalId = 0;
-    public static List<Training> trainingsList = new ArrayList<>();
+    protected static List<Training> trainingsList = new ArrayList<>();
     
     private int id;
     private typeEnum type;
@@ -53,6 +55,11 @@ public class Training {
         incrementalId++;
         
         trainingsList.add(this);
+    }
+    
+    //singleton pattern
+    public static List<Training> getTrainingsList(){
+        return trainingsList;
     }
     
     //attribute that can't be changed
@@ -149,6 +156,22 @@ public class Training {
             }
         }
         return resTrainings;
+    }
+    
+    public String toString(){
+        String coach;
+        if (this.coachId > -1){//if id == -1 display error
+           coach = Membership.getMembersList().get(this.coachId).getName();
+        }else{
+            coach = "NO COACH ASSIGNED";
+        }
+        String res = "TRAINING. Type: " + this.getType()
+                + ", Discipline: " + this.getDiscipline()
+                + ", Age Group: " + this.getAgeGroup()
+                + ", Date: " + this.getDate()
+                + ", Coach: " + coach;
+        
+        return res;
     }
     
 }
