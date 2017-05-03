@@ -166,10 +166,11 @@ public class AthleticsClub {
         Event ev1 = new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
         Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1,3));
         Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1,3));
-        
+        /*testing serialization-->taking it away for a while. Yes, as I am creating Events using sublists of athletes...it crushes...
         officialsList.get(0).addEvent(ev1);
         officialsList.get(1).addEvent(ev2);
         officialsList.get(2).addEvent(ev3);
+        */
         //display members
         System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
@@ -225,10 +226,17 @@ public class AthleticsClub {
         System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPPSSSSS---->");
         for (Membership m : retrievedMemberships){
             System.out.println(m);
+            System.out.println("ID-->" + m.getId());
         }
         
         System.out.println("\nENDDDDDD");
     }
+    
+    //NOW --> HOW TO SET THE DESERIALIZED ARRAYLIST INTO STATIC VALUE
+    //MEMBERSHIP LISTS, ATHLETES LIST, ETC...
+    //AND TRY TO SERIALIZE A COMPLETE OBJECT LIKE ATHLETE WITH A LIST
+    //OF EVENTS, TRAININGS, ETC, AND SEE IF IT IS WORKING WELL...
+    //BUT DONT THINK IT WILL
     
     
     

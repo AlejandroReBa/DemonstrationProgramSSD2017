@@ -1,5 +1,6 @@
 package event;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,7 @@ import membership.Team;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 
-public class Event {
+public class Event implements Serializable{
     //invented
     public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
     Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
