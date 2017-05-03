@@ -59,4 +59,18 @@ public class Athlete extends Membership implements Serializable{
     public void addEvent(Event eventIn){
         this.eventsList.add(eventIn);
     }
+    
+    @Override
+    public String toString(){
+        String res = super.toString();
+        for (Training t : this.trainingsList){
+            res += "\nATHLETE TRAININGS\n: " + t;
+        }
+        
+        for (Event e : this.eventsList){
+            res += "\nATHLETE EVENTS\n: " + e;
+        }
+        
+        return res;
+    }
 }

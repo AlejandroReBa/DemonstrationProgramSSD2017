@@ -71,4 +71,17 @@ public class Coach extends Membership implements Serializable{ //delete elements
     public void addAthlete(Athlete athleteIn){
         this.athletesList.add(athleteIn);
     }
+    
+    @Override
+    public String toString(){
+        String res = super.toString();
+        for (Training t : this.trainingsList){
+            res += "\nCOACH TRAININGS:\n " + t;
+        }
+        for (Athlete a : this.athletesList){
+            res += "\nATHLETES UNDER SUPERVISION:\n " + a;
+        }
+        
+        return res;
+    }
 }

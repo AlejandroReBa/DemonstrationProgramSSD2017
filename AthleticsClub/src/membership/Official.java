@@ -48,4 +48,15 @@ public class Official extends Membership implements Serializable{
     public void addEvent(Event eventIn){
         this.eventsList.add(eventIn);
     }
+    
+    @Override
+    public String toString(){
+        String res = super.toString();
+        
+        for (Event e : this.eventsList){
+            res += "\nOFFICIAL EVENTS\n: " + e;
+        }
+        
+        return res;
+    }
 }
