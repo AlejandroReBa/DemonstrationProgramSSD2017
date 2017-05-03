@@ -37,9 +37,9 @@ public class Coach extends Membership implements Serializable{ //delete elements
             List<Training> trainingsListIn, List<Event> eventsListIn, List<Athlete> athletesListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Coach;
-        this.trainingsList = trainingsListIn;
-        this.eventsList = eventsListIn;
-        this.athletesList = athletesListIn;
+        this.trainingsList = new ArrayList<>(trainingsListIn);
+        this.eventsList = new ArrayList<>(eventsListIn);
+        this.athletesList = new ArrayList<>(athletesListIn);
         Membership.membersList.add(this);
         coachsList.add(this);
     }

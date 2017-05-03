@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -162,15 +163,26 @@ public class AthleticsClub {
         }
         
         //create events
-        List<Official> officialsList = Official.getOfficialsList();
+        List<Official> officialsList = Official.getOfficialsList();     
+        
+        /*
+        Event ev1 = new Event("Sunday Match", "Football", "Men", "U15");
+        ev1.setDate(Date.from(Instant.now()));
+        ev1.setTransport("Train");
+        ev1.setOfficialId(officialsList.get(0).getId());
+        ev1.addParticipant(team1);
+        ev1.addParticipant(team2);
+        */
+        
         Event ev1 = new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
-        Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1,3));
-        Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1,3));
-        /*testing serialization-->taking it away for a while. Yes, as I am creating Events using sublists of athletes...it crushes...
+        Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1, 3));
+        Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1, 3));
+        /*testing serialization-->taking it away for a while. Yes, as I am creating Events using sublists of athletes...it crushes... */
         officialsList.get(0).addEvent(ev1);
         officialsList.get(1).addEvent(ev2);
         officialsList.get(2).addEvent(ev3);
-        */
+        
+        
         //display members
         System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
@@ -183,7 +195,7 @@ public class AthleticsClub {
         Training training2 = new Training("XCountryDistance", "Hurdling", "U17", Date.from(Instant.now()), coachsList.get(1).getId());
         Training training3 = new Training("Track", "Jumping", "U20", Date.from(Instant.now()), coachsList.get(2).getId());
         Training training4 = new Training("Field", "Sprinting", "U15", Date.from(Instant.now()), coachsList.get(3).getId());
-        Training training5 =new Training("RoadDistance", "Repetitions", "Senior", Date.from(Instant.now()), coachsList.get(4).getId());
+        Training training5 = new Training("RoadDistance", "Repetitions", "Senior", Date.from(Instant.now()), coachsList.get(4).getId());
         
         coachsList.get(0).addTraining(training1);
         coachsList.get(1).addTraining(training2);
@@ -287,6 +299,7 @@ public class AthleticsClub {
          fileOut.close();
          System.out.printf("Serialized data is saved in memberships.ser");
       }catch(IOException i) {
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZEDD JO");
          i.printStackTrace();
       }
     }

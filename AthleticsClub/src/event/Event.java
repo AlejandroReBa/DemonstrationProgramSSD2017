@@ -37,13 +37,11 @@ public class Event implements Serializable{
     private int officialId = -1;
 
     
-    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
-            String transportIn){
+    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn){
         this.name = nameIn;
         this.type = typeEnum.valueOf(typeIn);
         this.gender = genderEnum.valueOf(genderIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
-        this.transport = transportEnum.valueOf(transportIn);
         this.date = Date.from(Instant.now());
         this.officialId = -1;
         this.transport =  transportEnum.Minibus; //by default
@@ -60,11 +58,10 @@ public class Event implements Serializable{
         this.type = typeEnum.valueOf(typeIn);
         this.gender = genderEnum.valueOf(genderIn);
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
-        this.transport = transportEnum.valueOf(transportIn);
         this.date = dateIn;
         this.officialId = officialIdIn; 
-        this.transport =  transportEnum.valueOf(transportIn); //by default
-        this.participants = participantsIn;
+        this.transport =  transportEnum.valueOf(transportIn);
+        this.participants = new ArrayList<>(participantsIn);
         
         this.id = incrementalId;
         incrementalId++; 
@@ -196,11 +193,14 @@ public class Event implements Serializable{
     }
     
     public String toString(){
-        Official off = (Official) Membership.getMembersList().get(this.officialId);
+        String officialName = "No official assigned";
+        if (this.officialId > -1){
+            officialName = ((Official) Membership.getMembersList().get(this.officialId)).getName();
+        }
         String res = "EVENT. Name: " + this.name + ", Type: " + this.type.toString()
                 + ", Gender: " + this.gender.toString() + ", Age Group: " +
                 this.ageGroup.toString() + ", Date: " + this.date +
-                ", Official: " + off.getName() + ", Transport: " + this.transport.toString()
+                ", Official: " + officialName + ", Transport: " + this.transport.toString()
                 + ".\nParticipants:\n";
         for (Team t : this.participants){
             res += t + "\n";

@@ -37,7 +37,7 @@ public class Team implements Serializable{
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
-        this.athletesList = athletesListIn;
+        this.athletesList = new ArrayList<Athlete>(athletesListIn);
         this.eventsList = new ArrayList<>();
         
         this.id = incrementalId;
@@ -54,7 +54,7 @@ public class Team implements Serializable{
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
-        this.athletesList = athletesListIn;
+        this.athletesList = new ArrayList<Athlete>(athletesListIn);
         this.eventsList = eventsListIn;
         
         this.id = incrementalId;

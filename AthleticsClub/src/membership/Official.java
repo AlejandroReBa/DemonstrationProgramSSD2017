@@ -32,7 +32,7 @@ public class Official extends Membership implements Serializable{
             Date birthIn, List<Event> eventsListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Official;
-        this.eventsList = eventsListIn;
+        this.eventsList = new ArrayList<>(eventsListIn);
         Membership.membersList.add(this);
         officialsList.add(this);
     }
@@ -54,7 +54,7 @@ public class Official extends Membership implements Serializable{
         String res = super.toString();
         
         for (Event e : this.eventsList){
-            res += "\nOFFICIAL EVENTS\n: " + e;
+            res += "\nOFFICIAL EVENTS:\n " + e;
         }
         
         return res;
