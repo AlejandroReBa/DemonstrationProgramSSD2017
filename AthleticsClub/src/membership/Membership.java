@@ -114,7 +114,10 @@ public class Membership implements Serializable{
         incrementalId++;
     }
 
-
+    public void addItself(){
+        //nothing to do here, method used by subclasses
+        //but it needs to be initialized here for polymorphism reasons
+    }
     
     
 }

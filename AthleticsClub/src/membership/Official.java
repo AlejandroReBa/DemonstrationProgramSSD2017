@@ -10,12 +10,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import static membership.Athlete.athletesList;
 
 /**
  *
  * @author Alejandro Reyes
  */
 public class Official extends Membership implements Serializable{
+    //to avoid invalidClasException as deserialization
+    //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
+    private static final long serialVersionUID = 42L;
+    
     public static List<Official> officialsList = new ArrayList<>();
     private List<Event> eventsList;
 
@@ -58,5 +63,12 @@ public class Official extends Membership implements Serializable{
         }
         
         return res;
+    }
+    
+    @Override
+    public void addItself(){
+        //nothing to do here, method used by subclasses
+        //but it needs to be initialized here for polymorphism reasons
+        officialsList.add(this);
     }
 }

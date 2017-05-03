@@ -247,7 +247,11 @@ public class AthleticsClub {
             System.out.println(m);
             System.out.println("ID-->" + m.getId());
         }
-        
+        //THE BIG PROBLEM NOW IS THAT AHTLETESLIST FOR EXAMPLE IS EMPTY...
+        //I SHOULD ADD THE OBJECT ITSELF...
+         System.out.println("--->memberstList size" + Membership.getMembersList().size());
+         System.out.println("--->athletesList size" + Athlete.getAthletesList().size());
+         
         
         System.out.println("\nENDDDDDD");
     }
@@ -319,6 +323,12 @@ public class AthleticsClub {
          FileInputStream fileIn = new FileInputStream("memberships.ser");
          ObjectInputStream in = new ObjectInputStream(fileIn);
          membershipsList = (ArrayList<Membership>)in.readObject();
+         //added to insert deserialized memberships into static membershipsList
+         Membership.membersList = new ArrayList<Membership>(membershipsList);
+         for(Membership m : membershipsList){
+             m.addItself();
+         }
+         //although is a little bit dirty though...
          in.close();
          fileIn.close();
       }catch(IOException i) {
@@ -330,6 +340,5 @@ public class AthleticsClub {
       
       return membershipsList;
     }
-    
 
 }

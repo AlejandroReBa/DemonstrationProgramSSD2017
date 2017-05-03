@@ -18,6 +18,10 @@ import training.Training;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Coach extends Membership implements Serializable{ //delete elements for the list not implemented yet, for any class.
+    //to avoid invalidClasException as deserialization
+    //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
+    private static final long serialVersionUID = 42L;
+    
     public static List<Coach> coachsList = new ArrayList<>();
     private List<Training> trainingsList;
     private List<Event> eventsList; //needed?
@@ -83,5 +87,12 @@ public class Coach extends Membership implements Serializable{ //delete elements
         }
         
         return res;
+    }
+    
+    @Override
+    public void addItself(){
+        //nothing to do here, method used by subclasses
+        //but it needs to be initialized here for polymorphism reasons
+        coachsList.add(this);
     }
 }
