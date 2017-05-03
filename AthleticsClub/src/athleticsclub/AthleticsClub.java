@@ -88,6 +88,7 @@ public class AthleticsClub {
 
     public static void main(String[] args) {
         // TODO code application logic here
+  /* -------deleeeeeeeeeeeeeeeeeete
         generateNames gn = new generateNames();
         List<String> namesList = new ArrayList<>();
         List<String> addressesList = new ArrayList<>();
@@ -138,8 +139,9 @@ public class AthleticsClub {
             System.out.println("dates: " + datesList.get(i));
             System.out.println();
             */
+   /* -------deleeeeeeeeeeeeeeeeeete
         }
-        
+
         List<Coach> coachsList = Coach.getCoachsList();
         List<Athlete> athletesList = Athlete.getAthletesList();
         /*debug stuff
@@ -149,6 +151,7 @@ public class AthleticsClub {
         }
         */
         //create teams
+ /* -------deleeeeeeeeeeeeeeeeeete
         for (int i = 0; i < athletesList.size()/5; i++){
             List<Athlete> members = athletesList.subList(5*i,5*i+5);
             int captainId = members.get(0).getId();
@@ -173,11 +176,12 @@ public class AthleticsClub {
         ev1.addParticipant(team1);
         ev1.addParticipant(team2);
         */
-        
+    
+ /* -------deleeeeeeeeeeeeeeeeeete
         Event ev1 = new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
         Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1, 3));
         Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1, 3));
-        /*testing serialization-->taking it away for a while. Yes, as I am creating Events using sublists of athletes...it crushes... */
+     
         officialsList.get(0).addEvent(ev1);
         officialsList.get(1).addEvent(ev2);
         officialsList.get(2).addEvent(ev3);
@@ -229,17 +233,21 @@ public class AthleticsClub {
         Membership resultMember = deserializeMembership();
         System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPP---->" + resultMember);
         */
-        
+   /*
         new Membership("Pedro", "Road Lagasca",
             "613 28 99 82", "M", Date.from(Instant.now()), true);
         serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
+        */
         List<Membership> retrievedMemberships = deserializeMemberships();
         
         System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPPSSSSS---->");
+        System.out.println("--->INCREMENTALID: " + Membership.incrementalId);
+        
         for (Membership m : retrievedMemberships){
             System.out.println(m);
             System.out.println("ID-->" + m.getId());
         }
+        
         
         System.out.println("\nENDDDDDD");
     }
@@ -322,5 +330,6 @@ public class AthleticsClub {
       
       return membershipsList;
     }
+    
 
 }

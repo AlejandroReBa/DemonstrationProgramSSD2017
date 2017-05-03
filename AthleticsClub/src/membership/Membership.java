@@ -1,11 +1,11 @@
 package membership;
 
-import event.Event;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import training.Training;
 
 /**
  *
@@ -13,12 +13,16 @@ import training.Training;
  */
 
 public class Membership implements Serializable{
+    //to avoid invalidClasException as deserialization
+    //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
+    private static final long serialVersionUID = 42L;
+    
     public enum typeEnum {Athlete, Coach, Official, Administration, Support};
     public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters};
     public enum qualificationsEnum {Coaching, Official};
     public enum sexEnum {F, M, Other};
     
-    private static int incrementalId = 0; //unique place to incrementalId
+    public static int incrementalId = 0; //unique place to incrementalId
     public static List<Membership> membersList = new ArrayList<>();
     
     protected typeEnum type = typeEnum.Support;
@@ -102,5 +106,15 @@ public class Membership implements Serializable{
                + ", Birthday: " + this.birthday;
         return res;
     }
+    
+    //needed to increment incrementalId variable
+    //and add the deserialized Member to membersList    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        incrementalId++;
+    }
+
+
+    
     
 }
