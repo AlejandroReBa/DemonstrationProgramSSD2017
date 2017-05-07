@@ -159,6 +159,7 @@ public class Training implements Serializable{
         return resTrainings;
     }
     
+    @Override
     public String toString(){
         String coach;
         if (this.coachId > -1){//if id == -1 display error

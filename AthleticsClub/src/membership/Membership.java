@@ -18,8 +18,8 @@ public class Membership implements Serializable{
     private static final long serialVersionUID = 42L;
     
     public enum typeEnum {Athlete, Coach, Official, Administration, Support};
-    public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters};
-    public enum qualificationsEnum {Coaching, Official};
+    public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters, Other};//other for no athletes
+    public enum qualificationsEnum {Coaching, Official, None}; //None for no qualified memberships
     public enum sexEnum {F, M, Other};
     
     public static int incrementalId = 0; //unique place to incrementalId
@@ -32,6 +32,8 @@ public class Membership implements Serializable{
     private String address;
     private String telephone;
     private sexEnum sex;
+    private ageGroupEnum ageGroup; //for extended classes, not support membership
+    private qualificationsEnum qualification; //for extended classes, not support membership
     private Date birthday;
     
     //constructor for support
@@ -42,6 +44,8 @@ public class Membership implements Serializable{
         this.telephone = telIn;
         this.sex = sexEnum.valueOf(sexIn);
         this.birthday = birthdayIn;
+        this.ageGroup = ageGroupEnum.Other;
+        this.qualification = qualificationsEnum.None;
         
         this.id = incrementalId;
         incrementalId++;
@@ -99,6 +103,15 @@ public class Membership implements Serializable{
         return this.type.toString();
     }
     
+    public String getAgeGroup(){
+        return this.ageGroup.toString();
+    }
+    
+    public String getQualification(){
+        return this.qualification.toString();
+    }
+    
+    
     @Override
     public String toString(){
         String res = "Type: " + type + ", Name: " + this.name + ", Address: " + this.address
@@ -120,4 +133,71 @@ public class Membership implements Serializable{
     }
     
     
+    public static Membership viewMembershipById(int id){
+        Membership resMembership = null;
+        for (Membership currentMembership : membersList){
+            if (currentMembership.getId() == id){
+                resMembership = currentMembership;
+                break;
+            }
+        }
+        return resMembership;
+    }
+    
+    public static List<Membership> viewMembershipByName(String name){
+        List<Membership> resMemberships = new ArrayList<>();
+        int lastCharIndex = name.length();
+        for (Membership currentMembership : membersList){
+            String currentName = currentMembership.getName();
+            if (currentName.length() >= name.length() &&
+                    currentName.toLowerCase().substring(0, lastCharIndex)
+                    .equals(name.toLowerCase())){
+                resMemberships.add(currentMembership);
+            }
+            
+        }
+        
+        return resMemberships;
+    }
+    
+    
+     public static List<Membership> viewMembershipsByType(String type){
+        List<Membership> resMemberships = new ArrayList<>();
+        for (Membership currentMembership : membersList){
+            if (currentMembership.getType().equals(type)){
+                resMemberships.add(currentMembership);
+            }
+        }
+        return resMemberships;
+    }
+    
+    public static List<Membership> viewMembershipsByQualification(String qualification){
+        List<Membership> resMemberships = new ArrayList<>();
+        for (Membership currentMembership : membersList){
+            if (currentMembership.getQualification().equals(qualification)){
+                resMemberships.add(currentMembership);
+            }
+        }
+        return resMemberships;
+    }
+     
+    public static List<Membership> viewMembershipsBySex(String sex){
+        List<Membership> resMemberships = new ArrayList<>();
+        for (Membership currentMembership : membersList){
+            if (currentMembership.getSex().equals(sex)){
+                resMemberships.add(currentMembership);
+            }
+        }
+        return resMemberships;
+    }
+    
+    public static List<Membership> viewMembershipsByAgeGroup(String ageGroup){
+        List<Membership> resMemberships = new ArrayList<>();
+        for (Membership currentMembership : membersList){
+            if (currentMembership.getAgeGroup().equals(ageGroup)){
+                resMemberships.add(currentMembership);
+            }
+        }
+        return resMemberships;
+    }   
 }

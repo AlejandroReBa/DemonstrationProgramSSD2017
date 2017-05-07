@@ -18,6 +18,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import membership.Athlete;
 import membership.Coach;
 import membership.Membership;
@@ -30,9 +36,25 @@ import training.Training;
  *
  * @author Alejandro Reyes (AlejandroReBa)
  */
-public class AthleticsClub {
+public class AthleticsClub extends Application{
 
-    //just for generate random identifiers; http://stackoverflow.com/a/5025666/4733587
+    //JAVA FX
+     @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("AthleticsClub.fxml"));
+        
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        
+        loadFiles(); //deserialize objects
+        
+       System.out.println( Membership.getMembersList().get(0).getAgeGroup());
+        stage.show();
+    }
+    
+
+//just for generate random identifiers; http://stackoverflow.com/a/5025666/4733587
     protected static class generateNames {
 
         final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -87,6 +109,8 @@ public class AthleticsClub {
     }
 
     public static void main(String[] args) {
+        launch(args); //JAVAFX
+        
         // TODO code application logic here
   /* -------deleeeeeeeeeeeeeeeeeete
         generateNames gn = new generateNames();
@@ -238,6 +262,7 @@ public class AthleticsClub {
             "613 28 99 82", "M", Date.from(Instant.now()), true);
         serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
         */
+   /*
         List<Membership> retrievedMemberships = deserializeMemberships();
         
         System.out.println("\nDEFINITIVE MEMBERSHIPPPPPPPPPPPPSSSSS---->");
@@ -254,6 +279,7 @@ public class AthleticsClub {
          
         
         System.out.println("\nENDDDDDD");
+        */
     }
     
     //NOW --> HOW TO SET THE DESERIALIZED ARRAYLIST INTO STATIC VALUE
@@ -263,6 +289,9 @@ public class AthleticsClub {
     //BUT DONT THINK IT WILL
     
     
+    private static void loadFiles(){
+        deserializeMemberships();
+    }
     
     //reference: https://www.tutorialspoint.com/java/java_serialization.htm
     //class to serialize objects

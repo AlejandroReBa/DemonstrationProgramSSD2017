@@ -25,6 +25,10 @@ public class Athlete extends Membership implements Serializable{
     private List<Training> trainingsList;
     private List<Event> eventsList;
 
+//------------------>>
+
+//.........----------->    //add constructor with age group and qualifications....
+    //or just setter... at moment other ageGroup on no qualifications..
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
@@ -67,6 +71,7 @@ public class Athlete extends Membership implements Serializable{
     @Override
     public String toString(){
         String res = super.toString();
+        /* toString modified: too much information for interface
         for (Training t : this.trainingsList){
             res += "\nATHLETE TRAININGS\n: " + t;
         }
@@ -74,6 +79,7 @@ public class Athlete extends Membership implements Serializable{
         for (Event e : this.eventsList){
             res += "\nATHLETE EVENTS\n: " + e;
         }
+        */
         
         return res;
     }

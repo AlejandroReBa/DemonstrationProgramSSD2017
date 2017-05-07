@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="athleticsclub.AthleticsClubController">
+    <children>
+        <Button fx:id="bEvent" layoutX="60.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
+      <Text layoutX="136.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletics Club Main Page" wrappingWidth="197.462890625">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Text>
+      <Label layoutX="25.0" layoutY="60.0" prefHeight="20.0" prefWidth="105.0" text="Event actions:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="bTraining" layoutX="300.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
+      <Label layoutX="261.0" layoutY="53.0" prefHeight="20.0" prefWidth="105.0" text="Training actions:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="317.0" layoutY="185.0" prefHeight="17.0" prefWidth="120.0" text="Add a training record:" />
+      <Label layoutX="81.0" layoutY="185.0" prefHeight="17.0" prefWidth="93.0" text="Pick teams:" />
+      <Button fx:id="bMembership" layoutX="60.0" layoutY="254.0" onAction="#handleButtonAction" text="Go!" />
+      <Label layoutX="14.0" layoutY="234.0" prefHeight="20.0" prefWidth="220.0" text="Manage Membership Information">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="242.0" layoutY="229.0" prefHeight="164.0" prefWidth="256.0" text="Dear sport lovers. We have&#10;just released the beta version&#10;of Athletics Club Application!&#10;&#10;The interface is on an early stage,&#10;any feedfack would be appreciated.&#10;&#10;Enjoy!&#10;  The Athletics Club Team" />
+      <Text layoutX="341.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEWS" wrappingWidth="44.041015625">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Button fx:id="bExit" layoutX="52.0" layoutY="347.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" text="Exit" />
+    </children>
+</AnchorPane>
