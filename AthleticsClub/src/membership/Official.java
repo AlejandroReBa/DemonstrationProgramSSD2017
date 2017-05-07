@@ -32,11 +32,22 @@ public class Official extends Membership implements Serializable{
         officialsList.add(this);
     }
     
-    
-    public Official(String nameIn, String addressIn, String telIn, String sexIn,
-            Date birthIn, List<Event> eventsListIn) {
+        public Official(String nameIn, String addressIn, String telIn, String sexIn,
+                Date birthIn, String qualificationIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Official;
+        qualification = qualificationsEnum.valueOf(qualificationIn);
+        this.eventsList = new ArrayList<>();
+        Membership.membersList.add(this);
+        officialsList.add(this);
+    }
+    
+    
+    public Official(String nameIn, String addressIn, String telIn, String sexIn,
+            Date birthIn, String qualificationIn, List<Event> eventsListIn) {
+        super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Official;
+        qualification = qualificationsEnum.valueOf(qualificationIn);
         this.eventsList = new ArrayList<>(eventsListIn);
         Membership.membersList.add(this);
         officialsList.add(this);

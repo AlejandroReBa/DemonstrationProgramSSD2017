@@ -37,10 +37,24 @@ public class Coach extends Membership implements Serializable{ //delete elements
         coachsList.add(this);
     }
     
-    public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
-            List<Training> trainingsListIn, List<Event> eventsListIn, List<Athlete> athletesListIn) {
+    public Coach(String nameIn, String addressIn, String telIn, String sexIn,
+            Date birthIn, String qualificationIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Coach;
+        qualification = qualificationsEnum.valueOf(qualificationIn);
+        this.trainingsList = new ArrayList<>();
+        this.eventsList = new ArrayList<>();
+        this.athletesList = new ArrayList<>();
+        Membership.membersList.add(this);
+        coachsList.add(this);
+    }
+    
+    public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
+            String qualificationIn, List<Training> trainingsListIn,
+            List<Event> eventsListIn, List<Athlete> athletesListIn) {
+        super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Coach;
+        qualification = qualificationsEnum.valueOf(qualificationIn);
         this.trainingsList = new ArrayList<>(trainingsListIn);
         this.eventsList = new ArrayList<>(eventsListIn);
         this.athletesList = new ArrayList<>(athletesListIn);

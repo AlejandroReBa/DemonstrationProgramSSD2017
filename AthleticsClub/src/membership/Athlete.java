@@ -34,17 +34,32 @@ public class Athlete extends Membership implements Serializable{
         type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>();
         this.eventsList = new ArrayList<>();
-        Membership.membersList.add(this); //perhaps will throw an error
+        Membership.membersList.add(this);
         athletesList.add(this);
         
     }
     
-    public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn, List<Training> trainingsListIn, List<Event> eventsListIn) {
+    public Athlete(String nameIn, String addressIn, String telIn, String sexIn,
+            Date birthIn, String ageGroupIn) {
+        super(nameIn, addressIn, telIn, sexIn, birthIn, false);
+        type = typeEnum.Athlete;
+        this.trainingsList = new ArrayList<>();
+        this.eventsList = new ArrayList<>();
+        ageGroup = ageGroupEnum.valueOf(ageGroupIn);
+        Membership.membersList.add(this);
+        athletesList.add(this);
+        
+    }
+    
+    public Athlete(String nameIn, String addressIn, String telIn, String sexIn,
+            Date birthIn, String ageGroupIn, List<Training> trainingsListIn,
+            List<Event> eventsListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>(trainingsListIn);
         this.eventsList = new ArrayList<>(eventsListIn);
-        Membership.membersList.add(this); //perhaps will throw an error
+        ageGroup = ageGroupEnum.valueOf(ageGroupIn);
+        Membership.membersList.add(this);
         athletesList.add(this);
     }
     

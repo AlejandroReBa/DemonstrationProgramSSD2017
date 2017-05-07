@@ -6,6 +6,7 @@
 package athleticsclub;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,6 +78,7 @@ public class AthleticsClubController implements Initializable {
     
     @FXML
     private void buttonExitClickedAction(ActionEvent event) {
+        AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
         bExit.getScene().getWindow().hide();
     }
     

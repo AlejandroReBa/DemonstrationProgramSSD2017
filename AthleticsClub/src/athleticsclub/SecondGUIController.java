@@ -37,10 +37,15 @@ import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
 import java.util.ArrayList;
+import membership.Athlete;
+import membership.Coach;
 import membership.Membership.ageGroupEnum;
 import membership.Membership.qualificationsEnum;
 import membership.Membership.sexEnum;
 import membership.Membership.typeEnum;
+import static membership.Membership.typeEnum.Athlete;
+import membership.Official;
+import membership.StaffAdmin;
 import training.Training;
 
 /**
@@ -208,8 +213,8 @@ public class SecondGUIController implements Initializable {
     }
 
     @FXML
-    private void addAgentButtonAction(ActionEvent event) {
-        /*
+    private void addMembershipButtonAction(ActionEvent event) {
+        
         try {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
@@ -220,24 +225,42 @@ public class SecondGUIController implements Initializable {
 
             Date newBirthday = format.parse(selectedBirthday);
             String newName = nameTextField.getText();
+            String newAddress = addressTextField.getText();
             String newTelNumber = telNumberTextField.getText();
+            
+            String type = typeAddComboBox.getSelectionModel().getSelectedItem();
+            String newAgeGroup = ageGroupAddComboBox.getSelectionModel().getSelectedItem();
+            String newQualification = qualificationAddComboBox.getSelectionModel().getSelectedItem();
+            String newSex = sexAddComboBox.getSelectionModel().getSelectedItem();
 
-            Agent newAgent = new Agent(newName, newBirthday, newTelNumber);
-            Organisation org = organisationComboBox.getSelectionModel().getSelectedItem();
-            org.addAgent(newAgent);
-            newAgent.addEvent(eventComboBox.getSelectionModel().getSelectedItem());
-            eventComboBox.getSelectionModel().getSelectedItem().addAgent(newAgent);
+            Membership newMembership;
+            if (type.equals(typeEnum.Athlete.name())){
+                newMembership = new Athlete(newName, newAddress, newTelNumber,
+                newSex, newBirthday, newAgeGroup);
+            }else if (type.equals(typeEnum.Coach.name())){
+                newMembership = new Coach(newName, newAddress, newTelNumber,
+                newSex, newBirthday, newQualification);
+            }else if (type.equals(typeEnum.Official.name())){
+                newMembership = new Official(newName, newAddress, newTelNumber,
+                newSex, newBirthday, newQualification);
+            }else if (type.equals(typeEnum.Administration.name())){
+                newMembership = new StaffAdmin(newName, newAddress, newTelNumber,
+                newSex, newBirthday);
+            }else{
+                newMembership = new Membership(newName, newAddress, newTelNumber,
+                newSex, newBirthday, true);
+            }
+            
+            this.showMembershipsButtonAction(new ActionEvent());
 
-            this.showAgentsButtonAction(new ActionEvent());
-
-            resultTextArea.setText("The agent has been added successfully");
+            resultTextArea.setText("The membership has been added successfully");
         } catch (ParseException ex) {
             //exception never reached due to the use of a DatePicker
         }
-        */
+        
     }
     @FXML
-    private void modifyAgentButtonAction(ActionEvent event) {
+    private void modifyMembershipButtonAction(ActionEvent event) {
         if (!membershipsListView.getItems().isEmpty()) {
             int selectedIndex = membershipsListView.getSelectionModel().getSelectedIndex();
             Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
@@ -343,6 +366,7 @@ public class SecondGUIController implements Initializable {
             typeAddComboBox.getSelectionModel().select(selectedMembership.getType());
             ageGroupAddComboBox.getSelectionModel().select(selectedMembership.getAgeGroup());
             qualificationAddComboBox.getSelectionModel().select(selectedMembership.getQualification());
+            resultTextArea.setText("The membership details have been loaded into left fields");
         }
     }
     

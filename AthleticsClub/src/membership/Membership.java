@@ -32,8 +32,8 @@ public class Membership implements Serializable{
     private String address;
     private String telephone;
     private sexEnum sex;
-    private ageGroupEnum ageGroup; //for extended classes, not support membership
-    private qualificationsEnum qualification; //for extended classes, not support membership
+    protected ageGroupEnum ageGroup; //for extended classes, not support membership
+    protected qualificationsEnum qualification; //for extended classes, not support membership
     private Date birthday;
     
     //constructor for support
