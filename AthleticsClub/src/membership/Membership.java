@@ -99,16 +99,32 @@ public class Membership implements Serializable{
         return this.birthday;
     }
     
+    public void setBirthday(Date newBirthday){
+        this.birthday = newBirthday;
+    }
+    
     public String getType(){
         return this.type.toString();
+    }
+    
+    public void setType(String typeIn){
+        this.type = typeEnum.valueOf(typeIn);
     }
     
     public String getAgeGroup(){
         return this.ageGroup.toString();
     }
     
+    public void setAgeGroup(String ageGroupIn){
+        this.ageGroup = ageGroupEnum.valueOf(ageGroupIn);
+    }
+    
     public String getQualification(){
         return this.qualification.toString();
+    }
+    
+    public void setQualification(String qualificationIn){
+        this.qualification = qualificationsEnum.valueOf(qualificationIn);
     }
     
     

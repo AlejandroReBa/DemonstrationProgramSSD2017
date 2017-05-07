@@ -64,16 +64,8 @@ public class SecondGUIController implements Initializable {
             loader.load();
             
             //here or at initialize?
-            searchTypeList = new ArrayList<String>();
-            searchTypeList.add("Age Group"); //index 0
-            searchTypeList.add("Type");
-            searchTypeList.add("Qualification");
-            searchTypeList.add("Name");
-            searchTypeList.add("Sex"); //index 4
-            membershipComboBox.getItems().addAll(searchTypeList);
-            membershipComboBox.getSelectionModel().select(0);
-                        
-            setNewFilterList(0);
+            
+            
             /*
             ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
             for (int i=0; i<ageGroupArray.length; i++){
@@ -138,13 +130,18 @@ public class SecondGUIController implements Initializable {
     TextArea resultTextArea;
 
     @FXML
-    TextField searchNameTextField, nameTextField, telNumberTextField;
+    TextField searchNameTextField, nameTextField, telNumberTextField,
+            addressTextField;
 
     @FXML
     DatePicker birthdayDatePicker;
 
     @FXML
     ComboBox<String> membershipComboBox, membershipFilterComboBox;
+    
+    @FXML
+    ComboBox<String> sexAddComboBox, typeAddComboBox, ageGroupAddComboBox,
+            qualificationAddComboBox;
     
     //@FXML
     //ComboBox<Organisation> organisationComboBox;
@@ -153,14 +150,13 @@ public class SecondGUIController implements Initializable {
     //ComboBox<Event> eventComboBox;
 
     @FXML
-    private void showMembershipsButtonAction(ActionEvent event) {
-
-        resultTextArea.setText("ALL MEMBERSHIPS LOADED");
-        
+    private void showMembershipsButtonAction(ActionEvent event) {      
         //to make it beautiful: custom List view with HBox
         //Not implemented, source: http://stackoverflow.com/questions/36121707/javafx-custom-listview-appearance
         membershipsListView.getItems().clear();
         membershipsListView.getItems().addAll(Membership.getMembersList());
+        resultTextArea.setText("All memberships have been loaded"
+                + "\nDisplaying " + Membership.getMembersList().size() + " found results.");
         
         /*
         organisationComboBox.getItems().clear();
@@ -242,10 +238,9 @@ public class SecondGUIController implements Initializable {
     }
     @FXML
     private void modifyAgentButtonAction(ActionEvent event) {
-        /*
-        if (!agentsListView.getItems().isEmpty()) {
-            int selectedIndex = agentsListView.getSelectionModel().getSelectedIndex();
-            Agent selectedAgent = agentsListView.getItems().get(selectedIndex);
+        if (!membershipsListView.getItems().isEmpty()) {
+            int selectedIndex = membershipsListView.getSelectionModel().getSelectedIndex();
+            Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
             try {
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat format = new SimpleDateFormat(pattern);
@@ -255,13 +250,20 @@ public class SecondGUIController implements Initializable {
                 String selectedBirthday = birthdayLocalDate.format(formatter);
 
                 Date newBirthday = format.parse(selectedBirthday);
-                selectedAgent.setBirthday(newBirthday);
+                selectedMembership.setBirthday(newBirthday);
 
-                selectedAgent.setName(nameTextField.getText());
-                selectedAgent.setTelNumber(telNumberTextField.getText());
-                this.showAgentsButtonAction(new ActionEvent());
+                selectedMembership.setName(nameTextField.getText());
+                selectedMembership.setTelephone(telNumberTextField.getText());
+                selectedMembership.setAddress(addressTextField.getText());
+                
+                //at the moment all details can be modified except Sex
+                selectedMembership.setType(typeAddComboBox.getSelectionModel().getSelectedItem());
+                selectedMembership.setAgeGroup(ageGroupAddComboBox.getSelectionModel().getSelectedItem());
+                selectedMembership.setQualification(qualificationAddComboBox.getSelectionModel().getSelectedItem());
+                
+                this.showMembershipsButtonAction(new ActionEvent());
 
-                resultTextArea.setText("The agent has been modified successfully");
+                resultTextArea.setText("The membership has been modified successfully");
 
             } catch (ParseException ex) {
                 //exception never reached due to the use of a DatePicker
@@ -269,7 +271,7 @@ public class SecondGUIController implements Initializable {
 
             //buttonReturn.getScene().getWindow().hide();
         }
-        */
+        
 
     }
 
@@ -318,14 +320,13 @@ public class SecondGUIController implements Initializable {
 
     @FXML
     private void listMembershipViewClickedHandle(MouseEvent event) {
-        /*
-        if (!agentsListView.getItems().isEmpty()) {
-            int selectedIndex = agentsListView.getSelectionModel().getSelectedIndex();
-            Agent selectedAgent = agentsListView.getItems().get(selectedIndex);
+        if (!this.membershipsListView.getItems().isEmpty()) {
+            int selectedIndex = this.membershipsListView.getSelectionModel().getSelectedIndex();
+            Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
 
-            nameTextField.setText(selectedAgent.getName());
+            nameTextField.setText(selectedMembership.getName());
 
-            Date selectedBirthday = selectedAgent.getBirthday();
+            Date selectedBirthday = selectedMembership.getBirthday();
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
             String birthdayString = format.format(selectedBirthday);
@@ -335,11 +336,14 @@ public class SecondGUIController implements Initializable {
 
             birthdayDatePicker.setValue(localDate);
 
-            telNumberTextField.setText(selectedAgent.getTelNumber());
-
-            //buttonReturn.getScene().getWindow().hide();
+            telNumberTextField.setText(selectedMembership.getTelephone());
+            addressTextField.setText(selectedMembership.getAddress());
+            
+            sexAddComboBox.getSelectionModel().select(selectedMembership.getSex());
+            typeAddComboBox.getSelectionModel().select(selectedMembership.getType());
+            ageGroupAddComboBox.getSelectionModel().select(selectedMembership.getAgeGroup());
+            qualificationAddComboBox.getSelectionModel().select(selectedMembership.getQualification());
         }
-        */
     }
     
      @FXML
@@ -390,12 +394,48 @@ public class SecondGUIController implements Initializable {
     private void buttonExitClickedAction(ActionEvent event) {
         //buttonReturn.getScene().getWindow().hide();
         Platform.exit();
+        AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
         System.exit(0);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
         this.birthdayDatePicker.setValue(LocalDate.now());
+        searchTypeList = new ArrayList<String>();
+        searchTypeList.add("Age Group"); //index 0
+        searchTypeList.add("Type");
+        searchTypeList.add("Qualification");
+        searchTypeList.add("Name");
+        searchTypeList.add("Sex"); //index 4
+        membershipComboBox.getItems().addAll(searchTypeList);
+        membershipComboBox.getSelectionModel().select(0);
+    
+        setNewFilterList(0);
+        
+        ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
+        for (int i=0; i < ageGroupArray.length; i++){
+            this.ageGroupAddComboBox.getItems().add(ageGroupArray[i].toString());
+        }
+        this.ageGroupAddComboBox.getSelectionModel().select(0);
+        
+        typeEnum[] typeArray = Membership.typeEnum.values();
+        for (int i=0; i < typeArray.length; i++){
+            this.typeAddComboBox.getItems().add(typeArray[i].toString());
+        }
+        this.typeAddComboBox.getSelectionModel().select(0);
+                
+        qualificationsEnum[] qualificationsArray = Membership.qualificationsEnum.values();
+        for (int i=0; i < qualificationsArray.length; i++){
+            this.qualificationAddComboBox.getItems().add(qualificationsArray[i].toString());
+        }
+        this.qualificationAddComboBox.getSelectionModel().select(0);
+        
+        sexEnum[] sexArray = Membership.sexEnum.values();
+        for (int i=0; i < sexArray.length; i++){
+            this.sexAddComboBox.getItems().add(sexArray[i].toString());
+        }
+        this.sexAddComboBox.getSelectionModel().select(0);
+                    
     }
     
     //support method to set new filter List matching the type of search

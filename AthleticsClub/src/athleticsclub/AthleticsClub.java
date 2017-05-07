@@ -330,7 +330,7 @@ public class AthleticsClub extends Application{
     
     
     //serialize List<Membership> (including athletes, coachs...)
-    private static void serializeMemberships(ArrayList<Membership> membershipsList){
+    public static void serializeMemberships(ArrayList<Membership> membershipsList){
         try {
          FileOutputStream fileOut =
          new FileOutputStream("memberships.ser");
@@ -346,7 +346,7 @@ public class AthleticsClub extends Application{
     }
     
     //deserialize List<Membership> (including athletes, coachs...)
-    private static ArrayList<Membership> deserializeMemberships(){
+    public static ArrayList<Membership> deserializeMemberships(){
         ArrayList<Membership> membershipsList = null;
       try {
          FileInputStream fileIn = new FileInputStream("memberships.ser");
