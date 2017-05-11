@@ -13,9 +13,9 @@ import membership.Membership;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Training implements Serializable{
-    enum typeEnum {RoadDistance, XCountryDistance, Track, Field, Gym};
+    enum typeEnum {RoadDistance, XCountryDistance, Track, Sprinting, Field, Gym};
     enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
-    Weighting, Repetitions, Roading};
+    Weighting, Repetitions, Roading, Hamming};
     enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     
     private static int incrementalId = 0;

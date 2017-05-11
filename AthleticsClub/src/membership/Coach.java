@@ -24,7 +24,7 @@ public class Coach extends Membership implements Serializable{ //delete elements
     
     public static List<Coach> coachsList = new ArrayList<>();
     private List<Training> trainingsList;
-    private List<Event> eventsList; //needed?
+    private List<Event> eventsList; //needed? no really
     private List<Athlete> athletesList;
 
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {

@@ -23,7 +23,8 @@ public class Athlete extends Membership implements Serializable{
     
     public static List<Athlete> athletesList = new ArrayList<>();
     private List<Training> trainingsList;
-    private List<Event> eventsList;
+    private List<Event> eventsList; //dont needed, athletes are related with teams
+    //and teams with events: maybe you will need List<Team>
 
 //------------------>>
 

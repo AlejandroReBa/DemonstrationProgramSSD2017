@@ -49,7 +49,7 @@ public class AthleticsClub extends Application{
         
         loadFiles(); //deserialize objects
         
-       System.out.println( Membership.getMembersList().get(0).getAgeGroup());
+        
         stage.show();
     }
     
@@ -162,30 +162,28 @@ public class AthleticsClub extends Application{
             System.out.println("sex: " + sexList.get(i));
             System.out.println("dates: " + datesList.get(i));
             System.out.println();
-            */
+            
    /* -------deleeeeeeeeeeeeeeeeeete
         }
-
+        
+        
+        new Coach("coachAlfa","coach","coach","M", Date.from(Instant.now()));
+        
         List<Coach> coachsList = Coach.getCoachsList();
         List<Athlete> athletesList = Athlete.getAthletesList();
-        /*debug stuff
-        for (Athlete ath : athletesList){
-            System.out.println("--------->type:" + ath.getType() + " +id: " + ath.getId());
-            System.out.println("SAME ATHLETE ->" + Membership.getMembersList().get(ath.getId()));
-        }
-        */
+        
         //create teams
- /* -------deleeeeeeeeeeeeeeeeeete
+
         for (int i = 0; i < athletesList.size()/5; i++){
             List<Athlete> members = athletesList.subList(5*i,5*i+5);
             int captainId = members.get(0).getId();
-            int coachId = coachsList.get(i).getId();
+            int coachId = coachsList.get(0).getId();
             if (i == 0){
-                new Team("Football Solent", captainId, coachId, "Football", "Men", "U17", members);
+                new Team("Team U15 Solent", captainId, coachId, "Football", "Men", "U17", members);
             }else if (i == 1){
-                new Team("Basketball Solent", captainId, coachId, "Basketball", "Women", "U20", members);
+                new Team("Team New Generations Solent", captainId, coachId, "Basketball", "Women", "U20", members);
             }else{
-                new Team("Swimmers Solent", captainId, coachId, "Swimming", "Mixed", "Senior", members);
+                new Team("Team go hard or go home", captainId, coachId, "Swimming", "Mixed", "Senior", members);
             }
         }
         
@@ -201,7 +199,7 @@ public class AthleticsClub extends Application{
         ev1.addParticipant(team2);
         */
     
- /* -------deleeeeeeeeeeeeeeeeeete
+/*
         Event ev1 = new Event("Sunday Match", "Football", "Men", "U15", "Bus", Date.from(Instant.now()), officialsList.get(0).getId(), Team.getTeams().subList(0, 2));
         Event ev2 = new Event("Real cup", "Basketball", "Women", "U20", "Car", Date.from(Instant.now()), officialsList.get(1).getId(), Team.getTeams().subList(1, 3));
         Event ev3 = new Event("Fishs in the air", "Swimming", "Mixed", "Masters", "Train", Date.from(Instant.now()), officialsList.get(2).getId(), Team.getTeams().subList(1, 3));
@@ -210,7 +208,10 @@ public class AthleticsClub extends Application{
         officialsList.get(1).addEvent(ev2);
         officialsList.get(2).addEvent(ev3);
         
+        serializeEvents((ArrayList<Event>)Event.getEvents());
+        serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
         
+        /*
         //display members
         System.out.println("MEMBERS: 5 support, 15 athletes, 5 coachs, 5 officials and 5 staff Admin");
         for (Membership member : Membership.membersList){
@@ -291,6 +292,8 @@ public class AthleticsClub extends Application{
     
     private static void loadFiles(){
         deserializeMemberships();
+        deserializeEvents();
+        deserializeTeams();
     }
     
     //reference: https://www.tutorialspoint.com/java/java_serialization.htm
@@ -340,7 +343,7 @@ public class AthleticsClub extends Application{
          fileOut.close();
          System.out.printf("Serialized data is saved in memberships.ser");
       }catch(IOException i) {
-          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZEDD JO");
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
          i.printStackTrace();
       }
     }
@@ -370,4 +373,91 @@ public class AthleticsClub extends Application{
       return membershipsList;
     }
 
+    
+    //serialize List<Event>
+    public static void serializeEvents(ArrayList<Event> eventsList){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("events.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(eventsList);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in events.ser");
+      }catch(IOException i) {
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
+         i.printStackTrace();
+      }
+    }
+    
+     //deserialize List<Event>
+    public static ArrayList<Event> deserializeEvents(){
+        ArrayList<Event> eventsList = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("events.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         eventsList = (ArrayList<Event>)in.readObject();
+         //added to insert deserialized events into static eventsList
+         Event.eventsList = new ArrayList<>(eventsList);
+         /*
+         for(Event e : eventsList){
+             e.addItself();
+         }
+        */
+         //although is a little bit dirty though...
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("Event class not found");
+         c.printStackTrace();
+      }
+      
+      return eventsList;
+    }
+    
+    
+    //serialize List<Event>
+    public static void serializeTeams(ArrayList<Team> teamsList){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("teams.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(teamsList);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in teams.ser");
+      }catch(IOException i) {
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
+         i.printStackTrace();
+      }
+    }
+    
+     //deserialize List<Event>
+    public static ArrayList<Team> deserializeTeams(){
+        ArrayList<Team> teamsList = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("teams.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         teamsList = (ArrayList<Team>)in.readObject();
+         //added to insert deserialized events into static eventsList
+        Team.teamsList = new ArrayList<>(teamsList);
+        /* 
+        for(Team t : teamsList){
+             t.addItself();
+         }
+        */
+         //although is a little bit dirty though...
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("Team class not found");
+         c.printStackTrace();
+      }
+      
+      return teamsList;
+    }
 }

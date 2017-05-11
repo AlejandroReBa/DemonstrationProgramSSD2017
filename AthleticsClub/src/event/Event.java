@@ -1,5 +1,7 @@
 package event;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -15,12 +17,18 @@ import membership.Team;
  */
 
 public class Event implements Serializable{
+    //to avoid invalidClasException as deserialization
+    //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
+    private static final long serialVersionUID = 42L;
+    
     //invented
+    //MensLeague, LadiesLeague, YouthLeague, CrossCountryLeague,
+    //RoadRace, CountyChampionships, nationalChampionships
     public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
     Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
     public enum genderEnum {Men, Women, Mixed};
     public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
-    enum transportEnum {Car, Bus, Minibus, Train};
+    public enum transportEnum {Car, Bus, Minibus, Train};
     
     private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
@@ -34,7 +42,7 @@ public class Event implements Serializable{
     private transportEnum transport;
     private Date date;
     //not initialized yet, does not exist negative ID
-    private int officialId = -1;
+    private int officialId = -1; //should be more than one... but for now..
 
     
     public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn){
@@ -74,6 +82,10 @@ public class Event implements Serializable{
      
     public List<Team> getParticipants(){
         return this.participants;
+    }
+    
+    public void setParticipants(ArrayList<Team> participantsIn){
+        this.participants = new ArrayList<Team> (participantsIn);
     }
     
     public void addParticipant(Team participant){
@@ -152,10 +164,27 @@ public class Event implements Serializable{
         return resEvent;
     }
     
+    
+    public static List<Event> viewEventByName(String name){
+        List<Event> resEvents = new ArrayList<>();
+        int lastCharIndex = name.length();
+        for (Event currentEvent : eventsList){
+            String currentName = currentEvent.getName();
+            if (currentName.length() >= name.length() &&
+                    currentName.toLowerCase().substring(0, lastCharIndex)
+                    .equals(name.toLowerCase())){
+                resEvents.add(currentEvent);
+            }
+            
+        }
+        
+        return resEvents;
+    }
+    
     public static List<Event> viewEventsByType(String type){
         List<Event> resEvents = new ArrayList<>();
         for (Event currentEvent : eventsList){
-            if (currentEvent.type.toString().equals(type)){
+            if (currentEvent.getType().equals(type)){
                 resEvents.add(currentEvent);
             }
         }
@@ -165,7 +194,7 @@ public class Event implements Serializable{
     public static List<Event> viewEventsByAgeGroup(String ageGroup){
         List<Event> resEvents = new ArrayList<>();
         for (Event currentEvent : eventsList){
-            if (currentEvent.ageGroup.toString().equals(ageGroup)){
+            if (currentEvent.getAgeGroup().equals(ageGroup)){
                 resEvents.add(currentEvent);
             }
         }
@@ -175,7 +204,7 @@ public class Event implements Serializable{
     public static List<Event> viewEventsByGender(String gender){
         List<Event> resEvents = new ArrayList<>();
         for (Event currentEvent : eventsList){
-            if (currentEvent.gender.toString().equals(gender)){
+            if (currentEvent.getGender().equals(gender)){
                 resEvents.add(currentEvent);
             }
         }
@@ -184,8 +213,11 @@ public class Event implements Serializable{
     
     public static List<Event> viewEventsByDate(Date date){
         List<Event> resEvents = new ArrayList<>();
-        for (Event currentEvent : eventsList){
-            if (currentEvent.date.equals(date)){
+        for (Event currentEvent : eventsList){ //fix to compare dates.......
+            //java.time.LocalDateTime first = new java.time.LocalDateTime(currentEvent.getDate());
+            //java.time.LocalDate = 
+            //java.time.DateTimeComparator.getDateOnlyInstance();
+            if (currentEvent.getDate().equals(date)){
                 resEvents.add(currentEvent);
             }
         }
@@ -197,14 +229,26 @@ public class Event implements Serializable{
         if (this.officialId > -1){
             officialName = ((Official) Membership.getMembersList().get(this.officialId)).getName();
         }
-        String res = "EVENT. Name: " + this.name + ", Type: " + this.type.toString()
+        String res = "Event Name: " + this.name + ", Type: " + this.type.toString()
                 + ", Gender: " + this.gender.toString() + ", Age Group: " +
                 this.ageGroup.toString() + ", Date: " + this.date +
                 ", Official: " + officialName + ", Transport: " + this.transport.toString()
-                + ".\nParticipants:\n";
+                + ".\nTeams:\n";
         for (Team t : this.participants){
-            res += t + "\n";
+            Membership captain = Membership.getMembersList().get(t.getCaptainId());
+            res += "Team name: " + t.getName() + " - Captain: " + captain.getName() + "\n";
         }
         return res;
+    }
+    
+     //needed to increment incrementalId variable
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        incrementalId++;
+    }
+    
+    //and add the deserialized Event to events List 
+    public void addItself(){
+        eventsList.add(this);
     }
 }

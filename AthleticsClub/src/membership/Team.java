@@ -9,21 +9,23 @@ import event.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import static membership.Athlete.athletesList;
 
 /**
  *
  * @author Alejandro Reyes
  */
 public class Team implements Serializable{
+    private static final long serialVersionUID = 7133659194365448172L;
     private static int incrementalId = 1;
-    private static List<Team> teamsList = new ArrayList<>();
+    public static List<Team> teamsList = new ArrayList<>();
     
     private int id;
     private String name;
     private List<Athlete> athletesList;
     private List<Event> eventsList;
-    private int captainId;
-    private int coachId;
+    private int captainId; //has to be an official with no qualification
+    private int coachId; //dont need it
     
     private Event.typeEnum type;
     private Event.genderEnum gender;
@@ -116,17 +118,25 @@ public class Team implements Serializable{
     }
     
     public String toString(){
+        //captain should be an official!!!
         Athlete cap = (Athlete)Membership.getMembersList().get(this.captainId); //crash if id doesn't belong to an athlete
         Coach coach = (Coach)Membership.getMembersList().get(this.coachId);
-        String res = "TEAM. Name: " + this.name + ", Captain: " + cap.getName() +
+        String res = "Team Name: " + this.name + ", Captain: " + cap.getName() +
                 ", Coach: " + coach.getName() + ", Type:" + this.type.toString() +
                 ", Gender: " + this.gender.toString() + ", Age Group: " +
                 this.ageGroup.toString() + ".\nAthletes List: \n";
         for (Athlete ath : this.athletesList){
-            res += ath + "\n";
+            res += ath.getName() + ",";
         }
         
         return res;
+    }
+    
+
+    //to add the object to teamsList. When deserializes constructor is not called
+    //therefore this is the only manner of doing it.
+    public void addItself(){
+        teamsList.add(this);
     }
         
 }

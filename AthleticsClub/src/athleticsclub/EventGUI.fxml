@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" fx:id="SecondAnchorPane" prefHeight="658.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="buttonExit" layoutX="590.0" layoutY="594.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" prefHeight="36.0" prefWidth="233.0" text="Quit the Application" />
+      <Button id="buttonBefore" fx:id="buttonReturn" layoutX="25.0" layoutY="585.0" mnemonicParsing="false" onAction="#buttonReturnClickedAction" prefHeight="36.0" prefWidth="245.0" text="Back to Main Page" />
+      <ListView fx:id="eventsListView" layoutX="183.0" layoutY="35.0" onMouseReleased="#listEventViewClickedHandle" prefHeight="270.0" prefWidth="651.0" />
+      <GridPane layoutX="14.0" layoutY="35.0" prefHeight="270.0" prefWidth="157.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="showEventsButton" mnemonicParsing="false" onAction="#showEventsButtonAction" prefHeight="25.0" prefWidth="158.0" text="Show all events" />
+            <Button fx:id="searchEventsButton" mnemonicParsing="false" onAction="#searchEventsButtonAction" prefHeight="25.0" prefWidth="158.0" text="Search Event" GridPane.rowIndex="6" />
+            <ComboBox fx:id="eventComboBox" onHiding="#eventComboBoxChanges" prefWidth="150.0" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="144.0" text="Search Event by:" GridPane.rowIndex="1" />
+            <ComboBox fx:id="eventFilterComboBox" prefWidth="150.0" GridPane.rowIndex="3" />
+            <TextField fx:id="searchNameTextField" editable="false" promptText="Name" GridPane.rowIndex="4" />
+            <DatePicker fx:id="searchDateDatePicker" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <Label fx:id="resultLabel" layoutX="364.0" layoutY="321.0" prefHeight="17.0" prefWidth="76.0" text="Information:" />
+      <TextArea fx:id="resultTextArea" layoutX="364.0" layoutY="344.0" prefHeight="65.0" prefWidth="459.0" />
+      <Button fx:id="addEventButton" layoutX="14.0" layoutY="544.0" mnemonicParsing="false" onAction="#addEventButtonAction" prefHeight="25.0" prefWidth="158.0" text="Add event" />
+      <Button fx:id="modifyEventButton" layoutX="191.0" layoutY="544.0" mnemonicParsing="false" onAction="#modifyEventButtonAction" prefHeight="25.0" prefWidth="158.0" text="Modify event" />
+      <GridPane layoutX="13.0" layoutY="319.0" prefHeight="212.0" prefWidth="311.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="234.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name:" />
+            <Label prefHeight="17.0" prefWidth="133.0" text="Date:" GridPane.rowIndex="1" />
+            <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
+            <DatePicker fx:id="addDateDatePicker" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Type:" GridPane.rowIndex="3" />
+            <Label prefHeight="17.0" prefWidth="69.0" text="Age Group:" GridPane.rowIndex="4" />
+            <ComboBox fx:id="typeAddComboBox" onHiding="#organisationComboBoxHide" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="ageGroupAddComboBox" prefHeight="25.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Gender" GridPane.rowIndex="2" />
+            <ComboBox fx:id="sexAddComboBox" prefHeight="25.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Transport: " GridPane.rowIndex="5" />
+            <ComboBox fx:id="transportAddComboBox" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label prefHeight="17.0" prefWidth="63.0" text="official???" GridPane.rowIndex="6" />
+         </children>
+      </GridPane>
+      <Label layoutX="364.0" layoutY="426.0" text="Pick teams:" />
+      <ComboBox fx:id="pickTeamsComboBox" layoutX="360.0" layoutY="447.0" prefHeight="25.0" prefWidth="173.0" />
+      <ListView fx:id="teamsParticipatingListView" layoutX="550.0" layoutY="447.0" prefHeight="141.0" prefWidth="273.0" />
+      <Button fx:id="addTeamButton" layoutX="360.0" layoutY="481.0" mnemonicParsing="false" onAction="#addTeamActionEvent" text="Add team" />
+      <Label layoutX="543.0" layoutY="426.0" text="Teams participating in the event:" />
+      <Button fx:id="acceptChangesButton" layoutX="440.0" layoutY="481.0" mnemonicParsing="false" onAction="#acceptChangesActionEvent" text="Accept changes" />
+      <Button fx:id="deleteTeamButton" layoutX="404.0" layoutY="532.0" mnemonicParsing="false" onAction="#deleteTeamActionEvent" prefHeight="25.0" prefWidth="136.0" text="Delete selected team" />
+   </children>
+</AnchorPane>

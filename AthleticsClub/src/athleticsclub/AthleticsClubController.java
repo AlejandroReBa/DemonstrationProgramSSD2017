@@ -5,6 +5,7 @@
  */
 package athleticsclub;
 
+import event.Event;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -18,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import membership.Membership;
+import membership.Team;
 
 /**
  *
@@ -26,13 +28,7 @@ import membership.Membership;
 public class AthleticsClubController implements Initializable {
     
     @FXML
-    private Button bEvent;
-    
-    @FXML
-    private Button bTraining;
-    
-    @FXML
-    private Button bMembership;
+    private Button bEvent, bTraining, bMembership;
     
     @FXML
     private Button bExit;
@@ -48,26 +44,47 @@ public class AthleticsClubController implements Initializable {
             System.out.println(m);
         }
         label.setText("Hello World!");
-        */
-        SecondGUIController secondController;
-        //ThirdGUIController thirdController;
-        AnchorPane secondAnchorPane; //thirdAnchorPane;
-        StackPane secondStackPane;//, thirdStackPane;
-        Scene secondScene; //, thirdScene;
-        Stage secondStage; //, thirdStage;
-        
-        secondController = new SecondGUIController();
-        secondAnchorPane = secondController.getSecondAnchorPane();
-        secondStackPane = new StackPane();
-        secondStackPane.getChildren().add(secondAnchorPane);
-        secondScene = new Scene(secondStackPane);
-        secondStage = new Stage();
-        secondStage.setTitle("Membership actions");
-        secondStage.setScene(secondScene);
-        this.bEvent.getScene().getWindow().hide();
-                
-        secondStage.showAndWait();
-        ((Stage)this.bEvent.getScene().getWindow()).show();
+         */
+        AnchorPane secondAnchorPane;
+        StackPane secondStackPane;
+        Scene secondScene;
+        Stage secondStage;
+
+        Button clickedButton = (Button) event.getSource();
+        if (clickedButton.idProperty().equals(bMembership.idProperty())) {
+            MembershipGUIController membershipGUIController;
+
+            membershipGUIController = new MembershipGUIController();
+            secondAnchorPane = membershipGUIController.getSecondAnchorPane();
+            secondStackPane = new StackPane();
+            secondStackPane.getChildren().add(secondAnchorPane);
+            secondScene = new Scene(secondStackPane);
+            secondStage = new Stage();
+            secondStage.setTitle("Membership actions");
+            secondStage.setScene(secondScene);
+            this.bMembership.getScene().getWindow().hide();
+
+            secondStage.showAndWait();
+            ((Stage) this.bMembership.getScene().getWindow()).show();
+        } else if (clickedButton.idProperty().equals(bEvent.idProperty())) {
+            EventGUIController eventGUIController;
+            eventGUIController = new EventGUIController();
+            
+            secondAnchorPane = eventGUIController.getSecondAnchorPane();
+            secondStackPane = new StackPane();
+            secondStackPane.getChildren().add(secondAnchorPane);
+            secondScene = new Scene(secondStackPane);
+            secondStage = new Stage();
+            secondStage.setTitle("Event actions");
+            secondStage.setScene(secondScene);
+            this.bEvent.getScene().getWindow().hide();
+
+            secondStage.showAndWait();
+            ((Stage) this.bEvent.getScene().getWindow()).show();
+        } else {
+            System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOO WORKS :(");
+        }
+
     }
     
     @Override
@@ -79,6 +96,8 @@ public class AthleticsClubController implements Initializable {
     @FXML
     private void buttonExitClickedAction(ActionEvent event) {
         AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
+        AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
+        AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
         bExit.getScene().getWindow().hide();
     }
     

@@ -36,6 +36,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
+import event.Event.ageGroupRelatedEnum;
+import event.Event.genderEnum;
 import java.util.ArrayList;
 import membership.Athlete;
 import membership.Coach;
@@ -46,6 +48,7 @@ import membership.Membership.typeEnum;
 import static membership.Membership.typeEnum.Athlete;
 import membership.Official;
 import membership.StaffAdmin;
+import membership.Team;
 import training.Training;
 
 /**
@@ -53,15 +56,15 @@ import training.Training;
  *
  * @author Alejandro Reyes
  */
-public class SecondGUIController implements Initializable {
+public class EventGUIController implements Initializable {
 
     private ArrayList<String> searchTypeList;
     private ArrayList<String> searchFilterList; //this changes depends on searchTypeList
     /**
      * Initializes the controller class.
      */
-    public SecondGUIController() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SecondGUI.fxml"));
+    public EventGUIController() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EventGUI.fxml"));
 
         loader.setController(this);
         
@@ -123,10 +126,13 @@ public class SecondGUIController implements Initializable {
     */
 
     @FXML
-    Button buttonReturn, showMembershipsButton, searchMembershipsButton;
+    Button buttonReturn, showEventsButton, searchEventsButton;
 
     @FXML
-    ListView<Membership> membershipsListView;
+    ListView<Event> eventsListView;
+    
+    @FXML
+    ListView<Team> teamsParticipatingListView;
 
     @FXML
     Label resultLabel;
@@ -139,14 +145,17 @@ public class SecondGUIController implements Initializable {
             addressTextField;
 
     @FXML
-    DatePicker birthdayDatePicker;
+    DatePicker searchDateDatePicker, addDateDatePicker;
 
     @FXML
-    ComboBox<String> membershipComboBox, membershipFilterComboBox;
+    ComboBox<String> eventComboBox, eventFilterComboBox;
     
     @FXML
     ComboBox<String> sexAddComboBox, typeAddComboBox, ageGroupAddComboBox,
-            qualificationAddComboBox;
+            transportAddComboBox;
+    
+    @FXML
+    ComboBox<Team> pickTeamsComboBox;
     
     //@FXML
     //ComboBox<Organisation> organisationComboBox;
@@ -155,14 +164,17 @@ public class SecondGUIController implements Initializable {
     //ComboBox<Event> eventComboBox;
 
     @FXML
-    private void showMembershipsButtonAction(ActionEvent event) {      
+    private void showEventsButtonAction(ActionEvent event) {      
         //to make it beautiful: custom List view with HBox
         //Not implemented, source: http://stackoverflow.com/questions/36121707/javafx-custom-listview-appearance
-        membershipsListView.getItems().clear();
-        membershipsListView.getItems().addAll(Membership.getMembersList());
-        resultTextArea.setText("All memberships have been loaded"
-                + "\nDisplaying " + Membership.getMembersList().size() + " found results.");
+        eventsListView.getItems().clear();
+        eventsListView.getItems().addAll(Event.getEvents());
+        resultTextArea.setText("All events have been loaded"
+                + "\nDisplaying " + Event.getEvents().size() + " found results.");
         
+        if (eventsListView.getItems().size() > 0){
+            eventsListView.getSelectionModel().select(0);
+        }
         /*
         organisationComboBox.getItems().clear();
         eventComboBox.getItems().clear();
@@ -203,7 +215,7 @@ public class SecondGUIController implements Initializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate localDate = LocalDate.parse(birthdayString, formatter);
 
-            birthdayDatePicker.setValue(localDate);
+            addDateDatePicker.setValue(localDate);
 
             telNumberTextField.setText(selectedAgent.getTelNumber());
 
@@ -213,13 +225,13 @@ public class SecondGUIController implements Initializable {
     }
 
     @FXML
-    private void addMembershipButtonAction(ActionEvent event) {
-        
+    private void addEventButtonAction(ActionEvent event) {
+        /*
         try {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
 
-            LocalDate birthdayLocalDate = birthdayDatePicker.getValue();
+            LocalDate birthdayLocalDate = addDateDatePicker.getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String selectedBirthday = birthdayLocalDate.format(formatter);
 
@@ -257,10 +269,12 @@ public class SecondGUIController implements Initializable {
         } catch (ParseException ex) {
             //exception never reached due to the use of a DatePicker
         }
+        */
         
     }
     @FXML
-    private void modifyMembershipButtonAction(ActionEvent event) {
+    private void modifyEventButtonAction(ActionEvent event) {
+        /*
         if (!membershipsListView.getItems().isEmpty()) {
             int selectedIndex = membershipsListView.getSelectionModel().getSelectedIndex();
             Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
@@ -268,7 +282,7 @@ public class SecondGUIController implements Initializable {
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat format = new SimpleDateFormat(pattern);
 
-                LocalDate birthdayLocalDate = birthdayDatePicker.getValue();
+                LocalDate birthdayLocalDate = addDateDatePicker.getValue();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 String selectedBirthday = birthdayLocalDate.format(formatter);
 
@@ -294,36 +308,53 @@ public class SecondGUIController implements Initializable {
 
             //buttonReturn.getScene().getWindow().hide();
         }
-        
+        */
 
     }
 
     @FXML
     
-    private void searchMembershipsButtonAction(ActionEvent event) {
-        String viewBy = this.membershipComboBox.getSelectionModel().getSelectedItem();
+    private void searchEventsButtonAction(ActionEvent event) {
+        
+        String viewBy = this.eventComboBox.getSelectionModel().getSelectedItem();
         //another combo box with the age, type, etc required by the user.
         String filter = "";
+        Date newDate = null;
+        String selectedDate = "";
         if (viewBy.equals("Name")){
             filter = this.searchNameTextField.getText();
+        }else if (viewBy.equals("Date")){
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+
+            LocalDate dateLocalDate = searchDateDatePicker.getValue();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            selectedDate = dateLocalDate.format(formatter);
+
+            try {
+                newDate = format.parse(selectedDate);
+            } catch (ParseException ex) {
+                //never throwed because we are using a DatePicker
+            }
         }else{
-            filter = this.membershipFilterComboBox.getSelectionModel().getSelectedItem();
+            filter = this.eventFilterComboBox.getSelectionModel().getSelectedItem();
         }
         
 
-        this.membershipsListView.getItems().clear();
-        ArrayList<Membership> retrievedMemberships = 
-                retrieveMembershipsBySearchType(this.membershipComboBox.getSelectionModel().getSelectedIndex(),
-                        filter);
+        this.eventsListView.getItems().clear();
+        ArrayList<Event> retrievedEvents = 
+                retrieveEventsBySearchType(this.eventComboBox.getSelectionModel().getSelectedIndex(),
+                        filter, newDate); //filter=="" || newDate==null
         
-        if (retrievedMemberships.isEmpty()){
-            resultTextArea.setText("No matches found for " + viewBy + " = " + filter);
+        if (retrievedEvents.isEmpty()){
+            resultTextArea.setText("No matches found for " + viewBy + " = " + filter + selectedDate); //filter="" || selectedDate=""
         }else{
-            String text = "View of memberships by " + viewBy + " = " + filter +
-                    "\nDisplaying " + retrievedMemberships.size() + " found results.";
+            String text = "View of events by " + viewBy + " = " + filter + selectedDate +
+                    "\nDisplaying " + retrievedEvents.size() + " found results.";
             resultTextArea.setText(text);
-            this.membershipsListView.getItems().addAll(retrievedMemberships);
+            this.eventsListView.getItems().addAll(retrievedEvents);
         }
+    }
         
         /*
         if (!agentsListView.getItems().isEmpty()) {
@@ -338,42 +369,57 @@ public class SecondGUIController implements Initializable {
 
             //buttonReturn.getScene().getWindow().hide();
         }
-        */
+        
     }
-
+*/
     @FXML
-    private void listMembershipViewClickedHandle(MouseEvent event) {
-        if (!this.membershipsListView.getItems().isEmpty()) {
-            int selectedIndex = this.membershipsListView.getSelectionModel().getSelectedIndex();
-            Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
+    private void listEventViewClickedHandle(MouseEvent event) {
+        
+        if (!this.eventsListView.getItems().isEmpty()) {
+            int selectedIndex = this.eventsListView.getSelectionModel().getSelectedIndex();
+            Event selectedEvent = eventsListView.getItems().get(selectedIndex);
 
-            nameTextField.setText(selectedMembership.getName());
+            nameTextField.setText(selectedEvent.getName());
 
-            Date selectedBirthday = selectedMembership.getBirthday();
+            Date selectedDate = selectedEvent.getDate();
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
-            String birthdayString = format.format(selectedBirthday);
+            String selectedDateString = format.format(selectedDate);
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate localDate = LocalDate.parse(birthdayString, formatter);
+            LocalDate localDate = LocalDate.parse(selectedDateString, formatter);
 
-            birthdayDatePicker.setValue(localDate);
+            addDateDatePicker.setValue(localDate);
 
-            telNumberTextField.setText(selectedMembership.getTelephone());
-            addressTextField.setText(selectedMembership.getAddress());
             
-            sexAddComboBox.getSelectionModel().select(selectedMembership.getSex());
-            typeAddComboBox.getSelectionModel().select(selectedMembership.getType());
-            ageGroupAddComboBox.getSelectionModel().select(selectedMembership.getAgeGroup());
-            qualificationAddComboBox.getSelectionModel().select(selectedMembership.getQualification());
-            resultTextArea.setText("The membership details have been loaded into left fields");
+            sexAddComboBox.getSelectionModel().select(selectedEvent.getGender());
+            typeAddComboBox.getSelectionModel().select(selectedEvent.getType());
+            ageGroupAddComboBox.getSelectionModel().select(selectedEvent.getAgeGroup());
+            transportAddComboBox.getSelectionModel().select(selectedEvent.getTransport());
+            
+            
+            teamsParticipatingListView.getItems().clear();
+            for (Team t: selectedEvent.getParticipants()){
+                teamsParticipatingListView.getItems().add(t);
+            }
+            
+            ArrayList<Team> allTeams = (ArrayList<Team>)Team.getTeams();
+            
+            pickTeamsComboBox.getItems().addAll(allTeams);
+            if (!allTeams.isEmpty()){
+                pickTeamsComboBox.getSelectionModel().select(0);
+            }
+            
+            
+            resultTextArea.setText("The event details have been loaded into left fields");
         }
+        
     }
     
      @FXML
-    private void membershipComboBoxChanges() {
-        if (!membershipComboBox.getItems().isEmpty()) {
-            int selectedIndex = membershipComboBox.getSelectionModel().getSelectedIndex();
+    private void eventComboBoxChanges() {
+        if (!eventComboBox.getItems().isEmpty()) {
+            int selectedIndex = eventComboBox.getSelectionModel().getSelectedIndex();
             setNewFilterList(selectedIndex);
             
             /*
@@ -390,7 +436,7 @@ public class SecondGUIController implements Initializable {
         }
     }
     
-     @FXML
+    @FXML
     private void organisationComboBoxHide() {
         /*
         if (!organisationComboBox.getItems().isEmpty()) {
@@ -407,6 +453,54 @@ public class SecondGUIController implements Initializable {
         */
     }
     
+    //add picked team to the list of teams for the selected event
+     @FXML
+    private void addTeamActionEvent(ActionEvent ev) {
+        int eventsSelectedIndex = this.eventsListView.getSelectionModel().getSelectedIndex();
+        if (eventsSelectedIndex > 0){
+            if (pickTeamsComboBox.getSelectionModel().getSelectedIndex() < 1){
+                resultTextArea.setText("No team selected");
+            }else{
+                 Team pickedTeam = pickTeamsComboBox.getSelectionModel().getSelectedItem();
+                teamsParticipatingListView.getItems().add(pickedTeam);
+                resultTextArea.setText("The team has been picked");
+            }
+        }else{
+            resultTextArea.setText("No event selected");
+        }
+    }
+    
+    //delete the selected team (selected at tamsParticipatingListView, not at comboBox)
+    //from the list of participatings in the event
+    @FXML
+    private void deleteTeamActionEvent(ActionEvent ev) {
+       int currentIndex = teamsParticipatingListView.getSelectionModel().getSelectedIndex();
+       if (currentIndex < 0){
+           resultTextArea.setText("No team selected");
+       }else{
+           teamsParticipatingListView.getItems().remove(currentIndex);
+           resultTextArea.setText("The team has been deleted from the event");
+       }
+       
+    }
+    
+    @FXML
+    private void acceptChangesActionEvent(ActionEvent ev) {      
+        int eventsSelectedIndex = this.eventsListView.getSelectionModel().getSelectedIndex();
+        if (eventsSelectedIndex > 0){
+            Event selectedEvent = this.eventsListView.getSelectionModel().getSelectedItem();
+            ArrayList<Team> allParticipants = new ArrayList<Team>();
+            resultTextArea.setText("The participants for the event has been updated");
+            for (Team t : teamsParticipatingListView.getItems()){
+                allParticipants.add(t);
+            }
+            selectedEvent.setParticipants(allParticipants);
+        }else{
+            resultTextArea.setText("No event selected");
+        }
+        
+    }
+    
 
 
     @FXML
@@ -419,46 +513,50 @@ public class SecondGUIController implements Initializable {
         //buttonReturn.getScene().getWindow().hide();
         Platform.exit();
         AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
+        AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
+        AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
         System.exit(0);
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {        
-        this.birthdayDatePicker.setValue(LocalDate.now());
+    public void initialize(URL url, ResourceBundle rb) {
+        this.searchDateDatePicker.setValue(LocalDate.now());//DatePicker to search
+        this.addDateDatePicker.setValue(LocalDate.now());//DatePicker to add/modify
         searchTypeList = new ArrayList<String>();
         searchTypeList.add("Age Group"); //index 0
         searchTypeList.add("Type");
-        searchTypeList.add("Qualification");
         searchTypeList.add("Name");
-        searchTypeList.add("Sex"); //index 4
-        membershipComboBox.getItems().addAll(searchTypeList);
-        membershipComboBox.getSelectionModel().select(0);
+        searchTypeList.add("Sex");
+        searchTypeList.add("Date"); //index 4
+        eventComboBox.getItems().addAll(searchTypeList);
+        eventComboBox.getSelectionModel().select(0);
     
         setNewFilterList(0);
         
-        ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
+        //initialize comboBox for modifying and adding events
+        ageGroupRelatedEnum[] ageGroupArray = Event.ageGroupRelatedEnum.values();
         for (int i=0; i < ageGroupArray.length; i++){
             this.ageGroupAddComboBox.getItems().add(ageGroupArray[i].toString());
         }
         this.ageGroupAddComboBox.getSelectionModel().select(0);
         
-        typeEnum[] typeArray = Membership.typeEnum.values();
+        Event.typeEnum[] typeArray = Event.typeEnum.values();
         for (int i=0; i < typeArray.length; i++){
             this.typeAddComboBox.getItems().add(typeArray[i].toString());
         }
         this.typeAddComboBox.getSelectionModel().select(0);
-                
-        qualificationsEnum[] qualificationsArray = Membership.qualificationsEnum.values();
-        for (int i=0; i < qualificationsArray.length; i++){
-            this.qualificationAddComboBox.getItems().add(qualificationsArray[i].toString());
-        }
-        this.qualificationAddComboBox.getSelectionModel().select(0);
         
-        sexEnum[] sexArray = Membership.sexEnum.values();
+        genderEnum[] sexArray = Event.genderEnum.values();
         for (int i=0; i < sexArray.length; i++){
             this.sexAddComboBox.getItems().add(sexArray[i].toString());
         }
         this.sexAddComboBox.getSelectionModel().select(0);
+        
+        Event.transportEnum[] transportArray = Event.transportEnum.values();
+        for (int i=0; i < transportArray.length; i++){
+            this.transportAddComboBox.getItems().add(transportArray[i].toString());
+        }
+        this.transportAddComboBox.getSelectionModel().select(0);
                     
     }
     
@@ -469,73 +567,77 @@ public class SecondGUIController implements Initializable {
             searchFilterList = new ArrayList<String>();
             switch (index){
                 case 0:
-                    ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
+                    ageGroupRelatedEnum[] ageGroupArray = Event.ageGroupRelatedEnum.values();
                     for (int i=0; i < ageGroupArray.length; i++){
                         searchFilterList.add(ageGroupArray[i].toString());
                     }
                      break;
                 case 1:
-                    typeEnum[] typeArray = Membership.typeEnum.values();
+                    Event.typeEnum[] typeArray = Event.typeEnum.values();
                     for (int i=0; i < typeArray.length; i++){
                         searchFilterList.add(typeArray[i].toString());
                     }
                      break;
                 case 2:
-                    qualificationsEnum[] qualificationsArray = Membership.qualificationsEnum.values();
-                    for (int i=0; i < qualificationsArray.length; i++){
-                        searchFilterList.add(qualificationsArray[i].toString());
-                    }
-                     break;
-                case 3:
                     //break, name doesn't have anything at second comboBox. 
                     searchFilterList.add("Use the text field below to write in the name");
                      break;
-                case 4:
-                    sexEnum[] sexArray = Membership.sexEnum.values();
+                case 3:
+                    genderEnum[] sexArray = Event.genderEnum.values();
                     for (int i=0; i < sexArray.length; i++){
                         searchFilterList.add(sexArray[i].toString());
                     }
                      break;
-                
+                case 4:
+                    //break, date doesn't have anything at second comboBox. 
+                    searchFilterList.add("Use the date picker below to pick the date");
+                     break;
             }
             
             //searchNameTextField is only editable when we are searching by name
-            if (index == 3){
+            if (index == 2){
                 searchNameTextField.setDisable(false);
+                this.searchDateDatePicker.setDisable(true);
+            }else if (index == 4){
+                //-------------------------------------------------> TODOOOOOOOOOOOOOOOOOOOOOOO to disable data picker!!!!!!!!!!!!!
+                this.searchDateDatePicker.setDisable(false);
+                searchNameTextField.setDisable(true);
+                searchNameTextField.setText("Name");
             }else{
+                this.searchDateDatePicker.setDisable(true);
                 searchNameTextField.setDisable(true);
                 searchNameTextField.setText("Name");
             }
             searchNameTextField.setEditable(true);
-            membershipFilterComboBox.getItems().clear();
-            membershipFilterComboBox.getItems().addAll(searchFilterList);
-            membershipFilterComboBox.getSelectionModel().select(0);
+            eventFilterComboBox.getItems().clear();
+            eventFilterComboBox.getItems().addAll(searchFilterList);
+            eventFilterComboBox.getSelectionModel().select(0);
                     
         }
     }
     
-    private ArrayList<Membership> retrieveMembershipsBySearchType(int searchTypeIndex, String filter){
-        ArrayList<Membership> retrievedMemberships = new ArrayList<>();
+    private ArrayList<Event> retrieveEventsBySearchType(int searchTypeIndex, String filter, Date dateFilter){
+        ArrayList<Event> retrievedEvents = new ArrayList<>();
         if (searchTypeIndex > -1 && searchTypeIndex < 5){
             switch (searchTypeIndex){
                 case 0:
-                     retrievedMemberships = (ArrayList<Membership>)Membership.viewMembershipsByAgeGroup(filter);
+                     retrievedEvents = (ArrayList<Event>)Event.viewEventsByAgeGroup(filter);
                      break;
                 case 1:
-                    retrievedMemberships = (ArrayList<Membership>)Membership.viewMembershipsByType(filter);
+                    retrievedEvents = (ArrayList<Event>)Event.viewEventsByType(filter);
                      break;
                 case 2:
-                    retrievedMemberships = (ArrayList<Membership>)Membership.viewMembershipsByQualification(filter);
+                    retrievedEvents = (ArrayList<Event>)Event.viewEventByName(filter);
                      break;
                 case 3:
-                    retrievedMemberships = (ArrayList<Membership>)Membership.viewMembershipByName(filter);
+                    retrievedEvents = (ArrayList<Event>)Event.viewEventsByGender(filter);
                      break;
                 case 4:
-                    retrievedMemberships = (ArrayList<Membership>)Membership.viewMembershipsBySex(filter);
+                    retrievedEvents = (ArrayList<Event>)Event.viewEventsByDate(dateFilter);
                      break;
             }
         }
-        return retrievedMemberships;
+        return retrievedEvents;
        }
 }
 
