@@ -60,7 +60,24 @@ public class Event implements Serializable{
         eventsList.add(this);
     }
     
-        public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
+    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
+            String transportIn, Date dateIn){
+        this.name = nameIn;
+        this.type = typeEnum.valueOf(typeIn);
+        this.gender = genderEnum.valueOf(genderIn);
+        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
+        this.date = dateIn;
+        this.officialId = -1;
+        this.transport =  transportEnum.valueOf(transportIn);
+        this.participants = new ArrayList<>();
+        
+        this.id = incrementalId;
+        incrementalId++; 
+        eventsList.add(this);
+    }
+        
+        
+    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
             String transportIn, Date dateIn, int officialIdIn, List<Team> participantsIn){
         this.name = nameIn;
         this.type = typeEnum.valueOf(typeIn);

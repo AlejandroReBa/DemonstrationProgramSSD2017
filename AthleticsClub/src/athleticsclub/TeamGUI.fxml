@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" fx:id="SecondAnchorPane" prefHeight="658.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="buttonExit" layoutX="590.0" layoutY="594.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" prefHeight="36.0" prefWidth="233.0" text="Quit the Application" />
+      <Button id="buttonBefore" fx:id="buttonReturn" layoutX="25.0" layoutY="585.0" mnemonicParsing="false" onAction="#buttonReturnClickedAction" prefHeight="36.0" prefWidth="245.0" text="Back to Main Page" />
+      <ListView fx:id="teamsListView" layoutX="183.0" layoutY="35.0" onMouseReleased="#listTeamViewClickedHandle" prefHeight="270.0" prefWidth="651.0" />
+      <GridPane layoutX="14.0" layoutY="35.0" prefHeight="270.0" prefWidth="157.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="showTeamsButton" mnemonicParsing="false" onAction="#showTeamsButtonAction" prefHeight="25.0" prefWidth="158.0" text="Show all Teams" />
+            <Button fx:id="searchTeamsButton" mnemonicParsing="false" onAction="#searchTeamsButtonAction" prefHeight="25.0" prefWidth="158.0" text="Search Team" GridPane.rowIndex="6" />
+            <ComboBox fx:id="teamComboBox" onHiding="#teamComboBoxChanges" prefHeight="25.0" prefWidth="158.0" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="144.0" text="Search Team by:" GridPane.rowIndex="1" />
+            <ComboBox fx:id="teamFilterComboBox" prefHeight="25.0" prefWidth="158.0" GridPane.rowIndex="3" />
+            <TextField fx:id="searchNameTextField" editable="false" promptText="Name" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Label fx:id="resultLabel" layoutX="364.0" layoutY="321.0" prefHeight="17.0" prefWidth="76.0" text="Information:" />
+      <TextArea fx:id="resultTextArea" layoutX="364.0" layoutY="344.0" prefHeight="65.0" prefWidth="459.0" />
+      <Button fx:id="addTeamButton" layoutX="14.0" layoutY="520.0" mnemonicParsing="false" onAction="#addTeamButtonAction" prefHeight="25.0" prefWidth="158.0" text="Add Team" />
+      <Button fx:id="modifyTeamButton" layoutX="191.0" layoutY="520.0" mnemonicParsing="false" onAction="#modifyTeamButtonAction" prefHeight="25.0" prefWidth="158.0" text="Modify Team" />
+      <GridPane layoutX="13.0" layoutY="345.0" prefHeight="159.0" prefWidth="305.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="107.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="234.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Name:" />
+            <TextField fx:id="nameTextField" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="1" />
+            <Label text="Type:" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="69.0" text="Age Group:" GridPane.rowIndex="3" />
+            <ComboBox fx:id="typeAddComboBox" onHiding="#organisationComboBoxHide" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="ageGroupAddComboBox" prefHeight="25.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Gender" GridPane.rowIndex="1" />
+            <ComboBox fx:id="sexAddComboBox" prefHeight="25.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="17.0" prefWidth="63.0" text="Captain:" GridPane.rowIndex="4" />
+            <ComboBox fx:id="captainAddComboBox" prefHeight="25.0" prefWidth="219.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <Label layoutX="364.0" layoutY="426.0" text="Pick Athlete:" />
+      <ComboBox fx:id="pickAthletesComboBox" layoutX="360.0" layoutY="447.0" prefHeight="25.0" prefWidth="173.0" />
+      <ListView fx:id="athletesMembersListView" layoutX="550.0" layoutY="447.0" prefHeight="141.0" prefWidth="273.0" />
+      <Button fx:id="addAthleteButton" layoutX="360.0" layoutY="481.0" mnemonicParsing="false" onAction="#addAthleteActionEvent" text="Add athlete" />
+      <Label layoutX="550.0" layoutY="426.0" text="Athletes in the team:" />
+      <Button fx:id="acceptChangesButton" layoutX="440.0" layoutY="481.0" mnemonicParsing="false" onAction="#acceptChangesActionEvent" text="Accept changes" />
+      <Button fx:id="deleteAthleteButton" layoutX="403.0" layoutY="532.0" mnemonicParsing="false" onAction="#deleteAthleteActionEvent" prefHeight="25.0" prefWidth="137.0" text="Delete selected athlete" />
+   </children>
+</AnchorPane>

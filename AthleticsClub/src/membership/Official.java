@@ -84,4 +84,14 @@ public class Official extends Membership implements Serializable{
         //but it needs to be initialized here for polymorphism reasons
         officialsList.add(this);
     }
+    
+    public static List<Official> viewOfficialsByQualification(String qualification){
+        List<Official> resOfficials = new ArrayList<>();
+        for (Official currentOfficial : officialsList){
+            if (currentOfficial.getQualification().equals(qualification)){
+                resOfficials.add(currentOfficial);
+            }
+        }
+        return resOfficials;
+    }
 }

@@ -224,96 +224,77 @@ public class EventGUIController implements Initializable {
         */
     }
 
-    @FXML
+    @FXML //IM HEEEEEEEEEEEEEEEEEEEEERE, ADD AND MODIFY EVENTS
     private void addEventButtonAction(ActionEvent event) {
-        /*
         try {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
 
-            LocalDate birthdayLocalDate = addDateDatePicker.getValue();
+            LocalDate dateLocalDate = searchDateDatePicker.getValue();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String selectedBirthday = birthdayLocalDate.format(formatter);
+            String selectedDate = dateLocalDate.format(formatter);
 
-            Date newBirthday = format.parse(selectedBirthday);
+            Date newDate = format.parse(selectedDate);
             String newName = nameTextField.getText();
-            String newAddress = addressTextField.getText();
-            String newTelNumber = telNumberTextField.getText();
             
             String type = typeAddComboBox.getSelectionModel().getSelectedItem();
             String newAgeGroup = ageGroupAddComboBox.getSelectionModel().getSelectedItem();
-            String newQualification = qualificationAddComboBox.getSelectionModel().getSelectedItem();
-            String newSex = sexAddComboBox.getSelectionModel().getSelectedItem();
+            String newTransport = transportAddComboBox.getSelectionModel().getSelectedItem();
+            String newGender = sexAddComboBox.getSelectionModel().getSelectedItem();
 
-            Membership newMembership;
-            if (type.equals(typeEnum.Athlete.name())){
-                newMembership = new Athlete(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newAgeGroup);
-            }else if (type.equals(typeEnum.Coach.name())){
-                newMembership = new Coach(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newQualification);
-            }else if (type.equals(typeEnum.Official.name())){
-                newMembership = new Official(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newQualification);
-            }else if (type.equals(typeEnum.Administration.name())){
-                newMembership = new StaffAdmin(newName, newAddress, newTelNumber,
-                newSex, newBirthday);
-            }else{
-                newMembership = new Membership(newName, newAddress, newTelNumber,
-                newSex, newBirthday, true);
-            }
+            Event newEvent = new Event(newName, type, newGender, newAgeGroup,
+            newTransport, newDate);
             
-            this.showMembershipsButtonAction(new ActionEvent());
+            this.showEventsButtonAction(new ActionEvent());
 
-            resultTextArea.setText("The membership has been added successfully");
+            resultTextArea.setText("The event has been added successfully");
         } catch (ParseException ex) {
             //exception never reached due to the use of a DatePicker
-        }
-        */
-        
+        }   
     }
+    
+    
     @FXML
     private void modifyEventButtonAction(ActionEvent event) {
-        /*
-        if (!membershipsListView.getItems().isEmpty()) {
-            int selectedIndex = membershipsListView.getSelectionModel().getSelectedIndex();
-            Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
+        if (!eventsListView.getItems().isEmpty()) {
+            int selectedIndex = eventsListView.getSelectionModel().getSelectedIndex();
+            Event selectedEvent = eventsListView.getItems().get(selectedIndex);
             try {
                 String pattern = "dd/MM/yyyy";
                 SimpleDateFormat format = new SimpleDateFormat(pattern);
 
-                LocalDate birthdayLocalDate = addDateDatePicker.getValue();
+                LocalDate dateLocalDate = searchDateDatePicker.getValue();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String selectedBirthday = birthdayLocalDate.format(formatter);
+                String selectedDate = dateLocalDate.format(formatter);
 
-                Date newBirthday = format.parse(selectedBirthday);
-                selectedMembership.setBirthday(newBirthday);
+                Date newDate = format.parse(selectedDate);
+                String newName = nameTextField.getText();
 
-                selectedMembership.setName(nameTextField.getText());
-                selectedMembership.setTelephone(telNumberTextField.getText());
-                selectedMembership.setAddress(addressTextField.getText());
-                
-                //at the moment all details can be modified except Sex
-                selectedMembership.setType(typeAddComboBox.getSelectionModel().getSelectedItem());
-                selectedMembership.setAgeGroup(ageGroupAddComboBox.getSelectionModel().getSelectedItem());
-                selectedMembership.setQualification(qualificationAddComboBox.getSelectionModel().getSelectedItem());
-                
-                this.showMembershipsButtonAction(new ActionEvent());
+                String type = typeAddComboBox.getSelectionModel().getSelectedItem();
+                String newAgeGroup = ageGroupAddComboBox.getSelectionModel().getSelectedItem();
+                String newTransport = transportAddComboBox.getSelectionModel().getSelectedItem();
+                String newGender = sexAddComboBox.getSelectionModel().getSelectedItem();
 
-                resultTextArea.setText("The membership has been modified successfully");
+                selectedEvent.setName(nameTextField.getText());
+                selectedEvent.setDate(newDate);
+
+                selectedEvent.setType(type);
+                selectedEvent.setAgeGroup(newAgeGroup);
+                selectedEvent.setTransport(newTransport);
+                selectedEvent.setGender(newGender);
+
+                this.showEventsButtonAction(new ActionEvent());
+
+                resultTextArea.setText("The event has been modified successfully");
 
             } catch (ParseException ex) {
                 //exception never reached due to the use of a DatePicker
             }
-
-            //buttonReturn.getScene().getWindow().hide();
         }
-        */
-
     }
 
-    @FXML
     
+    @FXML
     private void searchEventsButtonAction(ActionEvent event) {
         
         String viewBy = this.eventComboBox.getSelectionModel().getSelectedItem();
@@ -526,7 +507,7 @@ public class EventGUIController implements Initializable {
         searchTypeList.add("Age Group"); //index 0
         searchTypeList.add("Type");
         searchTypeList.add("Name");
-        searchTypeList.add("Sex");
+        searchTypeList.add("Gender");
         searchTypeList.add("Date"); //index 4
         eventComboBox.getItems().addAll(searchTypeList);
         eventComboBox.getSelectionModel().select(0);

@@ -20,6 +20,7 @@ public class Membership implements Serializable{
     public enum typeEnum {Athlete, Coach, Official, Administration, Support};
     public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters, Other};//other for no athletes
     public enum qualificationsEnum {Coaching, Official, None}; //None for no qualified memberships
+    //modify Official to TimeKeeper, Referee, Starter...An official without qualification can be a captain
     public enum sexEnum {F, M, Other};
     
     public static int incrementalId = 0; //unique place to incrementalId

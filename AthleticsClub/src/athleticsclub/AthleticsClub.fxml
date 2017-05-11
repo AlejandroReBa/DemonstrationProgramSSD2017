@@ -10,26 +10,26 @@
 <AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="athleticsclub.AthleticsClubController">
     <children>
         <Button fx:id="bEvent" layoutX="60.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
-      <Text layoutX="136.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletics Club Main Page" wrappingWidth="197.462890625">
+      <Text layoutX="154.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletics Club Main Page" wrappingWidth="197.462890625">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <Label layoutX="25.0" layoutY="60.0" prefHeight="20.0" prefWidth="105.0" text="Event actions:">
+      <Label layoutX="25.0" layoutY="60.0" prefHeight="20.0" prefWidth="175.0" text="Manage Event Information:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button fx:id="bTraining" layoutX="300.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
-      <Label layoutX="261.0" layoutY="53.0" prefHeight="20.0" prefWidth="105.0" text="Training actions:">
+      <Label layoutX="262.0" layoutY="60.0" prefHeight="20.0" prefWidth="190.0" text="Manage Training information:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Label layoutX="317.0" layoutY="185.0" prefHeight="17.0" prefWidth="120.0" text="Add a training record:" />
-      <Label layoutX="81.0" layoutY="185.0" prefHeight="17.0" prefWidth="93.0" text="Pick teams:" />
-      <Button fx:id="bMembership" layoutX="60.0" layoutY="254.0" onAction="#handleButtonAction" text="Go!" />
-      <Label layoutX="14.0" layoutY="234.0" prefHeight="20.0" prefWidth="220.0" text="Manage Membership Information">
+      <Label layoutX="108.0" layoutY="103.0" prefHeight="17.0" prefWidth="93.0" text="Pick teams:" />
+      <Button fx:id="bMembership" layoutX="60.0" layoutY="197.0" onAction="#handleButtonAction" text="Go!" />
+      <Label layoutX="14.0" layoutY="165.0" prefHeight="20.0" prefWidth="220.0" text="Manage Membership Information">
          <font>
             <Font size="14.0" />
          </font>
@@ -41,5 +41,11 @@
          </font>
       </Text>
       <Button fx:id="bExit" layoutX="52.0" layoutY="347.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" text="Exit" />
+      <Label layoutX="25.0" layoutY="250.0" text="Manage Teams">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="bTeams" layoutX="46.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Go!" />
     </children>
 </AnchorPane>

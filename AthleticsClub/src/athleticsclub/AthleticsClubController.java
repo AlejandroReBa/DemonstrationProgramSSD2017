@@ -23,19 +23,19 @@ import membership.Team;
 
 /**
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class AthleticsClubController implements Initializable {
-    
+
     @FXML
-    private Button bEvent, bTraining, bMembership;
-    
+    private Button bEvent, bTraining, bMembership, bTeams;
+
     @FXML
     private Button bExit;
-    
+
     @FXML
     private Label label;
-    
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         /*
@@ -69,7 +69,7 @@ public class AthleticsClubController implements Initializable {
         } else if (clickedButton.idProperty().equals(bEvent.idProperty())) {
             EventGUIController eventGUIController;
             eventGUIController = new EventGUIController();
-            
+
             secondAnchorPane = eventGUIController.getSecondAnchorPane();
             secondStackPane = new StackPane();
             secondStackPane.getChildren().add(secondAnchorPane);
@@ -81,25 +81,39 @@ public class AthleticsClubController implements Initializable {
 
             secondStage.showAndWait();
             ((Stage) this.bEvent.getScene().getWindow()).show();
+        } else if (clickedButton.idProperty().equals(bTeams.idProperty())) {
+            TeamGUIController teamGUIController;
+            teamGUIController = new TeamGUIController();
+
+            secondAnchorPane = teamGUIController.getSecondAnchorPane();
+            secondStackPane = new StackPane();
+            secondStackPane.getChildren().add(secondAnchorPane);
+            secondScene = new Scene(secondStackPane);
+            secondStage = new Stage();
+            secondStage.setTitle("Management of Teams");
+            secondStage.setScene(secondScene);
+            this.bTeams.getScene().getWindow().hide();
+
+            secondStage.showAndWait();
+            ((Stage) this.bTeams.getScene().getWindow()).show();
         } else {
             System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOO WORKS :(");
         }
 
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //everything was initialized in main activity
 
     }
-    
+
     @FXML
     private void buttonExitClickedAction(ActionEvent event) {
-        AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
-        AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
-        AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
+        AthleticsClub.serializeMemberships((ArrayList<Membership>) Membership.getMembersList());
+        AthleticsClub.serializeEvents((ArrayList<Event>) Event.getEvents());
+        AthleticsClub.serializeTeams((ArrayList<Team>) Team.getTeams());
         bExit.getScene().getWindow().hide();
     }
-    
-    
+
 }

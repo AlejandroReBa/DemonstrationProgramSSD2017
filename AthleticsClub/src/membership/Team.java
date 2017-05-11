@@ -6,6 +6,7 @@
 package membership;
 
 import event.Event;
+import static event.Event.eventsList;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,10 @@ public class Team implements Serializable{
             this.athletesList.remove(athleteIndex);
         }
     }
+    
+    public void setMembersOfTeam(List<Athlete> members){
+        this.athletesList = new ArrayList<Athlete>(members);
+    }
         
     public List<Athlete> getAthletesList(){
         return this.athletesList;
@@ -117,6 +122,31 @@ public class Team implements Serializable{
         this.coachId = coachIdIn;
     }
     
+     public String getType (){
+        return this.type.toString();
+    }
+    
+     //////////////im here modify typeEnum by type from this class....dontknow refers other perhapss
+    public void setType (String typeIn){
+        this.type = Event.typeEnum.valueOf(typeIn);
+    }
+    
+    public String getGender (){
+        return this.gender.toString();
+    }
+    
+    public void setGender (String genderIn){
+        this.gender = Event.genderEnum.valueOf(genderIn);
+    }
+    
+    public String getAgeGroup (){
+        return this.ageGroup.toString();
+    }
+    
+    public void setAgeGroup (String ageGroupIn){
+        this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
+    }
+    
     public String toString(){
         //captain should be an official!!!
         Athlete cap = (Athlete)Membership.getMembersList().get(this.captainId); //crash if id doesn't belong to an athlete
@@ -134,9 +164,56 @@ public class Team implements Serializable{
     
 
     //to add the object to teamsList. When deserializes constructor is not called
-    //therefore this is the only manner of doing it.
+    //therefore this is the only manner of doing it. Dont needed
+    //I change the value of static List<Team> when deserialize these objects
     public void addItself(){
         teamsList.add(this);
+    }
+    
+     public static List<Team> viewTeamsByName(String name){
+        List<Team> resTeams = new ArrayList<>();
+        int lastCharIndex = name.length();
+        for (Team currentTeam : teamsList){
+            String currentName = currentTeam.getName();
+            if (currentName.length() >= name.length() &&
+                    currentName.toLowerCase().substring(0, lastCharIndex)
+                    .equals(name.toLowerCase())){
+                resTeams.add(currentTeam);
+            }
+            
+        }
+        
+        return resTeams;
+    }
+    
+    public static List<Team> viewTeamsByType(String type){
+        List<Team> resTeams = new ArrayList<>();
+        for (Team currentTeam : teamsList){
+            if (currentTeam.getType().equals(type)){
+                resTeams.add(currentTeam);
+            }
+        }
+        return resTeams;
+    }
+    
+    public static List<Team> viewTeamsByAgeGroup(String ageGroup){
+        List<Team> resTeams = new ArrayList<>();
+        for (Team currentTeam : teamsList){
+            if (currentTeam.getAgeGroup().equals(ageGroup)){
+                resTeams.add(currentTeam);
+            }
+        }
+        return resTeams;
+    }
+    
+    public static List<Team> viewTeamsByGender(String gender){
+        List<Team> resTeams = new ArrayList<>();
+        for (Team currentTeam : teamsList){
+            if (currentTeam.getGender().equals(gender)){
+                resTeams.add(currentTeam);
+            }
+        }
+        return resTeams;
     }
         
 }
