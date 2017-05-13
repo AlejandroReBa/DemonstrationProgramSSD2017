@@ -21,14 +21,15 @@ public class Event implements Serializable{
     //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
     private static final long serialVersionUID = 42L;
     
-    //invented
     //MensLeague, LadiesLeague, YouthLeague, CrossCountryLeague,
     //RoadRace, CountyChampionships, nationalChampionships
-    public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
-    Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
+    //public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
+    //Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
+    public enum typeEnum {MensLeague, LadiesLeague, YouthLeague, CrossCountryLeague,
+    RoadRace, CountyChampionships, NationalChampionships};
     public enum genderEnum {Men, Women, Mixed};
     public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
-    public enum transportEnum {Car, Bus, Minibus, Train};
+    public enum transportEnum {Car, Bus, Minibus, Train, Other};
     
     private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
@@ -268,4 +269,6 @@ public class Event implements Serializable{
     public void addItself(){
         eventsList.add(this);
     }
+    
+    
 }

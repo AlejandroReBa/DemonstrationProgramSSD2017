@@ -5,7 +5,6 @@
  */
 package membership;
 
-import event.Event;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,8 +22,9 @@ public class Athlete extends Membership implements Serializable{
     
     public static List<Athlete> athletesList = new ArrayList<>();
     private List<Training> trainingsList;
-    private List<Event> eventsList; //dont needed, athletes are related with teams
+    //private List<Event> eventsList; //dont needed, athletes are related with teams
     //and teams with events: maybe you will need List<Team>
+    private List<Team> teamsList;
 
 //------------------>>
 
@@ -34,7 +34,7 @@ public class Athlete extends Membership implements Serializable{
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>();
-        this.eventsList = new ArrayList<>();
+        this.teamsList = new ArrayList<>();
         Membership.membersList.add(this);
         athletesList.add(this);
         
@@ -45,7 +45,7 @@ public class Athlete extends Membership implements Serializable{
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>();
-        this.eventsList = new ArrayList<>();
+        this.teamsList = new ArrayList<>();
         ageGroup = ageGroupEnum.valueOf(ageGroupIn);
         Membership.membersList.add(this);
         athletesList.add(this);
@@ -54,11 +54,11 @@ public class Athlete extends Membership implements Serializable{
     
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn,
             Date birthIn, String ageGroupIn, List<Training> trainingsListIn,
-            List<Event> eventsListIn) {
+            List<Team> teamsListIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
         this.trainingsList = new ArrayList<>(trainingsListIn);
-        this.eventsList = new ArrayList<>(eventsListIn);
+        this.teamsList = new ArrayList<>(teamsListIn);
         ageGroup = ageGroupEnum.valueOf(ageGroupIn);
         Membership.membersList.add(this);
         athletesList.add(this);
@@ -76,12 +76,12 @@ public class Athlete extends Membership implements Serializable{
         this.trainingsList.add(trainingIn);
     }
     
-    public List<Event> getEventsList(){
-        return this.eventsList;
+    public List<Team> getTeamsList(){
+        return this.teamsList;
     }
     
-    public void addEvent(Event eventIn){
-        this.eventsList.add(eventIn);
+    public void addTeam(Team teamIn){
+        this.teamsList.add(teamIn);
     }
     
     @Override
@@ -106,4 +106,47 @@ public class Athlete extends Membership implements Serializable{
         //but it needs to be initialized here for polymorphism reasons
         athletesList.add(this);
     }
+    
+    //to compare if two Athletes are the same
+    //useful when you need to check if an athlete is already in a team
+    //ref: http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
+    @Override
+    public boolean equals(Object obj){
+        boolean res = false;
+        if(obj instanceof Athlete){
+            Athlete ath = (Athlete) obj;
+            if (this.getName().equals(ath.getName()) &&
+                this.getSex().equals(ath.getSex())&&
+                this.getAgeGroup().equals(ath.getAgeGroup())&&
+                this.getAddress().equals(ath.getAddress())&&
+                this.getQualification().equals(ath.getQualification())&&
+                this.getType().equals(ath.getType()))
+                {
+                  res = true;
+                }
+        }
+        
+        return res;
+    }
+    //
+    
+    //if two objects returns true at equals, they must have the same hashCode
+    @Override
+    public int hashCode(){
+        String sexString = getSex();
+        String ageGroupString = getAgeGroup();
+        String qualificationString = getQualification();
+        String typeString = getType();
+        
+        int hash = 7;
+        hash = 31 * hash + (null == name ? 0 : name.hashCode());
+        hash = 31 * hash + (null == sexString ? 0 : sexString.hashCode());
+        hash = 31 * hash + (null == ageGroupString? 0 : ageGroupString.hashCode());
+        hash = 31 * hash + (null == address? 0 : address.hashCode());
+        hash = 31 * hash + (null == qualificationString? 0 : qualificationString.hashCode());
+        hash = 31 * hash + (null == typeString? 0 : typeString.hashCode());
+        
+        return hash;
+    }
+    
 }

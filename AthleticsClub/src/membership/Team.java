@@ -6,11 +6,9 @@
 package membership;
 
 import event.Event;
-import static event.Event.eventsList;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import static membership.Athlete.athletesList;
 
 /**
  *
@@ -26,17 +24,15 @@ public class Team implements Serializable{
     private List<Athlete> athletesList;
     private List<Event> eventsList;
     private int captainId; //has to be an official with no qualification
-    private int coachId; //dont need it
     
-    private Event.typeEnum type;
+    //private Event.typeEnum type; you dont have a type because members
+    //of a team can belong to distinct disciplines
     private Event.genderEnum gender;
     private Event.ageGroupRelatedEnum ageGroup;
     
-    public Team (String nameIn, int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn, List<Athlete> athletesListIn){
+    public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn, List<Athlete> athletesListIn){
         this.name = nameIn;
         this.captainId = captainIdIn;
-        this.coachId = coachIdIn;
-        this.type = Event.typeEnum.valueOf(typeIn);
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
@@ -48,12 +44,10 @@ public class Team implements Serializable{
         teamsList.add(this);
     }
     
-        public Team (String nameIn, int captainIdIn, int coachIdIn, String typeIn, String genderIn, String ageGroupIn,
+        public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn,
                 List<Athlete> athletesListIn, List<Event> eventsListIn){
         this.name = nameIn;
         this.captainId = captainIdIn;
-        this.coachId = coachIdIn;
-        this.type = Event.typeEnum.valueOf(typeIn);
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
@@ -65,9 +59,27 @@ public class Team implements Serializable{
         teamsList.add(this);
     }
     
+    public Team (String nameIn, String genderIn, String ageGroupIn, int captainIdIn){
+        this.name = nameIn;
+        this.captainId = captainIdIn;
+        this.gender = Event.genderEnum.valueOf(genderIn);
+        this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
+        
+        this.athletesList = new ArrayList<Athlete>();
+        this.eventsList = new ArrayList<Event>();
+        
+        this.id = incrementalId;
+        incrementalId++; 
+        teamsList.add(this);
+    }
+        
     public static List<Team> getTeams(){
         return teamsList;
     }    
+    
+    public int getId(){
+        return this.id;
+    }
     
     public String getName(){
         return this.name;
@@ -114,23 +126,6 @@ public class Team implements Serializable{
         this.captainId = captainIdIn;
     }
     
-    public int getCoachId(){
-        return this.coachId;
-    }
-    
-    public void changeCoachId(int coachIdIn){
-        this.coachId = coachIdIn;
-    }
-    
-     public String getType (){
-        return this.type.toString();
-    }
-    
-     //////////////im here modify typeEnum by type from this class....dontknow refers other perhapss
-    public void setType (String typeIn){
-        this.type = Event.typeEnum.valueOf(typeIn);
-    }
-    
     public String getGender (){
         return this.gender.toString();
     }
@@ -149,10 +144,8 @@ public class Team implements Serializable{
     
     public String toString(){
         //captain should be an official!!!
-        Athlete cap = (Athlete)Membership.getMembersList().get(this.captainId); //crash if id doesn't belong to an athlete
-        Coach coach = (Coach)Membership.getMembersList().get(this.coachId);
+        Official cap = (Official)Membership.getMembersList().get(this.captainId); //crash if id doesn't belong to an athlete
         String res = "Team Name: " + this.name + ", Captain: " + cap.getName() +
-                ", Coach: " + coach.getName() + ", Type:" + this.type.toString() +
                 ", Gender: " + this.gender.toString() + ", Age Group: " +
                 this.ageGroup.toString() + ".\nAthletes List: \n";
         for (Athlete ath : this.athletesList){
@@ -186,16 +179,6 @@ public class Team implements Serializable{
         return resTeams;
     }
     
-    public static List<Team> viewTeamsByType(String type){
-        List<Team> resTeams = new ArrayList<>();
-        for (Team currentTeam : teamsList){
-            if (currentTeam.getType().equals(type)){
-                resTeams.add(currentTeam);
-            }
-        }
-        return resTeams;
-    }
-    
     public static List<Team> viewTeamsByAgeGroup(String ageGroup){
         List<Team> resTeams = new ArrayList<>();
         for (Team currentTeam : teamsList){
@@ -214,6 +197,32 @@ public class Team implements Serializable{
             }
         }
         return resTeams;
+    }
+    
+    
+     //to compare if two Teams are the same
+    //useful when you need to check if a team is already in a event
+    //ref: http://stackoverflow.com/questions/27581/what-issues-should-be-considered-when-overriding-equals-and-hashcode-in-java
+    @Override
+    public boolean equals(Object obj){
+        boolean res = false;
+        if(obj instanceof Team){
+            Team team = (Team) obj;
+            if (this.getId() == (team.getId()))
+                {
+                  res = true;
+                }
+        }
+        return res;
+    }
+    //
+    
+    //if two objects returns true at equals, they must have the same hashCode
+    @Override
+    public int hashCode(){        
+        int hash = 7;
+        hash = 31 * hash + this.getId();        
+        return hash;
     }
         
 }

@@ -43,7 +43,6 @@ import membership.Membership.ageGroupEnum;
 import membership.Membership.qualificationsEnum;
 import membership.Membership.sexEnum;
 import membership.Membership.typeEnum;
-import static membership.Membership.typeEnum.Athlete;
 import membership.Official;
 import membership.StaffAdmin;
 import membership.Team;
@@ -283,7 +282,11 @@ public class MembershipGUIController implements Initializable {
                 selectedMembership.setAddress(addressTextField.getText());
                 
                 //at the moment all details can be modified except Sex
-                selectedMembership.setType(typeAddComboBox.getSelectionModel().getSelectedItem());
+                //and type. If you want to change the type you have to create
+                //a new one. Because change type implies delete the membership
+                //from one list and added it to another...future feature.
+    
+                //selectedMembership.setType(typeAddComboBox.getSelectionModel().getSelectedItem());
                 selectedMembership.setAgeGroup(ageGroupAddComboBox.getSelectionModel().getSelectedItem());
                 selectedMembership.setQualification(qualificationAddComboBox.getSelectionModel().getSelectedItem());
                 
@@ -374,7 +377,9 @@ public class MembershipGUIController implements Initializable {
             typeAddComboBox.getSelectionModel().select(selectedMembership.getType());
             ageGroupAddComboBox.getSelectionModel().select(selectedMembership.getAgeGroup());
             qualificationAddComboBox.getSelectionModel().select(selectedMembership.getQualification());
-            resultTextArea.setText("The membership details have been loaded into left fields");
+            resultTextArea.setText("The membership details have been loaded into"
+                    + " left fields --ID:" + selectedMembership.getId() +
+                    "total account: " + Membership.incrementalId + " - athletes size: " + Athlete.getAthletesList().size());
         }
     }
     

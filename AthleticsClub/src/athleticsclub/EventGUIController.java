@@ -384,7 +384,15 @@ public class EventGUIController implements Initializable {
                 teamsParticipatingListView.getItems().add(t);
             }
             
-            ArrayList<Team> allTeams = (ArrayList<Team>)Team.getTeams();
+             //to display at ComboBox teams are not already in only
+            ArrayList<Team> teamsAlreadyIn = (ArrayList<Team>) selectedEvent.getParticipants();
+            ArrayList<Team> allTeams = new ArrayList<>();
+            for (Team t : Team.getTeams()){
+                if (!teamsAlreadyIn.contains(t)){ //need to override equals/hashCode at Team
+                    allTeams.add(t);
+                }
+            }
+            
             
             pickTeamsComboBox.getItems().addAll(allTeams);
             if (!allTeams.isEmpty()){
@@ -438,8 +446,8 @@ public class EventGUIController implements Initializable {
      @FXML
     private void addTeamActionEvent(ActionEvent ev) {
         int eventsSelectedIndex = this.eventsListView.getSelectionModel().getSelectedIndex();
-        if (eventsSelectedIndex > 0){
-            if (pickTeamsComboBox.getSelectionModel().getSelectedIndex() < 1){
+        if (eventsSelectedIndex > -1){
+            if (pickTeamsComboBox.getSelectionModel().getSelectedIndex() < 0){
                 resultTextArea.setText("No team selected");
             }else{
                  Team pickedTeam = pickTeamsComboBox.getSelectionModel().getSelectedItem();
@@ -468,7 +476,7 @@ public class EventGUIController implements Initializable {
     @FXML
     private void acceptChangesActionEvent(ActionEvent ev) {      
         int eventsSelectedIndex = this.eventsListView.getSelectionModel().getSelectedIndex();
-        if (eventsSelectedIndex > 0){
+        if (eventsSelectedIndex > -1){
             Event selectedEvent = this.eventsListView.getSelectionModel().getSelectedItem();
             ArrayList<Team> allParticipants = new ArrayList<Team>();
             resultTextArea.setText("The participants for the event has been updated");

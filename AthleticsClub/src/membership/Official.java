@@ -67,14 +67,7 @@ public class Official extends Membership implements Serializable{
     
     @Override
     public String toString(){
-        String res = super.toString();
-        /* toString modified: too much information for interface
-        
-        for (Event e : this.eventsList){
-            res += "\nOFFICIAL EVENTS:\n " + e;
-        }
-        */
-        
+        String res = "Type: " + type + ", Name: " + this.name + ", Sex: " + this.sex;
         return res;
     }
     

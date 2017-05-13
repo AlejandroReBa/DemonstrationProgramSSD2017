@@ -114,9 +114,8 @@ public class TeamGUIController implements Initializable {
     TextArea resultTextArea;
 
     @FXML
-    TextField searchNameTextField, nameTextField, telNumberTextField,
-            addressTextField;
-
+    TextField searchNameTextField, nameTextField;
+    
     @FXML
     DatePicker searchDateDatePicker, addDateDatePicker;
 
@@ -124,7 +123,7 @@ public class TeamGUIController implements Initializable {
     ComboBox<String> teamComboBox, teamFilterComboBox;
     
     @FXML
-    ComboBox<String> sexAddComboBox, typeAddComboBox, ageGroupAddComboBox,
+    ComboBox<String> sexAddComboBox, ageGroupAddComboBox,
             transportAddComboBox;
     
     @FXML
@@ -155,90 +154,37 @@ public class TeamGUIController implements Initializable {
 
     @FXML
     private void addTeamButtonAction(ActionEvent event) {
-        /*
-        try {
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-
-            LocalDate birthdayLocalDate = addDateDatePicker.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String selectedBirthday = birthdayLocalDate.format(formatter);
-
-            Date newBirthday = format.parse(selectedBirthday);
             String newName = nameTextField.getText();
-            String newAddress = addressTextField.getText();
-            String newTelNumber = telNumberTextField.getText();
             
-            String type = typeAddComboBox.getSelectionModel().getSelectedItem();
             String newAgeGroup = ageGroupAddComboBox.getSelectionModel().getSelectedItem();
-            String newQualification = qualificationAddComboBox.getSelectionModel().getSelectedItem();
-            String newSex = sexAddComboBox.getSelectionModel().getSelectedItem();
+            String newGender = sexAddComboBox.getSelectionModel().getSelectedItem();
+            Official captain = captainAddComboBox.getSelectionModel().getSelectedItem();
 
-            Membership newMembership;
-            if (type.equals(typeEnum.Athlete.name())){
-                newMembership = new Athlete(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newAgeGroup);
-            }else if (type.equals(typeEnum.Coach.name())){
-                newMembership = new Coach(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newQualification);
-            }else if (type.equals(typeEnum.Official.name())){
-                newMembership = new Official(newName, newAddress, newTelNumber,
-                newSex, newBirthday, newQualification);
-            }else if (type.equals(typeEnum.Administration.name())){
-                newMembership = new StaffAdmin(newName, newAddress, newTelNumber,
-                newSex, newBirthday);
-            }else{
-                newMembership = new Membership(newName, newAddress, newTelNumber,
-                newSex, newBirthday, true);
-            }
-            
-            this.showMembershipsButtonAction(new ActionEvent());
-
-            resultTextArea.setText("The membership has been added successfully");
-        } catch (ParseException ex) {
-            //exception never reached due to the use of a DatePicker
-        }
-        */
-        
+            Team team = new Team(newName, newGender, newAgeGroup, captain.getId());
+           
+            this.showTeamsButtonAction(new ActionEvent());
+            resultTextArea.setText("The team has been created successfully"); 
     }
+    
+    
     @FXML
     private void modifyTeamButtonAction(ActionEvent event) {
-        /*
-        if (!membershipsListView.getItems().isEmpty()) {
-            int selectedIndex = membershipsListView.getSelectionModel().getSelectedIndex();
-            Membership selectedMembership = membershipsListView.getItems().get(selectedIndex);
-            try {
-                String pattern = "dd/MM/yyyy";
-                SimpleDateFormat format = new SimpleDateFormat(pattern);
-
-                LocalDate birthdayLocalDate = addDateDatePicker.getValue();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String selectedBirthday = birthdayLocalDate.format(formatter);
-
-                Date newBirthday = format.parse(selectedBirthday);
-                selectedMembership.setBirthday(newBirthday);
-
-                selectedMembership.setName(nameTextField.getText());
-                selectedMembership.setTelephone(telNumberTextField.getText());
-                selectedMembership.setAddress(addressTextField.getText());
+        if (!teamsListView.getItems().isEmpty()) {
+            int selectedIndex = teamsListView.getSelectionModel().getSelectedIndex();
+            Team selectedTeam = teamsListView.getItems().get(selectedIndex);
+            
+            selectedTeam.setName(nameTextField.getText());
                 
-                //at the moment all details can be modified except Sex
-                selectedMembership.setType(typeAddComboBox.getSelectionModel().getSelectedItem());
-                selectedMembership.setAgeGroup(ageGroupAddComboBox.getSelectionModel().getSelectedItem());
-                selectedMembership.setQualification(qualificationAddComboBox.getSelectionModel().getSelectedItem());
+            //at the moment all details can be modified except Sex
+            selectedTeam.setAgeGroup(ageGroupAddComboBox.getSelectionModel().getSelectedItem());
+            selectedTeam.setGender(sexAddComboBox.getSelectionModel().getSelectedItem());
+            selectedTeam.changeCaptainId(captainAddComboBox.getSelectionModel().getSelectedItem().getId());
+            
                 
-                this.showMembershipsButtonAction(new ActionEvent());
+            this.showTeamsButtonAction(new ActionEvent());
 
-                resultTextArea.setText("The membership has been modified successfully");
-
-            } catch (ParseException ex) {
-                //exception never reached due to the use of a DatePicker
-            }
-
-            //buttonReturn.getScene().getWindow().hide();
+            resultTextArea.setText("The team has been modified successfully");
         }
-        */
-
     }
 
     @FXML 
@@ -247,25 +193,8 @@ public class TeamGUIController implements Initializable {
         String viewBy = this.teamComboBox.getSelectionModel().getSelectedItem();
         //another combo box with the age, type, etc required by the user.
         String filter = "";
-        Date newDate = null;
-        String selectedDate = "";
         if (viewBy.equals("Name")){
             filter = this.searchNameTextField.getText();
-            /*
-        }else if (viewBy.equals("Date")){
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-
-            LocalDate dateLocalDate = searchDateDatePicker.getValue();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            selectedDate = dateLocalDate.format(formatter);
-
-            try {
-                newDate = format.parse(selectedDate);
-            } catch (ParseException ex) {
-                //never throwed because we are using a DatePicker
-            }
-            */
         }else{
             filter = this.teamFilterComboBox.getSelectionModel().getSelectedItem();
         }
@@ -279,29 +208,14 @@ public class TeamGUIController implements Initializable {
         if (retrievedTeams.isEmpty()){
             resultTextArea.setText("No matches found for " + viewBy + " = " + filter);
         }else{
-            String text = "View of teams by " + viewBy + " = " + filter + selectedDate +
+            String text = "View of teams by " + viewBy + " = " + filter +
                     "\nDisplaying " + retrievedTeams.size() + " found results.";
             resultTextArea.setText(text);
             this.teamsListView.getItems().addAll(retrievedTeams);
         }
     }
-        
-        /*
-        if (!agentsListView.getItems().isEmpty()) {
-            int selectedIndex = agentsListView.getSelectionModel().getSelectedIndex();
-            Agent selectedAgent = agentsListView.getItems().get(selectedIndex);
-            for (Organisation org : Organisation.findAllOrganisation()) {
-                org.deleteAgent(selectedAgent);
-            }
-            this.showAgentsButtonAction(new ActionEvent());
-
-            resultTextArea.setText("The agent has been deleted successfully");
-
-            //buttonReturn.getScene().getWindow().hide();
-        }
-        
-    }
-*/
+    
+    
     @FXML
     private void listTeamViewClickedHandle(MouseEvent event) {
         
@@ -324,7 +238,6 @@ public class TeamGUIController implements Initializable {
             */
             
             sexAddComboBox.getSelectionModel().select(selectedTeam.getGender());
-            typeAddComboBox.getSelectionModel().select(selectedTeam.getType());
             ageGroupAddComboBox.getSelectionModel().select(selectedTeam.getAgeGroup());
             
             
@@ -333,8 +246,14 @@ public class TeamGUIController implements Initializable {
                 athletesMembersListView.getItems().add(t);
             }
             
-            
-            ArrayList<Athlete> allAthletes = (ArrayList<Athlete>)Athlete.getAthletesList();
+            //to display at ComboBox athletes are not already in only
+            ArrayList<Athlete> athletesAlreadyIn = (ArrayList<Athlete>)selectedTeam.getAthletesList();
+            ArrayList<Athlete> allAthletes = new ArrayList<>();
+            for (Athlete t : Athlete.getAthletesList()){
+                if (!athletesAlreadyIn.contains(t)){ //need to override equals/hashCode at Athlete
+                    allAthletes.add(t);
+                }
+            }
             
             pickAthletesComboBox.getItems().addAll(allAthletes);
             if (!allAthletes.isEmpty()){
@@ -387,13 +306,17 @@ public class TeamGUIController implements Initializable {
     //add picked athlete to the list of teams for the selected event
      @FXML
     private void addAthleteActionEvent(ActionEvent ev) {
-        int eventsSelectedIndex = this.teamsListView.getSelectionModel().getSelectedIndex();
-        if (eventsSelectedIndex > 0){
-            if (pickAthletesComboBox.getSelectionModel().getSelectedIndex() < 1){
+        int teamsSelectedIndex = this.teamsListView.getSelectionModel().getSelectedIndex();
+        if (teamsSelectedIndex > -1){
+            if (pickAthletesComboBox.getSelectionModel().getSelectedIndex() < 0){
                 resultTextArea.setText("No athlete selected");
             }else{
-                 Athlete pickedAthlete = pickAthletesComboBox.getSelectionModel().getSelectedItem();
-                athletesMembersListView.getItems().add(pickedAthlete);
+                int athleteIndex = pickAthletesComboBox.getSelectionModel().getSelectedIndex();
+                Athlete pickedAthlete = pickAthletesComboBox.getItems().remove(athleteIndex); //get Athlete and remove it from combobox
+                if (pickAthletesComboBox.getItems().size() > 0){
+                    pickAthletesComboBox.getSelectionModel().select(0); //select first athlete of the comboBox
+                }
+                athletesMembersListView.getItems().add(pickedAthlete); //add Athlete to listView
                 resultTextArea.setText("The athlete has been picked");
             }
         }else{
@@ -401,15 +324,17 @@ public class TeamGUIController implements Initializable {
         }
     }
     
-    //delete the selected team (selected at tamsParticipatingListView, not at comboBox)
-    //from the list of participatings in the event
+    //delete the selected athlete from the team (selected at athletesParticipatingListView
+    //not at comboBox)from the list of participatings in the team
     @FXML
     private void deleteAthleteActionEvent(ActionEvent ev) {
        int currentIndex = athletesMembersListView.getSelectionModel().getSelectedIndex();
        if (currentIndex < 0){
            resultTextArea.setText("No athlete selected");
        }else{
-           athletesMembersListView.getItems().remove(currentIndex);
+           Athlete deletedAthlete = athletesMembersListView.getItems().remove(currentIndex); //get Athlete and remove it from listView
+           pickAthletesComboBox.getItems().add(deletedAthlete); //add Athlete to ComboBox again
+            pickAthletesComboBox.getSelectionModel().select(0); //select first athlete of the comboBox
            resultTextArea.setText("The athlete has been deleted from the team");
        }
        
@@ -418,14 +343,15 @@ public class TeamGUIController implements Initializable {
     @FXML
     private void acceptChangesActionEvent(ActionEvent ev) {      
         int teamsSelectedIndex = this.teamsListView.getSelectionModel().getSelectedIndex();
-        if (teamsSelectedIndex > 0){
+        if (teamsSelectedIndex > -1){
             Team selectedTeam = this.teamsListView.getSelectionModel().getSelectedItem();
             ArrayList<Athlete> allTeamMembers = new ArrayList<Athlete>();
-            resultTextArea.setText("The members of the team have been updated");
             for (Athlete ath: athletesMembersListView.getItems()){
                 allTeamMembers.add(ath);
             }
             selectedTeam.setMembersOfTeam(allTeamMembers);
+            this.showTeamsButtonAction(new ActionEvent()); //refresh list of teams
+            resultTextArea.setText("The members of the team have been updated");
         }else{
             resultTextArea.setText("No event selected");
         }
@@ -453,9 +379,8 @@ public class TeamGUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         searchTypeList = new ArrayList<String>();
         searchTypeList.add("Age Group"); //index 0
-        searchTypeList.add("Type");
         searchTypeList.add("Name");
-        searchTypeList.add("Sex"); //index 3
+        searchTypeList.add("Sex"); //index 2
         teamComboBox.getItems().addAll(searchTypeList);
         teamComboBox.getSelectionModel().select(0);
     
@@ -467,14 +392,7 @@ public class TeamGUIController implements Initializable {
         for (int i=0; i < ageGroupArray.length; i++){
             this.ageGroupAddComboBox.getItems().add(ageGroupArray[i].toString());
         }
-        this.ageGroupAddComboBox.getSelectionModel().select(0);
-        
-        Event.typeEnum[] typeArray = Event.typeEnum.values();
-        for (int i=0; i < typeArray.length; i++){
-            this.typeAddComboBox.getItems().add(typeArray[i].toString());
-        }
-        this.typeAddComboBox.getSelectionModel().select(0);
-        
+        this.ageGroupAddComboBox.getSelectionModel().select(0);    
         
         genderEnum[] sexArray = Event.genderEnum.values();
         for (int i=0; i < sexArray.length; i++){
@@ -494,7 +412,7 @@ public class TeamGUIController implements Initializable {
     //support method to set new filter List, matching the type of search
     //(first comboBox) the user has chosen
     private void setNewFilterList(int index){
-        if (index > -1 && index < 4){
+        if (index > -1 && index < 3){
             searchFilterList = new ArrayList<String>();
             switch (index){
                 case 0:
@@ -504,16 +422,10 @@ public class TeamGUIController implements Initializable {
                     }
                      break;
                 case 1:
-                    Event.typeEnum[] typeArray = Event.typeEnum.values();
-                    for (int i=0; i < typeArray.length; i++){
-                        searchFilterList.add(typeArray[i].toString());
-                    }
-                     break;
-                case 2:
                     //break, name doesn't have anything at second comboBox. 
                     searchFilterList.add("Use the text field below to write in the name");
                      break;
-                case 3:
+                case 2:
                     genderEnum[] sexArray = Event.genderEnum.values();
                     for (int i=0; i < sexArray.length; i++){
                         searchFilterList.add(sexArray[i].toString());
@@ -522,7 +434,7 @@ public class TeamGUIController implements Initializable {
             }
             
             //searchNameTextField is only editable when we are searching by name
-            if (index == 2){
+            if (index == 1){
                 searchNameTextField.setDisable(false);
             }else{
                 searchNameTextField.setDisable(true);
@@ -538,18 +450,15 @@ public class TeamGUIController implements Initializable {
     
     private ArrayList<Team> retrieveTeamsBySearchType(int searchTypeIndex, String filter){
         ArrayList<Team> retrievedTeams = new ArrayList<>();
-        if (searchTypeIndex > -1 && searchTypeIndex < 5){
+        if (searchTypeIndex > -1 && searchTypeIndex < 3){
             switch (searchTypeIndex){
                 case 0:
                      retrievedTeams = (ArrayList<Team>)Team.viewTeamsByAgeGroup(filter);
                      break;
                 case 1:
-                    retrievedTeams = (ArrayList<Team>)Team.viewTeamsByType(filter);
-                     break;
-                case 2:
                     retrievedTeams = (ArrayList<Team>)Team.viewTeamsByName(filter);
                      break;
-                case 3:
+                case 2:
                     retrievedTeams = (ArrayList<Team>)Team.viewTeamsByGender(filter);
                      break;
             }

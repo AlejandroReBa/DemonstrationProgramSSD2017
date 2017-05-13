@@ -17,7 +17,7 @@ public class Training implements Serializable{
     enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
     Weighting, Repetitions, Roading, Hamming};
     enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
-    
+    //no List<Athlete>...?
     private static int incrementalId = 0;
     protected static List<Training> trainingsList = new ArrayList<>();
     

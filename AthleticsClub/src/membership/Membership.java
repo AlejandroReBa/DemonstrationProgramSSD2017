@@ -19,7 +19,7 @@ public class Membership implements Serializable{
     
     public enum typeEnum {Athlete, Coach, Official, Administration, Support};
     public enum ageGroupEnum {U13, U15, U17, U20, Senior, Masters, Other};//other for no athletes
-    public enum qualificationsEnum {Coaching, Official, None}; //None for no qualified memberships
+    public enum qualificationsEnum {Coaching, Referee, Timekeeper, Starter, None}; //None for no qualified memberships
     //modify Official to TimeKeeper, Referee, Starter...An official without qualification can be a captain
     public enum sexEnum {F, M, Other};
     
@@ -28,14 +28,14 @@ public class Membership implements Serializable{
     
     protected typeEnum type = typeEnum.Support;
     
-    private int id;
-    private String name;
-    private String address;
-    private String telephone;
-    private sexEnum sex;
+    protected int id;
+    protected String name;
+    protected String address;
+    protected String telephone;
+    protected sexEnum sex;
     protected ageGroupEnum ageGroup; //for extended classes, not support membership
     protected qualificationsEnum qualification; //for extended classes, not support membership
-    private Date birthday;
+    protected Date birthday;
     
     //constructor for support
     public Membership(String nameIn, String addressIn, String telIn,
@@ -139,6 +139,7 @@ public class Membership implements Serializable{
     
     //needed to increment incrementalId variable
     //and add the deserialized Member to membersList    
+    static int total = 0;
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
         in.defaultReadObject();
         incrementalId++;
