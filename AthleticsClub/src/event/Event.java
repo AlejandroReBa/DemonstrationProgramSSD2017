@@ -34,7 +34,8 @@ public class Event implements Serializable{
     private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
     
-    private List<Team> participants; ///do we have to include participants?
+    //private List<Team> participants; ///do we have to include participants?
+    private List<Integer> participants; //list of teams. Referenced by  Id
     private int id;
     private String name;
     private typeEnum type;
@@ -77,7 +78,7 @@ public class Event implements Serializable{
         eventsList.add(this);
     }
         
-        
+    /*
     public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
             String transportIn, Date dateIn, int officialIdIn, List<Team> participantsIn){
         this.name = nameIn;
@@ -93,21 +94,33 @@ public class Event implements Serializable{
         incrementalId++; 
         eventsList.add(this);
     }
+    */
     
     public static List<Event> getEvents(){
         return eventsList;
     }
      
     public List<Team> getParticipants(){
-        return this.participants;
+        ArrayList<Team> list = new ArrayList<>();
+        ArrayList<Team> teamsList = (ArrayList<Team>) Team.getTeams();
+        System.out.println ("GOOOOOOOOOO nano");
+        for (Integer currentID : this.participants){
+            System.out.println ("GOOOOOOOOOO");
+            list.add((Team)teamsList.get(currentID));
+        }
+        return list;
     }
     
     public void setParticipants(ArrayList<Team> participantsIn){
-        this.participants = new ArrayList<Team> (participantsIn);
+        this.participants = new ArrayList<>();
+        for (Team team : participantsIn){
+            this.participants.add(team.getId());
+        }
+        //this.participants = new ArrayList<Team> (participantsIn);
     }
     
     public void addParticipant(Team participant){
-        this.participants.add(participant);
+        this.participants.add(participant.getId());
     }
         
     //attribute that can't be changed
@@ -252,7 +265,7 @@ public class Event implements Serializable{
                 this.ageGroup.toString() + ", Date: " + this.date +
                 ", Official: " + officialName + ", Transport: " + this.transport.toString()
                 + ".\nTeams:\n";
-        for (Team t : this.participants){
+        for (Team t : this.getParticipants()){
             Membership captain = Membership.getMembersList().get(t.getCaptainId());
             res += "Team name: " + t.getName() + " - Captain: " + captain.getName() + "\n";
         }

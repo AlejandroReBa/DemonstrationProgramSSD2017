@@ -255,6 +255,7 @@ public class TeamGUIController implements Initializable {
                 }
             }
             
+            pickAthletesComboBox.getItems().clear(); //clear the previous list of athletes
             pickAthletesComboBox.getItems().addAll(allAthletes);
             if (!allAthletes.isEmpty()){
                 pickAthletesComboBox.getSelectionModel().select(0);

@@ -143,6 +143,8 @@ public class Membership implements Serializable{
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
         in.defaultReadObject();
         incrementalId++;
+        System.out.println("value of incrementalId: " + incrementalId);
+        System.out.println("-->ID:" + this.getId() + " -- name: " + this.getName());
     }
 
     public void addItself(){

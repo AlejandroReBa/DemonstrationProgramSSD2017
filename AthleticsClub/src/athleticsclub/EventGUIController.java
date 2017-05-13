@@ -393,7 +393,7 @@ public class EventGUIController implements Initializable {
                 }
             }
             
-            
+            pickTeamsComboBox.getItems().clear(); //clear the previous list of teams
             pickTeamsComboBox.getItems().addAll(allTeams);
             if (!allTeams.isEmpty()){
                 pickTeamsComboBox.getSelectionModel().select(0);
@@ -450,9 +450,19 @@ public class EventGUIController implements Initializable {
             if (pickTeamsComboBox.getSelectionModel().getSelectedIndex() < 0){
                 resultTextArea.setText("No team selected");
             }else{
+                int teamIndex = pickTeamsComboBox.getSelectionModel().getSelectedIndex();
+                Team pickedTeam = pickTeamsComboBox.getItems().remove(teamIndex); //get Team and remove it from combobox
+                if (pickTeamsComboBox.getItems().size() > 0){
+                    pickTeamsComboBox.getSelectionModel().select(0); //select first athlete of the comboBox
+                }
+                teamsParticipatingListView.getItems().add(pickedTeam); //add Team to listView
+                resultTextArea.setText("The athlete has been picked");
+                
+                /*
                  Team pickedTeam = pickTeamsComboBox.getSelectionModel().getSelectedItem();
                 teamsParticipatingListView.getItems().add(pickedTeam);
                 resultTextArea.setText("The team has been picked");
+                */
             }
         }else{
             resultTextArea.setText("No event selected");
@@ -467,8 +477,14 @@ public class EventGUIController implements Initializable {
        if (currentIndex < 0){
            resultTextArea.setText("No team selected");
        }else{
+           Team deletedTeam = teamsParticipatingListView.getItems().remove(currentIndex); //get Team and remove it from listView
+           pickTeamsComboBox.getItems().add(deletedTeam); //add Team to ComboBox again
+           pickTeamsComboBox.getSelectionModel().select(0); //select first Team of the comboBox
+           resultTextArea.setText("The team has been deleted from the event");
+           /*
            teamsParticipatingListView.getItems().remove(currentIndex);
            resultTextArea.setText("The team has been deleted from the event");
+            */
        }
        
     }
@@ -479,11 +495,13 @@ public class EventGUIController implements Initializable {
         if (eventsSelectedIndex > -1){
             Event selectedEvent = this.eventsListView.getSelectionModel().getSelectedItem();
             ArrayList<Team> allParticipants = new ArrayList<Team>();
-            resultTextArea.setText("The participants for the event has been updated");
+            
             for (Team t : teamsParticipatingListView.getItems()){
                 allParticipants.add(t);
             }
             selectedEvent.setParticipants(allParticipants);
+            this.showEventsButtonAction(new ActionEvent()); //refresh list of Events
+            resultTextArea.setText("The participants for the event has been updated");
         }else{
             resultTextArea.setText("No event selected");
         }

@@ -16,13 +16,15 @@ import java.util.List;
  */
 public class Team implements Serializable{
     private static final long serialVersionUID = 7133659194365448172L;
-    private static int incrementalId = 1;
+    private static int incrementalId = 0;
     public static List<Team> teamsList = new ArrayList<>();
     
     private int id;
     private String name;
-    private List<Athlete> athletesList;
-    private List<Event> eventsList;
+    //private List<Athlete> athletesList;
+    private List<Integer> athletesList;
+    //private List<Event> eventsList;
+    private List<Integer> eventsList;
     private int captainId; //has to be an official with no qualification
     
     //private Event.typeEnum type; you dont have a type because members
@@ -30,6 +32,7 @@ public class Team implements Serializable{
     private Event.genderEnum gender;
     private Event.ageGroupRelatedEnum ageGroup;
     
+    /*
     public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn, List<Athlete> athletesListIn){
         this.name = nameIn;
         this.captainId = captainIdIn;
@@ -43,7 +46,9 @@ public class Team implements Serializable{
         incrementalId++; 
         teamsList.add(this);
     }
+*/
     
+    /*
         public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn,
                 List<Athlete> athletesListIn, List<Event> eventsListIn){
         this.name = nameIn;
@@ -58,6 +63,7 @@ public class Team implements Serializable{
         incrementalId++; 
         teamsList.add(this);
     }
+*/
     
     public Team (String nameIn, String genderIn, String ageGroupIn, int captainIdIn){
         this.name = nameIn;
@@ -65,8 +71,8 @@ public class Team implements Serializable{
         this.gender = Event.genderEnum.valueOf(genderIn);
         this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
-        this.athletesList = new ArrayList<Athlete>();
-        this.eventsList = new ArrayList<Event>();
+        this.athletesList = new ArrayList<>();
+        this.eventsList = new ArrayList<>();
         
         this.id = incrementalId;
         incrementalId++; 
@@ -90,9 +96,10 @@ public class Team implements Serializable{
     }
     
     public void addAthlete(Athlete atheleteIn){
-        this.athletesList.add(atheleteIn);
+        this.athletesList.add(atheleteIn.getId());
     }
     
+    /*not needed at the moment
     public void deleteAthlete(int athleteId){
         int athleteIndex = -1;
         int index = 0;
@@ -109,13 +116,25 @@ public class Team implements Serializable{
             this.athletesList.remove(athleteIndex);
         }
     }
+    */
     
     public void setMembersOfTeam(List<Athlete> members){
-        this.athletesList = new ArrayList<Athlete>(members);
+        this.athletesList = new ArrayList<>();
+        for (Athlete ath : members){
+            this.athletesList.add(ath.getId());
+        }
+        //this.athletesList = new ArrayList<Athlete>(members);
     }
         
     public List<Athlete> getAthletesList(){
-        return this.athletesList;
+        ArrayList<Athlete> list = new ArrayList<>();
+        ArrayList<Membership> listMembers = (ArrayList<Membership>)Membership.getMembersList();
+        System.out.println ("GOOOOOOOOOO nano");
+        for (Integer currentID : this.athletesList){
+            System.out.println ("GOOOOOOOOOO");
+            list.add((Athlete)listMembers.get(currentID));
+        }
+        return list;
     }
         
     public int getCaptainId(){
@@ -148,7 +167,7 @@ public class Team implements Serializable{
         String res = "Team Name: " + this.name + ", Captain: " + cap.getName() +
                 ", Gender: " + this.gender.toString() + ", Age Group: " +
                 this.ageGroup.toString() + ".\nAthletes List: \n";
-        for (Athlete ath : this.athletesList){
+        for (Athlete ath : this.getAthletesList()){
             res += ath.getName() + ",";
         }
         
@@ -224,5 +243,6 @@ public class Team implements Serializable{
         hash = 31 * hash + this.getId();        
         return hash;
     }
+
         
 }
