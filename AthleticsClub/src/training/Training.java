@@ -1,10 +1,13 @@
 package training;
 
+import event.Event;
+import static event.Event.eventsList;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import membership.Athlete;
 import membership.Coach;
 import membership.Membership;
 
@@ -13,18 +16,19 @@ import membership.Membership;
  * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Training implements Serializable{
-    enum typeEnum {RoadDistance, XCountryDistance, Track, Sprinting, Field, Gym};
-    enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
+    public enum typeEnum {RoadDistance, XCountryDistance, Track, Sprinting, Field, Gym};
+    public enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
     Weighting, Repetitions, Roading, Hamming};
-    enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
+    public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
     //no List<Athlete>...?
     private static int incrementalId = 0;
-    protected static List<Training> trainingsList = new ArrayList<>();
+    public static List<Training> trainingsList = new ArrayList<>();
     
     private int id;
+    private List<Integer> athletesList; //refers athletes identifiers
     private typeEnum type;
     //not initialized yet, does not exist negative ID
-    private int coachId = -1;
+    private int coachId = -1; //only one coach conduct the training
     private disciplineTrainingEnum discipline;
     private ageGroupRelatedEnum ageGroup;
     private Date date;
@@ -37,6 +41,7 @@ public class Training implements Serializable{
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
         this.date = Date.from(Instant.now());
         this.coachId = -1;
+        this.athletesList = new ArrayList<>();
         
         this.id = incrementalId;
         incrementalId++;
@@ -51,6 +56,7 @@ public class Training implements Serializable{
         this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
         this.date = dateIn;
         this.coachId = coachIdIn;
+        this.athletesList = new ArrayList<>();
         
         this.id = incrementalId;
         incrementalId++;
@@ -61,6 +67,22 @@ public class Training implements Serializable{
     //singleton pattern
     public static List<Training> getTrainingsList(){
         return trainingsList;
+    }
+    
+    public void setAthletesList(List<Athlete> members){
+        this.athletesList = new ArrayList<>();
+        for (Athlete ath : members){
+            this.athletesList.add(ath.getId());
+        }
+    }
+        
+    public List<Athlete> getAthletesList(){
+        ArrayList<Athlete> list = new ArrayList<>();
+        ArrayList<Membership> listMembers = (ArrayList<Membership>)Membership.getMembersList();
+        for (Integer currentID : this.athletesList){
+            list.add((Athlete)listMembers.get(currentID));
+        }
+        return list;
     }
     
     //attribute that can't be changed
@@ -76,12 +98,24 @@ public class Training implements Serializable{
         this.type = typeEnum.valueOf(typeIn);
     }
     
+    /*
     public int getCoach(){
         return this.coachId;
     }
+    */
     
+    public Coach getCoach(){
+        return (Coach)Membership.getMembersList().get(this.coachId);
+    }
+    
+    /*
     public void setCoach(int coachIdIn){
         this.coachId = coachIdIn;
+    }
+    */
+    
+    public void setCoach (Coach coachIn){
+        this.coachId = coachIn.getId();
     }
     
     public String getDiscipline(){
@@ -149,10 +183,29 @@ public class Training implements Serializable{
         return resTrainings;
     }
     
+    public static List<Training> viewTrainingsByCoachName(String coachName){
+        List<Training> resTrainings = new ArrayList<>();
+        int lastCharIndex = coachName.length();
+        for (Training currentTraining : trainingsList){
+            String currentCoachName = Membership.getMembersList().get(currentTraining.coachId).getName();
+            if (currentCoachName.length() >= coachName.length() &&
+                    currentCoachName.toLowerCase().substring(0, lastCharIndex)
+                    .equals(coachName.toLowerCase())){
+                resTrainings.add(currentTraining);
+            }  
+        }   
+        return resTrainings;
+    }
+    
+    
+    //TO DO
     public static List<Training> viewTrainingsByDate(Date date){
         List<Training> resTrainings = new ArrayList<>();
-        for (Training currentTraining : trainingsList){
-            if (currentTraining.date.equals(date)){ //perhaps is more complex..
+        for (Training currentTraining : trainingsList){ //fix to compare dates.......
+            //java.time.LocalDateTime first = new java.time.LocalDateTime(currentEvent.getDate());
+            //java.time.LocalDate = 
+            //java.time.DateTimeComparator.getDateOnlyInstance();
+            if (currentTraining.getDate().equals(date)){
                 resTrainings.add(currentTraining);
             }
         }

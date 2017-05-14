@@ -20,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import membership.Membership;
 import membership.Team;
+import training.Training;
 
 /**
  *
@@ -96,8 +97,21 @@ public class AthleticsClubController implements Initializable {
 
             secondStage.showAndWait();
             ((Stage) this.bTeams.getScene().getWindow()).show();
-        } else {
-            System.out.println("NOOOOOOOOOOOOOOOOOOOOOOOO WORKS :(");
+        } else  if (clickedButton.idProperty().equals(bTraining.idProperty())) {
+            TrainingGUIController trainingGUIController;
+            trainingGUIController = new TrainingGUIController();
+            
+            secondAnchorPane = trainingGUIController.getSecondAnchorPane();
+            secondStackPane = new StackPane();
+            secondStackPane.getChildren().add(secondAnchorPane);
+            secondScene = new Scene(secondStackPane);
+            secondStage = new Stage();
+            secondStage.setTitle("Training Actions");
+            secondStage.setScene(secondScene);
+            this.bTraining.getScene().getWindow().hide();
+            
+            secondStage.showAndWait();
+            ((Stage) this.bTraining.getScene().getWindow()).show();
         }
 
     }
@@ -113,6 +127,7 @@ public class AthleticsClubController implements Initializable {
         AthleticsClub.serializeMemberships((ArrayList<Membership>) Membership.getMembersList());
         AthleticsClub.serializeEvents((ArrayList<Event>) Event.getEvents());
         AthleticsClub.serializeTeams((ArrayList<Team>) Team.getTeams());
+        AthleticsClub.serializeTrainings((ArrayList<Training>)Training.getTrainingsList());
         bExit.getScene().getWindow().hide();
     }
 

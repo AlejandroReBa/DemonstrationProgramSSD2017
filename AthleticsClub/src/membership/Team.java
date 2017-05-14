@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class Team implements Serializable{
     private static final long serialVersionUID = 7133659194365448172L;

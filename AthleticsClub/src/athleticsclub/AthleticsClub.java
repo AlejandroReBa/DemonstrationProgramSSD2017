@@ -294,6 +294,7 @@ public class AthleticsClub extends Application{
         deserializeMemberships();
         deserializeEvents();
         deserializeTeams();
+        deserializeTrainings();
     }
     
     //reference: https://www.tutorialspoint.com/java/java_serialization.htm
@@ -306,7 +307,7 @@ public class AthleticsClub extends Application{
          out.writeObject(ob);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in object.ser");
+         System.out.println("Serialized data is saved in object.ser");
       }catch(IOException i) {
          i.printStackTrace();
       }
@@ -341,7 +342,7 @@ public class AthleticsClub extends Application{
          out.writeObject(membershipsList);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in memberships.ser");
+         System.out.println("Serialized data is saved in memberships.ser");
       }catch(IOException i) {
           System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
          i.printStackTrace();
@@ -383,7 +384,7 @@ public class AthleticsClub extends Application{
          out.writeObject(eventsList);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in events.ser");
+         System.out.println("Serialized data is saved in events.ser");
       }catch(IOException i) {
           System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
          i.printStackTrace();
@@ -427,7 +428,7 @@ public class AthleticsClub extends Application{
          out.writeObject(teamsList);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in teams.ser");
+         System.out.println("Serialized data is saved in teams.ser");
       }catch(IOException i) {
           System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
          i.printStackTrace();
@@ -459,5 +460,44 @@ public class AthleticsClub extends Application{
       }
       
       return teamsList;
+    }
+    
+    
+     //serialize List<Event>
+    public static void serializeTrainings(ArrayList<Training> trainingsList){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("trainings.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(trainingsList);
+         out.close();
+         fileOut.close();
+         System.out.println("Serialized data is saved in trainings.ser");
+      }catch(IOException i) {
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
+         i.printStackTrace();
+      }
+    }
+    
+     //deserialize List<Event>
+    public static ArrayList<Training> deserializeTrainings(){
+        ArrayList<Training> trainingsList = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("trainings.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         trainingsList = (ArrayList<Training>)in.readObject();
+         //added to insert deserialized trainings into static eventsList
+         Training.trainingsList = new ArrayList<>(trainingsList);
+
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("Training class not found");
+         c.printStackTrace();
+      }
+      
+      return trainingsList;
     }
 }

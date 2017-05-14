@@ -522,6 +522,7 @@ public class EventGUIController implements Initializable {
         AthleticsClub.serializeMemberships((ArrayList<Membership>)Membership.getMembersList());
         AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
         AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
+        AthleticsClub.serializeTrainings((ArrayList<Training>)Training.getTrainingsList());
         System.exit(0);
     }
 

@@ -23,15 +23,17 @@ public class Coach extends Membership implements Serializable{ //delete elements
     private static final long serialVersionUID = 42L;
     
     public static List<Coach> coachsList = new ArrayList<>();
-    private List<Training> trainingsList;
-    private List<Event> eventsList; //needed? no really
-    private List<Athlete> athletesList;
+    //private List<Training> trainingsList;
+    private List<Integer> trainingsList;
+    //private List<Event> eventsList; //needed? no really
+    //private List<Athlete> athletesList;
+    private List<Integer> athletesList;
 
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Coach;
         this.trainingsList = new ArrayList<>();
-        this.eventsList = new ArrayList<>();
+        //this.eventsList = new ArrayList<>();
         this.athletesList = new ArrayList<>();
         Membership.membersList.add(this);
         coachsList.add(this);
@@ -43,12 +45,13 @@ public class Coach extends Membership implements Serializable{ //delete elements
         type = typeEnum.Coach;
         qualification = qualificationsEnum.valueOf(qualificationIn);
         this.trainingsList = new ArrayList<>();
-        this.eventsList = new ArrayList<>();
+        //this.eventsList = new ArrayList<>();
         this.athletesList = new ArrayList<>();
         Membership.membersList.add(this);
         coachsList.add(this);
     }
     
+    /*
     public Coach(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn,
             String qualificationIn, List<Training> trainingsListIn,
             List<Event> eventsListIn, List<Athlete> athletesListIn) {
@@ -56,24 +59,31 @@ public class Coach extends Membership implements Serializable{ //delete elements
         type = typeEnum.Coach;
         qualification = qualificationsEnum.valueOf(qualificationIn);
         this.trainingsList = new ArrayList<>(trainingsListIn);
-        this.eventsList = new ArrayList<>(eventsListIn);
+        //this.eventsList = new ArrayList<>(eventsListIn);
         this.athletesList = new ArrayList<>(athletesListIn);
         Membership.membersList.add(this);
         coachsList.add(this);
     }
+    */
     
     public static List<Coach> getCoachsList(){
         return coachsList;
     }
     
     public List<Training> getTrainingsList(){
-        return this.trainingsList;
+        ArrayList<Training> list = new ArrayList<>();
+        ArrayList<Training> completeTrainingList = (ArrayList<Training>)Training.getTrainingsList();
+        for (Integer currentID : this.trainingsList){
+            list.add((Training)completeTrainingList.get(currentID));
+        }
+        return list;
     }
     
     public void addTraining(Training trainingIn){
-        this.trainingsList.add(trainingIn);
+        this.trainingsList.add(trainingIn.getId());
     }
     
+    /*
     public List<Event> getEventsList(){
         return this.eventsList;
     }
@@ -81,13 +91,19 @@ public class Coach extends Membership implements Serializable{ //delete elements
     public void addEvent(Event eventIn){
         this.eventsList.add(eventIn);
     }
+    */
     
     public List<Athlete> getAthletesList(){
-        return this.athletesList;
+        ArrayList<Athlete> list = new ArrayList<>();
+        ArrayList<Membership> listMembers = (ArrayList<Membership>)Membership.getMembersList();
+        for (Integer currentID : this.athletesList){
+            list.add((Athlete)listMembers.get(currentID));
+        }
+        return list;
     }
     
     public void addAthlete(Athlete athleteIn){
-        this.athletesList.add(athleteIn);
+        this.athletesList.add(athleteIn.getId());
     }
     
     @Override

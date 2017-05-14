@@ -205,10 +205,8 @@ public class Event implements Serializable{
                     currentName.toLowerCase().substring(0, lastCharIndex)
                     .equals(name.toLowerCase())){
                 resEvents.add(currentEvent);
-            }
-            
-        }
-        
+            }  
+        }   
         return resEvents;
     }
     
@@ -242,6 +240,7 @@ public class Event implements Serializable{
         return resEvents;
     }
     
+    //to do
     public static List<Event> viewEventsByDate(Date date){
         List<Event> resEvents = new ArrayList<>();
         for (Event currentEvent : eventsList){ //fix to compare dates.......
