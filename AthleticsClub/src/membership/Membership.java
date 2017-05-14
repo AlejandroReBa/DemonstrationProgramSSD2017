@@ -139,7 +139,6 @@ public class Membership implements Serializable{
     
     //needed to increment incrementalId variable
     //and add the deserialized Member to membersList    
-    static int total = 0;
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
         in.defaultReadObject();
         incrementalId++;

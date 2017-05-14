@@ -50,6 +50,7 @@ import membership.Official;
 import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
+import training.TrainingRecord;
 
 /**
  * FXML Controller class
@@ -523,6 +524,7 @@ public class EventGUIController implements Initializable {
         AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
         AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
         AthleticsClub.serializeTrainings((ArrayList<Training>)Training.getTrainingsList());
+        AthleticsClub.serializeTrainingRecords((ArrayList<TrainingRecord>) TrainingRecord.getTrainingRecords());
         System.exit(0);
     }
 

@@ -50,6 +50,7 @@ import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
 import training.Training.disciplineTrainingEnum;
+import training.TrainingRecord;
 
 /**
  * FXML Controller class
@@ -377,6 +378,9 @@ public class TrainingGUIController implements Initializable {
                 selectAthleteComboBox.getSelectionModel().select(0);
             }
             
+            //you need to select and athlete and click accept before be able of writting the record
+            recordTextArea.setDisable(true);
+            recordTextArea.setText("New Record: ");
             
             resultTextArea.setText("The training details have been loaded into left fields");
         }
@@ -391,15 +395,54 @@ public class TrainingGUIController implements Initializable {
         }
     }
     
-    
+   
+    //method to manage "Add new record" GUI feature
+     @FXML
+     private void selectAthleteComboBoxChanges (){
+         if (!trainingsListView.getItems().isEmpty() &&
+                 selectAthleteComboBox.getSelectionModel().getSelectedIndex() > -1) {
+            recordTextArea.setDisable(true);
+            recordTextArea.setText("New Record: ");
+        }
+     }
+     
      @FXML
      private void selectAthleteActionEvent (ActionEvent ev){
+         if (!trainingsListView.getItems().isEmpty() && 
+                 selectAthleteComboBox.getSelectionModel().getSelectedIndex() > -1) {
+            recordTextArea.setDisable(false);
+            recordTextArea.setText("New Record: ");
+            recordTextArea.setEditable(true);
+            Athlete currentAthlete = selectAthleteComboBox.getSelectionModel().getSelectedItem();
+            Coach currentCoach = trainingsListView.getSelectionModel().getSelectedItem().getCoach();
+            resultTextArea.setText("Writting a new record of Athlete \"" + 
+                    currentAthlete.getName() + "\" - by Coach \"" + currentCoach.getName() + "\"");
+         }else{
+             resultTextArea.setText("Sorry, you haven't selected an athlete from"
+                     + " this training to write a record.\nSelect first and try again");
+         }
          
      }
      
      @FXML
      private void saveRecordActionEvent (ActionEvent ev){
-         
+         if (trainingsListView.getSelectionModel().getSelectedIndex() > -1 && 
+                 selectAthleteComboBox.getSelectionModel().getSelectedIndex() > -1) {
+            Athlete currentAthlete = selectAthleteComboBox.getSelectionModel().getSelectedItem();
+            Training currentTraining = trainingsListView.getSelectionModel().getSelectedItem();
+            Coach currentCoach = trainingsListView.getSelectionModel().getSelectedItem().getCoach();
+            String record = recordTextArea.getText();
+            new TrainingRecord (currentAthlete.getId(), currentCoach.getId(),
+                    currentTraining.getId(), record);
+            resultTextArea.setText("You have added a record of Athlete \"" + 
+                    currentAthlete.getName() + "\" - by Coach \"\n" +
+                    currentCoach.getName() + "\" at current training of \"" +
+                    currentTraining.getType() + "\" for \"" +
+                    currentTraining.getDiscipline() + "\"");
+         }else{
+             resultTextArea.setText("Sorry, you haven't selected an athlete from"
+                     + " this training to write a record.\nSelect first and try again");
+         }
      }
      
      
@@ -436,7 +479,7 @@ public class TrainingGUIController implements Initializable {
            Athlete deletedAthlete = athletesTrainingListView.getItems().remove(currentIndex); //get Athlete and remove it from listView
            pickAthletesComboBox.getItems().add(deletedAthlete); //add Athlete to ComboBox again
            pickAthletesComboBox.getSelectionModel().select(0); //select first athlete of the comboBox
-           resultTextArea.setText("The athlete has been deleted from the team");
+           resultTextArea.setText("The athlete has been deleted from the training");
        }
        
     }
@@ -452,9 +495,9 @@ public class TrainingGUIController implements Initializable {
             }
             selectedTraining.setAthletesList(allAthletesTraining);
             this.showTrainingsButtonAction(new ActionEvent()); //refresh list of trainings. More/less artist for write records..
-            resultTextArea.setText("The members of the team have been updated");
+            resultTextArea.setText("The athletes of the training have been updated");
         }else{
-            resultTextArea.setText("No event selected");
+            resultTextArea.setText("No athlete selected");
         }
         
     }
@@ -474,6 +517,7 @@ public class TrainingGUIController implements Initializable {
         AthleticsClub.serializeEvents((ArrayList<Event>)Event.getEvents());
         AthleticsClub.serializeTeams((ArrayList<Team>)Team.getTeams());
         AthleticsClub.serializeTrainings((ArrayList<Training>)Training.getTrainingsList());
+        AthleticsClub.serializeTrainingRecords((ArrayList<TrainingRecord>) TrainingRecord.getTrainingRecords());
         System.exit(0);
     }
 

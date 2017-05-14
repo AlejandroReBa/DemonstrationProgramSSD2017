@@ -2,6 +2,8 @@ package training;
 
 import event.Event;
 import static event.Event.eventsList;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -220,7 +222,7 @@ public class Training implements Serializable{
         }else{
             coach = "NO COACH ASSIGNED";
         }
-        String res = "TRAINING. Type: " + this.getType()
+        String res = "Type: " + this.getType()
                 + ", Discipline: " + this.getDiscipline()
                 + ", Age Group: " + this.getAgeGroup()
                 + ", Date: " + this.getDate()
@@ -229,4 +231,9 @@ public class Training implements Serializable{
         return res;
     }
     
+    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+            in.defaultReadObject();
+            incrementalId++;
+    }
 }

@@ -277,10 +277,12 @@ public class Event implements Serializable{
         incrementalId++;
     }
     
+    /* dont needed
     //and add the deserialized Event to events List 
     public void addItself(){
         eventsList.add(this);
     }
+    */
     
     
 }

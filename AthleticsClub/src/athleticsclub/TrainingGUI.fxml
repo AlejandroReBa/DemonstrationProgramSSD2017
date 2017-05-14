@@ -70,7 +70,7 @@
          </children>
       </GridPane>
       <Label layoutX="354.0" layoutY="418.0" prefHeight="17.0" prefWidth="173.0" text="Select athlete to write a record:" />
-      <ComboBox fx:id="selectAthleteComboBox" layoutX="354.0" layoutY="436.0" prefHeight="25.0" prefWidth="173.0" />
+      <ComboBox fx:id="selectAthleteComboBox" layoutX="354.0" layoutY="436.0" onHidden="#selectAthleteComboBoxChanges" prefHeight="25.0" prefWidth="173.0" />
       <Button fx:id="selectAthleteButton" layoutX="354.0" layoutY="469.0" mnemonicParsing="false" onAction="#selectAthleteActionEvent" text="Select" />
       <Label layoutX="538.0" layoutY="418.0" text="New record of selected athlete at current training:" />
       <Button fx:id="saveRecordButton" layoutX="423.0" layoutY="469.0" mnemonicParsing="false" onAction="#saveRecordActionEvent" text="Save new record" />

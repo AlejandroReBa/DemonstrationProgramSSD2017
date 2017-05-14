@@ -31,6 +31,7 @@ import membership.Official;
 import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
+import training.TrainingRecord;
 
 /**
  *
@@ -295,6 +296,13 @@ public class AthleticsClub extends Application{
         deserializeEvents();
         deserializeTeams();
         deserializeTrainings();
+        deserializeTrainingRecords();
+        
+        
+        for (TrainingRecord record : TrainingRecord.getTrainingRecords()){
+            System.out.println(record + "\n");
+        }
+        
     }
     
     //reference: https://www.tutorialspoint.com/java/java_serialization.htm
@@ -400,12 +408,6 @@ public class AthleticsClub extends Application{
          eventsList = (ArrayList<Event>)in.readObject();
          //added to insert deserialized events into static eventsList
          Event.eventsList = new ArrayList<>(eventsList);
-         /*
-         for(Event e : eventsList){
-             e.addItself();
-         }
-        */
-         //although is a little bit dirty though...
          in.close();
          fileIn.close();
       }catch(IOException i) {
@@ -419,7 +421,7 @@ public class AthleticsClub extends Application{
     }
     
     
-    //serialize List<Event>
+    //serialize List<Team>
     public static void serializeTeams(ArrayList<Team> teamsList){
         try {
          FileOutputStream fileOut =
@@ -435,7 +437,7 @@ public class AthleticsClub extends Application{
       }
     }
     
-     //deserialize List<Event>
+     //deserialize List<Team>
     public static ArrayList<Team> deserializeTeams(){
         ArrayList<Team> teamsList = null;
       try {
@@ -463,7 +465,7 @@ public class AthleticsClub extends Application{
     }
     
     
-     //serialize List<Event>
+     //serialize List<Training>
     public static void serializeTrainings(ArrayList<Training> trainingsList){
         try {
          FileOutputStream fileOut =
@@ -479,7 +481,7 @@ public class AthleticsClub extends Application{
       }
     }
     
-     //deserialize List<Event>
+     //deserialize List<Training>
     public static ArrayList<Training> deserializeTrainings(){
         ArrayList<Training> trainingsList = null;
       try {
@@ -499,5 +501,43 @@ public class AthleticsClub extends Application{
       }
       
       return trainingsList;
+    }
+    
+     //serialize List<TrainingRecord>
+    public static void serializeTrainingRecords(ArrayList<TrainingRecord> trainingRecordsList){
+        try {
+         FileOutputStream fileOut =
+         new FileOutputStream("trainingRecords.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(trainingRecordsList);
+         out.close();
+         fileOut.close();
+         System.out.println("Serialized data is saved in trainingRecords.ser");
+      }catch(IOException i) {
+          System.err.println("-----------------------------> FAIL ERROR NOT SERIALIZED");
+         i.printStackTrace();
+      }
+    }
+    
+     //deserialize List<TrainingRecord>
+    public static ArrayList<TrainingRecord> deserializeTrainingRecords(){
+        ArrayList<TrainingRecord> trainingRecordsList = null;
+      try {
+         FileInputStream fileIn = new FileInputStream("trainingRecords.ser");
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         trainingRecordsList = (ArrayList<TrainingRecord>)in.readObject();
+         //added to insert deserialized trainings into static eventsList
+         TrainingRecord.trainingRecordsList = new ArrayList<>(trainingRecordsList);
+
+         in.close();
+         fileIn.close();
+      }catch(IOException i) {
+         i.printStackTrace();
+      }catch(ClassNotFoundException c) {
+         System.out.println("TrainingRecord class not found");
+         c.printStackTrace();
+      }
+      
+      return trainingRecordsList;
     }
 }

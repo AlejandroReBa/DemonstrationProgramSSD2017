@@ -5,16 +5,22 @@
  */
 package training;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import membership.Membership;
 
 /**
  *
  * @author Alejandro Reyes (AlejandroReBa)
  */
-public class TrainingRecord implements Serializable{ //another class because "Coaches hold separate records relating to their athletes, training routine..."
-    private static List<TrainingRecord> trainingRecordsList;
-    private static int incrementalId = 1;
+public class TrainingRecord implements Serializable{ 
+//another class because "Coaches hold separate records relating to their athletes, training routine..."
+    private static final long serialVersionUID = 42L;
+    public static List<TrainingRecord> trainingRecordsList = new ArrayList<>();
+    private static int incrementalId = 0;
     
     private int id;
     private int athleteId;
@@ -35,6 +41,10 @@ public class TrainingRecord implements Serializable{ //another class because "Co
         
     }
     
+    public static List<TrainingRecord> getTrainingRecords(){
+        return trainingRecordsList;
+    }
+    
     ///Should I to add getTrainingRecordbyId, or viewTrainingRecord by coach, athlete...?
     public int getAthleteId(){
         return this.athleteId;
@@ -50,5 +60,24 @@ public class TrainingRecord implements Serializable{ //another class because "Co
     
     public String getRecord(){
         return this.record;
+    }
+    
+    public String toString(){ //do not forget about serialize/deserialize trainingRecord...
+        String res = "";
+        ArrayList<Membership> members  = (ArrayList<Membership>)Membership.getMembersList();
+        Training training = Training.getTrainingsList().get(this.trainingId);
+        res += "Athlete: " + members.get(this.athleteId).getName();
+        res += " - Coach: " + members.get(this.coachId).getName();
+        res += " - Training: \"" + training.getType() + " - " +
+                training.getDiscipline() + "\"";
+        res += "\nDate: " + training.getDate();
+        res += "\nRecord: \n" + this.record;
+        
+        return res;
+    }
+    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        incrementalId++;
     }
 }
