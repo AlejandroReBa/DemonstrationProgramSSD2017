@@ -43,7 +43,7 @@
          </font>
       </Text>
       <Button fx:id="bExit" layoutX="34.0" layoutY="350.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" prefHeight="25.0" prefWidth="150.0" text="Exit" />
-      <Label layoutX="79.0" layoutY="209.0" prefHeight="20.0" prefWidth="98.0" text="Manage Teams">
+      <Label layoutX="79.0" layoutY="209.0" prefHeight="20.0" prefWidth="98.0" text="Manage Teams:">
          <font>
             <Font size="14.0" />
          </font>

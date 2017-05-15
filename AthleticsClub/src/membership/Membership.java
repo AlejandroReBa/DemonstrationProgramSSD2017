@@ -57,6 +57,22 @@ public class Membership implements Serializable{
         }
     }
     
+    //constructor for unit testing
+    public Membership(String nameIn){
+        this.name = nameIn;
+        this.address = "address";
+        this.telephone = "telephone";
+        this.sex = sexEnum.Other;
+        this.birthday = new Date();
+        this.ageGroup = ageGroupEnum.Other;
+        this.qualification = qualificationsEnum.None;
+        
+        this.id = incrementalId;
+        incrementalId++;
+ 
+        membersList.add(this);
+    }
+    
     public static List<Membership> getMembersList(){
         return membersList;
     }
