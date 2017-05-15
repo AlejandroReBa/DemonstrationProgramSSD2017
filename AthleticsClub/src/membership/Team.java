@@ -6,9 +6,12 @@
 package membership;
 
 import event.Event;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import static membership.Membership.incrementalId;
 
 /**
  *
@@ -242,6 +245,13 @@ public class Team implements Serializable{
         int hash = 7;
         hash = 31 * hash + this.getId();        
         return hash;
+    }
+    
+    //needed to increment incrementalId variable
+    //and add the deserialized Team to teamsList    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
+        in.defaultReadObject();
+        incrementalId++;
     }
 
         

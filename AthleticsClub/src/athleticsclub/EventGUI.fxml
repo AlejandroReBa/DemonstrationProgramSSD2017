@@ -65,13 +65,12 @@
             <DatePicker fx:id="addDateDatePicker" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Type:" GridPane.rowIndex="3" />
             <Label prefHeight="17.0" prefWidth="69.0" text="Age Group:" GridPane.rowIndex="4" />
-            <ComboBox fx:id="typeAddComboBox" onHiding="#organisationComboBoxHide" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="typeAddComboBox" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <ComboBox fx:id="ageGroupAddComboBox" prefHeight="25.0" prefWidth="221.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Gender" GridPane.rowIndex="2" />
             <ComboBox fx:id="sexAddComboBox" prefHeight="25.0" prefWidth="222.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Transport: " GridPane.rowIndex="5" />
             <ComboBox fx:id="transportAddComboBox" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label prefHeight="17.0" prefWidth="63.0" text="official???" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <Label layoutX="364.0" layoutY="426.0" text="Pick teams:" />

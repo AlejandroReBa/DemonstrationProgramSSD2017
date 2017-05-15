@@ -355,7 +355,7 @@ public class TeamGUIController implements Initializable {
             this.showTeamsButtonAction(new ActionEvent()); //refresh list of teams
             resultTextArea.setText("The members of the team have been updated");
         }else{
-            resultTextArea.setText("No event selected");
+            resultTextArea.setText("No team selected");
         }
         
     }
