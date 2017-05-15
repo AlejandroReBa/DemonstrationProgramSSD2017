@@ -30,23 +30,13 @@ import training.TrainingRecord;
 public class AthleticsClubController implements Initializable {
 
     @FXML
-    private Button bEvent, bTraining, bMembership, bTeams;
+    private Button bEvent, bTraining, bMembership, bTeams, bTrainingRecord;
 
     @FXML
     private Button bExit;
 
     @FXML
-    private Label label;
-
-    @FXML
     private void handleButtonAction(ActionEvent event) {
-        /*
-        System.out.println("You clicked me!");
-        for (Membership m : Membership.getMembersList()){
-            System.out.println(m);
-        }
-        label.setText("Hello World!");
-         */
         AnchorPane secondAnchorPane;
         StackPane secondStackPane;
         Scene secondScene;
@@ -113,6 +103,21 @@ public class AthleticsClubController implements Initializable {
             
             secondStage.showAndWait();
             ((Stage) this.bTraining.getScene().getWindow()).show();
+        } else if (clickedButton.idProperty().equals(bTrainingRecord.idProperty())){
+            TrainingRecordGUIController trainingRecordGUIController;
+            trainingRecordGUIController = new TrainingRecordGUIController();
+            
+            secondAnchorPane = trainingRecordGUIController.getSecondAnchorPane();
+            secondStackPane = new StackPane();
+            secondStackPane.getChildren().add(secondAnchorPane);
+            secondScene = new Scene(secondStackPane);
+            secondStage = new Stage();
+            secondStage.setTitle("View of Training Records");
+            secondStage.setScene(secondScene);
+            this.bTrainingRecord.getScene().getWindow().hide();
+            
+            secondStage.showAndWait();
+            ((Stage) this.bTrainingRecord.getScene().getWindow()).show();
         }
 
     }

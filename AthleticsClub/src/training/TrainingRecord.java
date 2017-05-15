@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import membership.Athlete;
+import membership.Coach;
 import membership.Membership;
 
 /**
@@ -50,12 +52,24 @@ public class TrainingRecord implements Serializable{
         return this.athleteId;
     }
     
+    public Athlete getAthlete(){
+        return (Athlete)Membership.getMembersList().get(this.athleteId);
+    }
+    
     public int getCoachId(){
         return this.coachId;
     }
     
+    public Coach getCoach(){
+        return (Coach)Membership.getMembersList().get(this.coachId);
+    }
+    
     public int getTrainingId(){
         return this.trainingId;
+    }
+    
+    public Training getTraining(){
+        return (Training)Training.getTrainingsList().get(this.trainingId);
     }
     
     public String getRecord(){
@@ -71,7 +85,7 @@ public class TrainingRecord implements Serializable{
         res += " - Training: \"" + training.getType() + " - " +
                 training.getDiscipline() + "\"";
         res += "\nDate: " + training.getDate();
-        res += "\nRecord: \n" + this.record;
+        //res += "\nRecord: \n" + this.record;
         
         return res;
     }
@@ -79,5 +93,49 @@ public class TrainingRecord implements Serializable{
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
         in.defaultReadObject();
         incrementalId++;
+    }
+    
+    public static List<TrainingRecord> viewTrainingRecordsByType(String type){
+        List<TrainingRecord> resTrainingRecords = new ArrayList<>();
+        for (TrainingRecord currentTrainingRecord : trainingRecordsList){
+            if (currentTrainingRecord.getTraining().getType().equals(type)){
+                resTrainingRecords.add(currentTrainingRecord);
+            }
+        }
+        return resTrainingRecords;
+    }
+    
+    public static List<TrainingRecord> viewTrainingRecordsByDiscipline(String discipline){
+        List<TrainingRecord> resTrainingRecords = new ArrayList<>();
+        for (TrainingRecord currentTrainingRecord : trainingRecordsList){
+            if (currentTrainingRecord.getTraining().getDiscipline().equals(discipline)){
+                resTrainingRecords.add(currentTrainingRecord);
+            }
+        }
+        return resTrainingRecords;
+    }
+    
+    public static List<TrainingRecord> viewTrainingRecordsByAgeGroup(String ageGroup){
+        List<TrainingRecord> resTrainingRecords = new ArrayList<>();
+        for (TrainingRecord currentTrainingRecord : trainingRecordsList){
+            if (currentTrainingRecord.getTraining().getAgeGroup().equals(ageGroup)){
+                resTrainingRecords.add(currentTrainingRecord);
+            }
+        }
+        return resTrainingRecords;
+    }
+    
+    public static List<TrainingRecord> viewTrainingsByCoachName(String coachName){
+        List<TrainingRecord> resTrainingRecords = new ArrayList<>();
+        int lastCharIndex = coachName.length();
+        for (TrainingRecord currentTrainingRecord : trainingRecordsList){
+            String currentCoachName = Membership.getMembersList().get(currentTrainingRecord.coachId).getName();
+            if (currentCoachName.length() >= coachName.length() &&
+                    currentCoachName.toLowerCase().substring(0, lastCharIndex)
+                    .equals(coachName.toLowerCase())){
+                resTrainingRecords.add(currentTrainingRecord);
+            }  
+        }   
+        return resTrainingRecords;
     }
 }
