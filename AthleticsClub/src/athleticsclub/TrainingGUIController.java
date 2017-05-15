@@ -11,10 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -22,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -32,21 +29,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
 import event.Event.ageGroupRelatedEnum;
-import event.Event.genderEnum;
 import java.util.ArrayList;
 import membership.Athlete;
 import membership.Coach;
-import membership.Membership.ageGroupEnum;
-import membership.Membership.qualificationsEnum;
-import membership.Membership.sexEnum;
-import membership.Membership.typeEnum;
-import membership.Official;
-import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
 import training.Training.disciplineTrainingEnum;
@@ -55,7 +43,7 @@ import training.TrainingRecord;
 /**
  * FXML Controller class
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class TrainingGUIController implements Initializable {
 
@@ -71,32 +59,7 @@ public class TrainingGUIController implements Initializable {
         
         try {
             loader.load();
-            
-            //here or at initialize?
-            
-            
-            /*
-            ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
-            for (int i=0; i<ageGroupArray.length; i++){
-                     searchFilterList.add(ageGroupArray[i].toString());
-                }
-            membershipFilterComboBox.getItems().addAll(searchFilterList);
-            membershipFilterComboBox.getSelectionModel().select(0);
-            /*
-            for (Organisation org : Organisation.findAllOrganisation()) {
-            organisationComboBox.getItems().add(org);
-            }
-            if (!organisationComboBox.getItems().isEmpty()) {
-            organisationComboBox.getSelectionModel().select(0);
-            Organisation selectedOrganisation = organisationComboBox.getItems().get(0);
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-                
-        }*/
+
         } catch (IOException ex) {
             Logger.getLogger(AthleticsClubController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,16 +78,6 @@ public class TrainingGUIController implements Initializable {
     public AnchorPane getSecondAnchorPane() {
         return this.SecondAnchorPane;
     }
-
-    @FXML
-    Button buttonNext;
-
-    /*
-    @FXML
-    public void disableButtonNext() {
-        this.buttonNext.disableProperty().set(true);
-    }
-    */
 
     @FXML
     Button buttonReturn, showTrainingsButton, searchTrainingsButton;
@@ -158,12 +111,6 @@ public class TrainingGUIController implements Initializable {
     
     @FXML
     ComboBox<Athlete> selectAthleteComboBox,pickAthletesComboBox;
-    
-    //@FXML
-    //ComboBox<Organisation> organisationComboBox;
-
-    //FXML
-    //ComboBox<Event> eventComboBox;
 
     @FXML
     private void showTrainingsButtonAction(ActionEvent event) {
@@ -313,26 +260,7 @@ public class TrainingGUIController implements Initializable {
             typeAddComboBox.getSelectionModel().select(selectedTraining.getType());
             ageGroupAddComboBox.getSelectionModel().select(selectedTraining.getAgeGroup());
             coachAddComboBox.getSelectionModel().select(selectedTraining.getCoach());
-            
-            /*
-            teamsParticipatingListView.getItems().clear();
-            for (Team t: selectedTraining.getParticipants()){
-                teamsParticipatingListView.getItems().add(t);
-            }
-            */
-            
-            /*
-             //to display at ComboBox teams are not already in only
-            ArrayList<Team> teamsAlreadyIn = (ArrayList<Team>) selectedTraining.getParticipants();
-            ArrayList<Team> allTeams = new ArrayList<>();
-            for (Team t : Team.getTeams()){
-                if (!teamsAlreadyIn.contains(t)){ //need to override equals/hashCode at Team
-                    allTeams.add(t);
-                }
-            }
-            */
-            
-            //note ee
+
             
             athletesTrainingListView.getItems().clear();
             for (Athlete t : selectedTraining.getAthletesList()){

@@ -47,7 +47,6 @@ public class TrainingRecord implements Serializable{
         return trainingRecordsList;
     }
     
-    ///Should I to add getTrainingRecordbyId, or viewTrainingRecord by coach, athlete...?
     public int getAthleteId(){
         return this.athleteId;
     }
@@ -76,7 +75,7 @@ public class TrainingRecord implements Serializable{
         return this.record;
     }
     
-    public String toString(){ //do not forget about serialize/deserialize trainingRecord...
+    public String toString(){
         String res = "";
         ArrayList<Membership> members  = (ArrayList<Membership>)Membership.getMembersList();
         Training training = Training.getTrainingsList().get(this.trainingId);

@@ -11,10 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -22,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -32,8 +29,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
 import java.util.ArrayList;
@@ -68,32 +63,7 @@ public class MembershipGUIController implements Initializable {
         
         try {
             loader.load();
-            
-            //here or at initialize?
-            
-            
-            /*
-            ageGroupEnum[] ageGroupArray = Membership.ageGroupEnum.values();
-            for (int i=0; i<ageGroupArray.length; i++){
-                     searchFilterList.add(ageGroupArray[i].toString());
-                }
-            membershipFilterComboBox.getItems().addAll(searchFilterList);
-            membershipFilterComboBox.getSelectionModel().select(0);
-            /*
-            for (Organisation org : Organisation.findAllOrganisation()) {
-            organisationComboBox.getItems().add(org);
-            }
-            if (!organisationComboBox.getItems().isEmpty()) {
-            organisationComboBox.getSelectionModel().select(0);
-            Organisation selectedOrganisation = organisationComboBox.getItems().get(0);
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-                
-        }*/
+
         } catch (IOException ex) {
             Logger.getLogger(AthleticsClubController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,13 +85,6 @@ public class MembershipGUIController implements Initializable {
 
     @FXML
     Button buttonNext;
-
-    /*
-    @FXML
-    public void disableButtonNext() {
-        this.buttonNext.disableProperty().set(true);
-    }
-    */
 
     @FXML
     Button buttonReturn, showMembershipsButton, searchMembershipsButton;
@@ -149,11 +112,6 @@ public class MembershipGUIController implements Initializable {
     ComboBox<String> sexAddComboBox, typeAddComboBox, ageGroupAddComboBox,
             qualificationAddComboBox;
     
-    //@FXML
-    //ComboBox<Organisation> organisationComboBox;
-
-    //FXML
-    //ComboBox<Event> eventComboBox;
 
     @FXML
     private void showMembershipsButtonAction(ActionEvent event) {      
@@ -166,53 +124,6 @@ public class MembershipGUIController implements Initializable {
         if (membershipsListView.getItems().size() > 0){
             membershipsListView.getSelectionModel().select(0);
         }
-        /*
-        organisationComboBox.getItems().clear();
-        eventComboBox.getItems().clear();
-        */
-
-        /*
-        
-        for (Organisation org : Organisation.findAllOrganisation()) {
-            organisationComboBox.getItems().add(org);
-            for (Agent agent : org.findAllAgent()) {
-                agentsListView.getItems().add(agent);
-            }
-        }
-
-        if (!organisationComboBox.getItems().isEmpty()) {
-            organisationComboBox.getSelectionModel().select(0);
-            Organisation selectedOrganisation = organisationComboBox.getItems().get(0);
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-
-        }
-
-        if (!agentsListView.getItems().isEmpty()) {
-            agentsListView.getSelectionModel().select(0);
-            Agent selectedAgent = agentsListView.getItems().get(0);
-            nameTextField.setText(selectedAgent.getName());
-
-            Date selectedBirthday = selectedAgent.getBirthday();
-
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-            String birthdayString = format.format(selectedBirthday);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate localDate = LocalDate.parse(birthdayString, formatter);
-
-            birthdayDatePicker.setValue(localDate);
-
-            telNumberTextField.setText(selectedAgent.getTelNumber());
-
-            //buttonReturn.getScene().getWindow().hide();
-        }
-        */
     }
 
     @FXML
@@ -299,7 +210,6 @@ public class MembershipGUIController implements Initializable {
                 //exception never reached due to the use of a DatePicker
             }
 
-            //buttonReturn.getScene().getWindow().hide();
         }
         
 
@@ -336,21 +246,6 @@ public class MembershipGUIController implements Initializable {
         if (membershipsListView.getItems().size() > 0){
             membershipsListView.getSelectionModel().select(0);
         }
-        
-        /*
-        if (!agentsListView.getItems().isEmpty()) {
-            int selectedIndex = agentsListView.getSelectionModel().getSelectedIndex();
-            Agent selectedAgent = agentsListView.getItems().get(selectedIndex);
-            for (Organisation org : Organisation.findAllOrganisation()) {
-                org.deleteAgent(selectedAgent);
-            }
-            this.showAgentsButtonAction(new ActionEvent());
-
-            resultTextArea.setText("The agent has been deleted successfully");
-
-            //buttonReturn.getScene().getWindow().hide();
-        }
-        */
     }
 
     @FXML
@@ -379,8 +274,7 @@ public class MembershipGUIController implements Initializable {
             ageGroupAddComboBox.getSelectionModel().select(selectedMembership.getAgeGroup());
             qualificationAddComboBox.getSelectionModel().select(selectedMembership.getQualification());
             resultTextArea.setText("The membership details have been loaded into"
-                    + " left fields --ID:" + selectedMembership.getId() +
-                    "total account: " + Membership.incrementalId + " - athletes size: " + Athlete.getAthletesList().size());
+                    + " left fields");
         }
     }
     
@@ -389,39 +283,9 @@ public class MembershipGUIController implements Initializable {
         if (!membershipComboBox.getItems().isEmpty()) {
             int selectedIndex = membershipComboBox.getSelectionModel().getSelectedIndex();
             setNewFilterList(selectedIndex);
-            
-            /*
-            String searchTypeList = membershipComboBox.getItems().get(selectedIndex);
-            Organisation selectedOrganisation = membershipComboBox.getItems().get(selectedIndex);
-            eventComboBox.getItems().clear();
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-            */
         }
     }
     
-     @FXML
-    private void organisationComboBoxHide() {
-        /*
-        if (!organisationComboBox.getItems().isEmpty()) {
-            int selectedIndex = organisationComboBox.getSelectionModel().getSelectedIndex();
-            Organisation selectedOrganisation = organisationComboBox.getItems().get(selectedIndex);
-            eventComboBox.getItems().clear();
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-        }
-        */
-    }
-    
-
 
     @FXML
     private void buttonReturnClickedAction(ActionEvent event) {

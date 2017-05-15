@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package membership;
 
 import java.io.Serializable;
@@ -26,10 +21,6 @@ public class Athlete extends Membership implements Serializable{
     //and teams with events: maybe you will need List<Team>
     private List<Team> teamsList;
 
-//------------------>>
-
-//.........----------->    //add constructor with age group and qualifications....
-    //or just setter... at moment other ageGroup on no qualifications..
     public Athlete(String nameIn, String addressIn, String telIn, String sexIn, Date birthIn) {
         super(nameIn, addressIn, telIn, sexIn, birthIn, false);
         type = typeEnum.Athlete;
@@ -102,8 +93,6 @@ public class Athlete extends Membership implements Serializable{
     
     @Override
     public void addItself(){
-        //nothing to do here, method used by subclasses
-        //but it needs to be initialized here for polymorphism reasons
         athletesList.add(this);
     }
     
@@ -128,7 +117,6 @@ public class Athlete extends Membership implements Serializable{
         
         return res;
     }
-    //
     
     //if two objects returns true at equals, they must have the same hashCode
     @Override

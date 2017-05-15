@@ -21,10 +21,6 @@ public class Event implements Serializable{
     //source: https://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html
     private static final long serialVersionUID = 42L;
     
-    //MensLeague, LadiesLeague, YouthLeague, CrossCountryLeague,
-    //RoadRace, CountyChampionships, nationalChampionships
-    //public enum typeEnum {Football, Basketball, Futsal, Hockey, Voleyball, Handball,
-    //Athletism, Cycling, Swimming, Badminton, Tennis, Padel, KickBoxing, Boxing};
     public enum typeEnum {MensLeague, LadiesLeague, YouthLeague, CrossCountryLeague,
     RoadRace, CountyChampionships, NationalChampionships};
     public enum genderEnum {Men, Women, Mixed};
@@ -34,7 +30,6 @@ public class Event implements Serializable{
     private static int incrementalId = 0;
     public static List<Event> eventsList = new ArrayList<>();
     
-    //private List<Team> participants; ///do we have to include participants?
     private List<Integer> participants; //list of teams. Referenced by  Id
     private int id;
     private String name;
@@ -77,24 +72,6 @@ public class Event implements Serializable{
         incrementalId++; 
         eventsList.add(this);
     }
-        
-    /*
-    public Event (String nameIn, String typeIn, String genderIn, String ageGroupIn,
-            String transportIn, Date dateIn, int officialIdIn, List<Team> participantsIn){
-        this.name = nameIn;
-        this.type = typeEnum.valueOf(typeIn);
-        this.gender = genderEnum.valueOf(genderIn);
-        this.ageGroup = ageGroupRelatedEnum.valueOf(ageGroupIn);
-        this.date = dateIn;
-        this.officialId = officialIdIn; 
-        this.transport =  transportEnum.valueOf(transportIn);
-        this.participants = new ArrayList<>(participantsIn);
-        
-        this.id = incrementalId;
-        incrementalId++; 
-        eventsList.add(this);
-    }
-    */
     
     public static List<Event> getEvents(){
         return eventsList;
@@ -103,9 +80,7 @@ public class Event implements Serializable{
     public List<Team> getParticipants(){
         ArrayList<Team> list = new ArrayList<>();
         ArrayList<Team> teamsList = (ArrayList<Team>) Team.getTeams();
-        System.out.println ("GOOOOOOOOOO nano");
         for (Integer currentID : this.participants){
-            System.out.println ("GOOOOOOOOOO");
             list.add((Team)teamsList.get(currentID));
         }
         return list;
@@ -243,7 +218,7 @@ public class Event implements Serializable{
     //to do
     public static List<Event> viewEventsByDate(Date date){
         List<Event> resEvents = new ArrayList<>();
-        for (Event currentEvent : eventsList){ //fix to compare dates.......
+        for (Event currentEvent : eventsList){ //fix to compare dates
             //java.time.LocalDateTime first = new java.time.LocalDateTime(currentEvent.getDate());
             //java.time.LocalDate = 
             //java.time.DateTimeComparator.getDateOnlyInstance();
@@ -275,14 +250,6 @@ public class Event implements Serializable{
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException{
         in.defaultReadObject();
         incrementalId++;
-    }
-    
-    /* dont needed
-    //and add the deserialized Event to events List 
-    public void addItself(){
-        eventsList.add(this);
-    }
-    */
-    
+    }  
     
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package membership;
 
 import event.Event;
@@ -11,7 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import static membership.Membership.incrementalId;
 
 /**
  *
@@ -34,40 +28,7 @@ public class Team implements Serializable{
     //of a team can belong to distinct disciplines
     private Event.genderEnum gender;
     private Event.ageGroupRelatedEnum ageGroup;
-    
-    /*
-    public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn, List<Athlete> athletesListIn){
-        this.name = nameIn;
-        this.captainId = captainIdIn;
-        this.gender = Event.genderEnum.valueOf(genderIn);
-        this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
         
-        this.athletesList = new ArrayList<Athlete>(athletesListIn);
-        this.eventsList = new ArrayList<>();
-        
-        this.id = incrementalId;
-        incrementalId++; 
-        teamsList.add(this);
-    }
-*/
-    
-    /*
-        public Team (String nameIn, int captainIdIn, String genderIn, String ageGroupIn,
-                List<Athlete> athletesListIn, List<Event> eventsListIn){
-        this.name = nameIn;
-        this.captainId = captainIdIn;
-        this.gender = Event.genderEnum.valueOf(genderIn);
-        this.ageGroup = Event.ageGroupRelatedEnum.valueOf(ageGroupIn);
-        
-        this.athletesList = new ArrayList<Athlete>(athletesListIn);
-        this.eventsList = eventsListIn;
-        
-        this.id = incrementalId;
-        incrementalId++; 
-        teamsList.add(this);
-    }
-*/
-    
     public Team (String nameIn, String genderIn, String ageGroupIn, int captainIdIn){
         this.name = nameIn;
         this.captainId = captainIdIn;
@@ -132,9 +93,7 @@ public class Team implements Serializable{
     public List<Athlete> getAthletesList(){
         ArrayList<Athlete> list = new ArrayList<>();
         ArrayList<Membership> listMembers = (ArrayList<Membership>)Membership.getMembersList();
-        System.out.println ("GOOOOOOOOOO nano");
         for (Integer currentID : this.athletesList){
-            System.out.println ("GOOOOOOOOOO");
             list.add((Athlete)listMembers.get(currentID));
         }
         return list;

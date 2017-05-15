@@ -1,20 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package athleticsclub;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -22,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -32,21 +19,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
 import event.Event.ageGroupRelatedEnum;
 import event.Event.genderEnum;
 import java.util.ArrayList;
 import membership.Athlete;
-import membership.Coach;
-import membership.Membership.ageGroupEnum;
-import membership.Membership.qualificationsEnum;
-import membership.Membership.sexEnum;
-import membership.Membership.typeEnum;
 import membership.Official;
-import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
 import training.TrainingRecord;
@@ -54,7 +33,7 @@ import training.TrainingRecord;
 /**
  * FXML Controller class
  *
- * @author Alejandro Reyes
+ * @author Alejandro Reyes (AlejandroReBa)
  */
 public class TeamGUIController implements Initializable {
 
@@ -92,13 +71,6 @@ public class TeamGUIController implements Initializable {
     @FXML
     Button buttonNext;
 
-    /*
-    @FXML
-    public void disableButtonNext() {
-        this.buttonNext.disableProperty().set(true);
-    }
-    */
-
     @FXML
     Button buttonReturn, showTeamsButton, searchTeamsButton;
 
@@ -133,11 +105,6 @@ public class TeamGUIController implements Initializable {
     @FXML
     ComboBox<Official> captainAddComboBox;
     
-    //@FXML
-    //ComboBox<Organisation> organisationComboBox;
-
-    //FXML
-    //ComboBox<Event> eventComboBox;
 
     @FXML
     private void showTeamsButtonAction(ActionEvent event) {      
@@ -226,22 +193,9 @@ public class TeamGUIController implements Initializable {
 
             nameTextField.setText(selectedTeam.getName());
             
-            /*
-            Date selectedDate = selectedEvent.getDate();
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
-            String selectedDateString = format.format(selectedDate);
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate localDate = LocalDate.parse(selectedDateString, formatter);
-
-            addDateDatePicker.setValue(localDate);
-            */
-            
             sexAddComboBox.getSelectionModel().select(selectedTeam.getGender());
             ageGroupAddComboBox.getSelectionModel().select(selectedTeam.getAgeGroup());
-            
-            
+                      
             athletesMembersListView.getItems().clear();
             for (Athlete t : selectedTeam.getAthletesList()){
                 athletesMembersListView.getItems().add(t);
@@ -273,37 +227,8 @@ public class TeamGUIController implements Initializable {
         if (!teamComboBox.getItems().isEmpty()) {
             int selectedIndex = teamComboBox.getSelectionModel().getSelectedIndex();
             setNewFilterList(selectedIndex);
-            
-            /*
-            String searchTypeList = membershipComboBox.getItems().get(selectedIndex);
-            Organisation selectedOrganisation = membershipComboBox.getItems().get(selectedIndex);
-            eventComboBox.getItems().clear();
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-            */
         }
-    }
-    
-    @FXML
-    private void organisationComboBoxHide() {
-        /*
-        if (!organisationComboBox.getItems().isEmpty()) {
-            int selectedIndex = organisationComboBox.getSelectionModel().getSelectedIndex();
-            Organisation selectedOrganisation = organisationComboBox.getItems().get(selectedIndex);
-            eventComboBox.getItems().clear();
-            for (Event ev : selectedOrganisation.findAllEvent()) {
-                eventComboBox.getItems().add(ev);
-            }
-            if (!eventComboBox.getItems().isEmpty()) {
-                eventComboBox.getSelectionModel().select(0);
-            }
-        }
-        */
-    }
+    }  
     
     //add picked athlete to the list of teams for the selected event
      @FXML

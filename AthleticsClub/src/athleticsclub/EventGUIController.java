@@ -277,7 +277,6 @@ public class EventGUIController implements Initializable {
             for (Team t : Team.getTeams()){
                 if (!teamsAlreadyIn.contains(t)){ //need to override equals/hashCode at Team
                     allTeams.add(t);
-                    System.out.println ("ADDING TEAM: " + t.getName());
                 }
             }
             

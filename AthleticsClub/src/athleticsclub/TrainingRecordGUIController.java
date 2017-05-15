@@ -7,14 +7,7 @@ package athleticsclub;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -22,31 +15,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import membership.Membership;
 import event.Event;
 import event.Event.ageGroupRelatedEnum;
-import event.Event.genderEnum;
 import java.util.ArrayList;
-import membership.Athlete;
-import membership.Coach;
-import membership.Membership.ageGroupEnum;
-import membership.Membership.qualificationsEnum;
-import membership.Membership.sexEnum;
-import membership.Membership.typeEnum;
-import membership.Official;
-import membership.StaffAdmin;
 import membership.Team;
 import training.Training;
 import training.TrainingRecord;
@@ -90,9 +69,6 @@ public class TrainingRecordGUIController implements Initializable {
     }
 
     @FXML
-    Button buttonNext;
-
-    @FXML
     Button buttonReturn, showTrainingRecordsButton, searchTrainingRecordsButton;
 
     @FXML
@@ -122,8 +98,6 @@ public class TrainingRecordGUIController implements Initializable {
         }
     }
     
-    
-   
 
     @FXML 
     private void searchTrainingRecordsButtonAction(ActionEvent event) {
@@ -136,7 +110,6 @@ public class TrainingRecordGUIController implements Initializable {
             filter = this.trainingRecordFilterComboBox.getSelectionModel().getSelectedItem();
         }
         
-
         this.trainingRecordsListView.getItems().clear();
         ArrayList<TrainingRecord> retrievedTrainingRecords = 
                 retrieveTrainingRecordsBySearchType(this.trainingRecordComboBox.getSelectionModel().getSelectedIndex(),
@@ -161,8 +134,7 @@ public class TrainingRecordGUIController implements Initializable {
             TrainingRecord selectedTrainingRecord = trainingRecordsListView.getItems().get(selectedIndex);
 
             trainingRecordTextArea.setText(selectedTrainingRecord.getRecord());
-            
-            
+                
             resultTextArea.setText("The selected record description has been loaded into left field");
         }
         
@@ -176,7 +148,6 @@ public class TrainingRecordGUIController implements Initializable {
         }
     }
     
-
     @FXML
     private void buttonReturnClickedAction(ActionEvent event) {
         buttonReturn.getScene().getWindow().hide();

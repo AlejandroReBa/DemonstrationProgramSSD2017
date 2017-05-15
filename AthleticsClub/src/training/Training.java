@@ -1,7 +1,5 @@
 package training;
 
-import event.Event;
-import static event.Event.eventsList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
@@ -22,7 +20,7 @@ public class Training implements Serializable{
     public enum disciplineTrainingEnum {Hurdling, Sprinting, Jumping, Throwing,
     Weighting, Repetitions, Roading, Hamming};
     public enum ageGroupRelatedEnum {U13, U15, U17, U20, Senior, Masters};
-    //no List<Athlete>...?
+    //no List<Athlete> at the moment
     private static int incrementalId = 0;
     public static List<Training> trainingsList = new ArrayList<>();
     
@@ -30,7 +28,7 @@ public class Training implements Serializable{
     private List<Integer> athletesList; //refers athletes identifiers
     private typeEnum type;
     //not initialized yet, does not exist negative ID
-    private int coachId = -1; //only one coach conduct the training
+    private int coachId = -1; //only one coach conducts the training
     private disciplineTrainingEnum discipline;
     private ageGroupRelatedEnum ageGroup;
     private Date date;
