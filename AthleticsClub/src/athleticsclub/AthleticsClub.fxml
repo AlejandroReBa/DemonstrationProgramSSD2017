@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="401.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="athleticsclub.AthleticsClubController">
     <children>
-        <Button fx:id="bEvent" layoutX="60.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
+        <Button fx:id="bEvent" layoutX="27.0" layoutY="86.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="163.0" text="Go!" />
       <Text layoutX="154.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Athletics Club Main Page" wrappingWidth="197.462890625">
          <font>
             <Font name="System Italic" size="18.0" />
@@ -20,35 +20,35 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="bTraining" layoutX="300.0" layoutY="86.0" onAction="#handleButtonAction" text="Go!" />
+      <Button fx:id="bTraining" layoutX="267.0" layoutY="86.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="175.0" text="Go!" />
       <Label layoutX="262.0" layoutY="60.0" prefHeight="20.0" prefWidth="190.0" text="Manage Training information:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="266.0" layoutY="141.0" prefHeight="20.0" prefWidth="157.0" text="View all training records:">
+      <Label layoutX="266.0" layoutY="141.0" prefHeight="20.0" prefWidth="175.0" text="View all training records:">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Button fx:id="bMembership" layoutX="60.0" layoutY="197.0" onAction="#handleButtonAction" text="Go!" />
-      <Label layoutX="14.0" layoutY="165.0" prefHeight="20.0" prefWidth="220.0" text="Manage Membership Information">
+      <Button fx:id="bMembership" layoutX="25.0" layoutY="163.0" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="205.0" text="Go!" />
+      <Label layoutX="25.0" layoutY="141.0" prefHeight="20.0" prefWidth="220.0" text="Manage Membership Information:">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextArea layoutX="242.0" layoutY="229.0" prefHeight="164.0" prefWidth="256.0" text="Dear sport lovers. We have&#10;just released the beta version&#10;of Athletics Club Application!&#10;&#10;The interface is on an early stage,&#10;any feedfack would be appreciated.&#10;&#10;Enjoy!&#10;  The Athletics Club Team" />
+      <TextArea layoutX="242.0" layoutY="229.0" prefHeight="164.0" prefWidth="256.0" text="Dear athletics lovers. We have&#10;just released version 1.0&#10;of Athletics Club Application!&#10;&#10;The interface is still on an early stage,&#10;any feedfack would be appreciated.&#10;&#10;Enjoy!&#10;  The Athletics Club Team            15/05/2017" />
       <Text layoutX="341.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEWS" wrappingWidth="44.041015625">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <Button fx:id="bExit" layoutX="52.0" layoutY="347.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" text="Exit" />
-      <Label layoutX="25.0" layoutY="250.0" text="Manage Teams">
+      <Button fx:id="bExit" layoutX="34.0" layoutY="350.0" mnemonicParsing="false" onAction="#buttonExitClickedAction" prefHeight="25.0" prefWidth="150.0" text="Exit" />
+      <Label layoutX="79.0" layoutY="209.0" prefHeight="20.0" prefWidth="98.0" text="Manage Teams">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="bTeams" layoutX="46.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Go!" />
-      <Button fx:id="bTrainingRecord" layoutX="309.0" layoutY="163.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Go!" />
+      <Button fx:id="bTeams" layoutX="80.0" layoutY="229.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="98.0" text="Go!" />
+      <Button fx:id="bTrainingRecord" layoutX="269.0" layoutY="163.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="150.0" text="Go!" />
     </children>
 </AnchorPane>
